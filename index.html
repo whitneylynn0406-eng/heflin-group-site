@@ -423,6 +423,18 @@
               autocomplete="email"
               placeholder="your@email.com"
             />
+            <div id="emailHint" style="display:none; margin-top:0.35rem; font-size:0.85rem; color:#B07D55; cursor:pointer; text-decoration:underline;"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="phone">Phone <span style="font-weight:normal; opacity:0.6;">(optional)</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              placeholder="Best number to reach you"
+            />
           </div>
 
           <div class="form-field">
@@ -438,7 +450,7 @@
           <button type="submit" class="form-submit" id="submitBtn">Send</button>
 
           <div class="form-message success" id="successMsg" role="alert">
-            Got it — I'll be in touch soon. If you don't hear back within one business day, email me directly: whitney@heflingroup.net
+            Got it — I'll be in touch soon.
           </div>
           <div class="form-message error" id="errorMsg" role="alert">
             Something went wrong. Try emailing directly: whitney@heflingroup.net
@@ -477,6 +489,41 @@
     const submitBtn = document.getElementById('submitBtn');
     const successMsg = document.getElementById('successMsg');
     const errorMsg = document.getElementById('errorMsg');
+
+    // Email typo-catcher: suggests a fix for common misspelled domains
+    const emailInput = document.getElementById('email');
+    const emailHint = document.getElementById('emailHint');
+    const domainFixes = {
+      'gamil.com': 'gmail.com', 'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com',
+      'gmaill.com': 'gmail.com', 'gnail.com': 'gmail.com',
+      'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'yhaoo.com': 'yahoo.com',
+      'hotmial.com': 'hotmail.com', 'hotmal.com': 'hotmail.com', 'hotmali.com': 'hotmail.com',
+      'outlok.com': 'outlook.com', 'outloook.com': 'outlook.com',
+      'iclod.com': 'icloud.com', 'icoud.com': 'icloud.com'
+    };
+    function checkEmailTypo() {
+      const value = emailInput.value.trim();
+      const at = value.lastIndexOf('@');
+      if (at < 1) { emailHint.style.display = 'none'; return; }
+      let domain = value.slice(at + 1).toLowerCase();
+      let fixedDomain = domainFixes[domain];
+      if (!fixedDomain && /\.(con|cmo|ocm|comm)$/.test(domain)) {
+        fixedDomain = domain.replace(/\.(con|cmo|ocm|comm)$/, '.com');
+      }
+      if (fixedDomain && fixedDomain !== domain) {
+        const suggested = value.slice(0, at + 1) + fixedDomain;
+        emailHint.textContent = 'Did you mean ' + suggested + '? Click to fix.';
+        emailHint.style.display = 'block';
+        emailHint.onclick = function () {
+          emailInput.value = suggested;
+          emailHint.style.display = 'none';
+        };
+      } else {
+        emailHint.style.display = 'none';
+      }
+    }
+    emailInput.addEventListener('blur', checkEmailTypo);
+    emailInput.addEventListener('input', checkEmailTypo);
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
