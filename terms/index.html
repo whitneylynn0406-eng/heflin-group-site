@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Participation — Heflin Group LLC</title>
+  <meta name="description" content="Terms of Participation for Building Your AI Digital Workforce, a course from Heflin Group LLC." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Brand palette (locked 2026-06-03) — matches heflingroup.net index.html ───
+       Copper        #B07D55  — identity color
+       Charcoal Slate #3D3D3D — body text
+       Cream          #F5F0E8 — background
+       Walnut Brown   #6B4C3B — structural accent
+    ─────────────────────────────────────────────────────────────────── */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 18px;
+    }
+
+    body {
+      background-color: #F5F0E8;
+      color: #3D3D3D;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #B07D55; }
+    a:hover, a:focus { color: #6B4C3B; }
+
+    /* ─── Not-attorney-reviewed banner — persistent, prominent ────────── */
+
+    .attorney-banner {
+      background-color: #6B4C3B;
+      color: #F5F0E8;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      border-bottom: 3px solid #B07D55;
+    }
+
+    .attorney-banner strong {
+      display: inline-block;
+      margin-right: 0.35rem;
+    }
+
+    .attorney-banner .banner-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ─── Simple top nav back to home ────────────────────────────────── */
+
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .nav-wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: #3D3D3D;
+    }
+
+    .nav-monogram {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    /* ─── Layout ──────────────────────────────────────────────────────── */
+
+    .page-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    .doc-card {
+      background-color: #F5F0E8;
+      max-width: 760px;
+      width: 100%;
+      padding: 2.5rem 2.5rem 3rem;
+      border-top: 4px solid #B07D55;
+    }
+
+    /* ─── Title block ─────────────────────────────────────────────────── */
+
+    .doc-eyebrow {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6B4C3B;
+      margin-bottom: 0.5rem;
+    }
+
+    h1.doc-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 1.15;
+      color: #3D3D3D;
+      margin-bottom: 0.25rem;
+    }
+
+    .doc-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #6B4C3B;
+      margin-bottom: 1.5rem;
+    }
+
+    .doc-meta {
+      font-size: 0.9375rem;
+      color: #3D3D3D;
+      margin-bottom: 0.4rem;
+    }
+
+    .doc-meta em {
+      color: #6B4C3B;
+    }
+
+    .divider {
+      width: 56px;
+      height: 2px;
+      background: #B07D55;
+      margin: 1.75rem 0;
+    }
+
+    /* ─── Quick summary box ──────────────────────────────────────────── */
+
+    .quick-summary {
+      background-color: #EDE8DF;
+      border-left: 3px solid #B07D55;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .quick-summary h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #3D3D3D;
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-summary ul {
+      padding-left: 1.25rem;
+    }
+
+    .quick-summary li {
+      margin-bottom: 0.4rem;
+      font-size: 0.9375rem;
+    }
+
+    .quick-summary p {
+      margin-top: 0.9rem;
+      font-size: 0.9375rem;
+    }
+
+    /* ─── Article body ────────────────────────────────────────────────── */
+
+    article h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #3D3D3D;
+      margin: 2.25rem 0 0.9rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #C9B99A;
+    }
+
+    article h2:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    article p {
+      margin-bottom: 1rem;
+      font-size: 0.9688rem;
+    }
+
+    article ul, article ol {
+      margin: 0 0 1rem 1.25rem;
+    }
+
+    article li {
+      margin-bottom: 0.5rem;
+      font-size: 0.9688rem;
+    }
+
+    article strong {
+      color: #3D3D3D;
+      font-weight: 600;
+    }
+
+    .closing-note {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #C9B99A;
+      font-style: italic;
+      color: #6B4C3B;
+      font-size: 0.875rem;
+    }
+
+    .back-home {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 0.9375rem;
+    }
+
+    /* ─── Footer ──────────────────────────────────────────────────────── */
+
+    footer {
+      text-align: center;
+      padding: 1.25rem 1.5rem 1.5rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.75rem;
+      color: #6B4C3B;
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── Responsive ──────────────────────────────────────────────────── */
+
+    @media (max-width: 480px) {
+      .doc-card {
+        padding: 2rem 1.25rem 2.5rem;
+      }
+
+      h1.doc-title {
+        font-size: 1.9rem;
+      }
+
+      .attorney-banner {
+        font-size: 0.875rem;
+        padding: 0.875rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ⚠️ NOT-ATTORNEY-REVIEWED BANNER — must stay prominent on this page per source doc instruction -->
+  <div class="attorney-banner" role="alert">
+    <div class="banner-inner">
+      <strong>⚠️ Not attorney-reviewed.</strong>These Terms of Participation were prepared by Heflin Group LLC without review by a licensed attorney. Whitney Heflin has made an informed decision to publish this page for the first cohort of this course rather than delay launch, and has built in standard, conservative protective language below. This is not a substitute for legal advice, and this notice must stay on the published page until an attorney has reviewed it.
+    </div>
+  </div>
+
+  <nav class="site-nav">
+    <a href="/" class="nav-wordmark" aria-label="Heflin Group home">
+      <svg class="nav-monogram" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="36,4 65,20 65,52 36,68 7,52 7,20" fill="none" stroke="#B07D55" stroke-width="2.5" />
+        <polygon points="36,7.5 62,22.25 62,49.75 36,64.5 10,49.75 10,22.25" fill="none" stroke="#F5F0E8" stroke-width="2" />
+        <text x="36" y="43" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" letter-spacing="2" fill="#6B4C3B">HG</text>
+      </svg>
+      <span class="nav-name">Heflin Group</span>
+    </a>
+  </nav>
+
+  <main class="page-wrapper">
+    <div class="doc-card">
+
+      <div class="doc-eyebrow">Terms &amp; Course Policies</div>
+      <h1 class="doc-title">Terms of Participation</h1>
+      <p class="doc-subtitle">Building Your AI Digital Workforce</p>
+
+      <p class="doc-meta"><strong>These terms are provided by Heflin Group LLC</strong>, a Kentucky limited liability company (&ldquo;Heflin Group,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), for the course <em>Building Your AI Digital Workforce</em> (the &ldquo;Course&rdquo;).</p>
+      <p class="doc-meta"><strong>Effective Date:</strong> July 14, 2026 <em>(update to the actual publish date if this page goes live later)</em></p>
+
+      <div class="divider"></div>
+
+      <div class="quick-summary">
+        <h2>Quick summary</h2>
+        <ul>
+          <li><strong>Course:</strong> Building Your AI Digital Workforce — two 4-hour live virtual sessions (8 hours total)</li>
+          <li><strong>Instructor:</strong> Whitney Heflin, CPA (licensed in Virginia)</li>
+          <li><strong>Price:</strong> $495 (Cohort 1) or $795 (Cohort 2) per seat — same course, same content, same instructor; the price reflects which scheduling window you register for</li>
+          <li><strong>Format choice:</strong> Build-Along (bring your own laptop and build live) or Watch &amp; Learn (no laptop needed) — either way, you earn full CPE credit</li>
+          <li><strong>Cohort 1 dates:</strong> Wednesday, August 5 and Thursday, August 6, 2026</li>
+          <li><strong>CPE:</strong> Up to 8.0 hours, self-sponsored — see Section 3 below</li>
+        </ul>
+        <p>The rest of this page spells out the details. It's written in plain English on purpose — if anything here is unclear, email us (Section 12) before you register.</p>
+      </div>
+
+      <article>
+
+        <h2>1. What This Is / How You Accept These Terms</h2>
+        <p>By checking the &ldquo;I agree&rdquo; box at registration or checkout, submitting payment, or attending any part of the Course, you're confirming that you've read this page and agree to be bound by it. If you don't agree, please don't register or attend.</p>
+
+        <h2>2. Educational Content Only — Not Advice</h2>
+        <p>This course provides educational content only and is not tax, legal, or accounting advice. Nothing taught in the Course, and nothing the instructor says or demonstrates, creates a CPA-client relationship, an attorney-client relationship, or any other professional-services relationship between you and Heflin Group LLC or Whitney Heflin individually. Use your own professional judgment — and your own qualified advisors — for decisions specific to your situation.</p>
+
+        <h2>3. CPE Credit</h2>
+        <p><strong>Active CPA (Virginia). Self-sponsored CPE — confirm acceptance with your own state board.</strong></p>
+        <p>This course is self-sponsored by Heflin Group LLC under Kentucky's CPE rules for self-study/self-sponsored programs. It is <strong>not endorsed, approved, or registered by NASBA, the AICPA, or any state board of accountancy.</strong> Before relying on this course for CPE credit, you're responsible for confirming that your own state board (or other licensing body) will accept credit from a self-sponsored program of this type. We don't guarantee that any board will accept it.</p>
+        <p><strong>Credit is earned by monitored, full attendance of both sessions.</strong> We monitor attendance throughout the live course. If you arrive late, leave early, or miss a significant portion of either session, your CPE credit will be adjusted to reflect only the portion you actually completed — you may not receive the full 8.0-credit Certificate of Completion.</p>
+        <p>This is a separate question from the payment terms in Section 6 below. Whether or not you receive a credit toward a future class has no effect on the CPE record for any credit already earned, and vice versa.</p>
+
+        <h2>4. Price &amp; Payment</h2>
+        <p>Price: <strong>$495 per seat for Cohort 1</strong>, <strong>$795 per seat for Cohort 2</strong>. Identical course, content, and instructor — the difference is the scheduling window you register for.</p>
+        <p>We use two enrollment methods, depending on how you register:</p>
+        <p><strong>Manual invoice (request-and-approve registration).</strong> After you register, we send you a Stripe invoice for your seat. Your seat is <strong>held, not confirmed,</strong> for 24 hours from when the invoice is issued. If payment isn't received within that window, the hold releases automatically and the seat becomes available to the next person on the list. You're welcome to request a new invoice if seats remain.</p>
+        <p><strong>Stripe Payment Link (instant checkout).</strong> If you register through a direct payment link, you'll be asked to check a box confirming you've read and agree to these Terms of Participation before Stripe processes your payment. Payment is captured immediately, and your seat is <strong>confirmed the moment payment succeeds</strong> — there's no hold period on this path.</p>
+        <p>If a manual invoice goes unpaid past the 24-hour window, it simply expires with no further obligation on either side.</p>
+
+        <h2>5. Your Seat: Held vs. Confirmed</h2>
+        <ul>
+          <li><strong>HELD</strong> — your registration has started (an invoice has been issued) but payment hasn't been received yet. A held seat isn't guaranteed and doesn't count against the Course's seat capacity.</li>
+          <li><strong>CONFIRMED</strong> — payment has been received in full. Only confirmed seats count against the Course's capacity.</li>
+        </ul>
+        <p>On the manual-invoice path, your seat moves from HELD to CONFIRMED once payment is received. On the Payment Link path, your seat is CONFIRMED immediately and automatically.</p>
+
+        <h2>6. Cancellations, Credits &amp; Substitutions</h2>
+        <p>We don't offer cash refunds — but that doesn't mean your payment is at risk if your plans change. Here's exactly how it works:</p>
+        <p><strong>Cancel or change your registration at least 14 calendar days before your scheduled class, and your payment converts into a credit toward a future class, usable within 12 months of your original purchase date.</strong> No forms, no negotiating — just email us and your credit is on file. <em>For Cohort 1 (Session 1 = Wednesday, August 5, 2026), that means cancellations or changes received on or before July 22, 2026 are credit-eligible.</em></p>
+        <p><strong>Cancel or change your registration less than 14 calendar days before your scheduled class, or don't show up at all, and the payment is forfeited</strong> — no cash refund and no future-class credit. We'd rather be upfront about this than bury it: on a small-capacity, hands-on class, a late cancellation holds a seat someone else could have taken, which is why the line sits at 14 days.</p>
+        <p><strong>Want to avoid forfeiting altogether? Send someone else in your place, free — no 14-day window required.</strong> You may send a substitute to attend at no charge, as long as you notify us by email at <strong>help@heflingroup.net</strong> at least 24 hours before Session 1, so we can update registration and CPE records. The CPE certificate is issued only to whoever actually attends and completes both full sessions — it can't be split between the original registrant and a substitute, and it can't be reissued afterward to a different name.</p>
+        <p><strong>If Heflin Group LLC cancels or reschedules the Course</strong>, you'll be offered your choice of a full refund or a confirmed seat in the next scheduled cohort. This is the one case where a cash refund is available — everything above governs a participant's own change of plans.</p>
+
+        <h2>7. No Warranty</h2>
+        <p>Course content, materials, and instruction are provided &ldquo;as is,&rdquo; without warranties of any kind, express or implied. We don't guarantee any specific result or outcome from taking the Course, and we don't guarantee that any particular tool, configuration, or setup will work correctly in your specific computing environment.</p>
+
+        <h2>8. Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, Heflin Group LLC's total liability to you, arising out of or relating to the Course or these terms, for any cause, will not exceed the amount you actually paid for the Course. Some jurisdictions don't allow certain limitations on liability, so this limitation may not apply to you to the extent your jurisdiction's law doesn't permit it.</p>
+
+        <h2>9. Your Device, Third-Party Tools &amp; Data</h2>
+        <p><strong>Your device and data are your responsibility.</strong> This is a hands-on course. On the Build-Along track, you'll install software and run commands on your own personal laptop. Your device, your backups, and your data are yours to manage — Heflin Group LLC isn't responsible for anything that happens to your device, files, or data as a result of steps you take on your own machine.</p>
+        <p><strong>You're choosing to do hands-on technical work, at your own risk.</strong> Installing software, running commands, and pushing files to services like GitHub all carry some inherent risk. By choosing to follow along on the Build-Along track, you're accepting that risk for yourself.</p>
+        <p><strong>The tools we show you belong to other companies.</strong> The Course demonstrates and references third-party tools and services — for example, Claude and GitHub. Those are provided by their own companies, under their own separate terms of service and privacy policies. We don't control them, we're not responsible for them, and we don't guarantee their availability, behavior, pricing, or that they'll keep existing in their current form. It's on you to review and follow the terms of any tool you choose to use.</p>
+        <p><strong>Don't put confidential data or credentials into any tool during the Course.</strong> Don't enter confidential, sensitive, or client/patient/proprietary data — or any password, API key, or credential — into any tool while you're building along. This is the same sanitize-before-you-build guidance the Course itself teaches — what you choose to input is on you.</p>
+
+        <h2>10. Governing Law &amp; Venue</h2>
+        <p>These terms are governed by the laws of the Commonwealth of Kentucky, without regard to conflict-of-law principles. Any dispute arising out of or relating to the Course or these terms will be handled in the state or federal courts located in Kentucky, and you consent to personal jurisdiction there.</p>
+
+        <h2>11. Changes to These Terms</h2>
+        <p>We may update this page from time to time — for example, between Cohort 1 and Cohort 2, or as we finalize the fuller attorney-reviewed agreement referenced in the notice at the top of this page. The version in effect at the time you register is the one that applies to you. We'll post the current effective date at the top of this page.</p>
+
+        <h2>12. Questions</h2>
+        <p>Email us at <strong>help@heflingroup.net</strong> — we're happy to walk through anything on this page before you register.</p>
+
+      </article>
+
+      <p class="closing-note">These Terms of Participation are provided by Heflin Group LLC. Not attorney-reviewed — see notice at the top of this page.</p>
+
+      <a href="/" class="back-home">&larr; Back to Heflin Group home</a>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Heflin Group LLC &middot; Headquartered in Louisville, Kentucky
+  </footer>
+
+</body>
+</html>
