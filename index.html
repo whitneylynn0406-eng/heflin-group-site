@@ -297,6 +297,24 @@
       letter-spacing: 0.02em;
     }
 
+    .footer-links {
+      margin-top: 0.35rem;
+    }
+
+    .footer-links a {
+      color: #6B4C3B;
+      text-decoration: underline;
+    }
+
+    .footer-links a:hover,
+    .footer-links a:focus {
+      color: #B07D55;
+    }
+
+    .footer-links .footer-sep {
+      margin: 0 0.5rem;
+    }
+
     /* ─── Responsive ──────────────────────────────────────────────────── */
 
     @media (max-width: 480px) {
@@ -481,6 +499,9 @@
 
   <footer>
     &copy; 2026 Heflin Group LLC &middot; Headquartered in Louisville, Kentucky
+    <div class="footer-links">
+      <a href="/terms/">Terms</a><span class="footer-sep">&middot;</span><a href="/privacy/">Privacy</a>
+    </div>
   </footer>
 
   <script>
