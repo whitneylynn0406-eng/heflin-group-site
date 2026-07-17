@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building Your AI Digital Workforce — Heflin Group</title>
+<meta name="description" content="A two-day, hands-on course teaching you to build your own AI agents — no coding background required. Cohort 1: Aug 5-6, 2026. $495 introductory rate. Full CPE credit available for CPAs." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* Brand palette — matched to live heflingroup.net index.html, 2026-07-17 */
+  :root {
+    --copper: #B07D55;
+    --charcoal: #3D3D3D;
+    --cream: #F5F0E8;
+    --cream-deep: #EDE8DF;
+    --walnut: #6B4C3B;
+    --tbd-bg: #FFF6E5;
+    --tbd-border: #C98A2C;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 18px; }
+  body {
+    background: #FEFDFB;
+    color: var(--charcoal);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    padding-bottom: 96px;
+  }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; }
+  em { font-style: italic; color: var(--copper); }
+  a { color: var(--walnut); }
+
+  .top-link { text-align: center; padding: 14px; font-size: 0.85rem; }
+  .top-link a { color: var(--walnut); text-decoration: none; border-bottom: 1px solid var(--copper); }
+  .top-link a:hover { color: var(--copper); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+
+  header.hero { text-align: center; padding: 3rem 1.5rem 2.5rem; border-top: 4px solid var(--copper); }
+  .monogram-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+  .monogram { width: 56px; height: 56px; }
+  .eyebrow { color: var(--walnut); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; font-weight: 500; margin-bottom: 0.75rem; }
+  .hero h1 { font-size: 2.3rem; line-height: 1.2; margin-bottom: 1rem; }
+  .hero-sub { font-size: 1.05rem; max-width: 560px; margin: 0 auto 0.85rem; }
+  .hero-aside { font-size: 0.85rem; color: var(--walnut); max-width: 520px; margin: 0 auto 1.5rem; }
+  .btn {
+    display: inline-block; padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.95rem; font-weight: 500; text-decoration: none;
+    background: var(--copper); color: var(--cream); letter-spacing: 0.02em;
+  }
+  .btn:hover { background: var(--walnut); }
+  .btn:disabled, .btn.disabled {
+    background: #C9B99A; color: var(--cream); cursor: not-allowed; pointer-events: none;
+  }
+
+  section { padding: 2.5rem 0; }
+  /* Bold alternating sections — even sections go dark, with light text */
+  section:nth-of-type(even) { background: #3E2C23; color: #E7DCC9; }
+  section:nth-of-type(even) > .wrap > .sec-label { color: #D6A15E; }
+  section:nth-of-type(even) > .wrap > .sec-title,
+  section:nth-of-type(even) > .wrap > h2 { color: #FBF4E8; }
+  section:nth-of-type(even) > .wrap > .sec-body { color: #E7DCC9; }
+  section:nth-of-type(even) > .wrap > .sec-body strong { color: #FBF4E8; }
+  section:nth-of-type(even) > .wrap > .sec-body em,
+  section:nth-of-type(even) > .wrap > .sec-body a { color: #D6A15E; }
+  /* keep text inside white cards dark even on dark sections */
+  section:nth-of-type(even) .instructor-card,
+  section:nth-of-type(even) .disclosure-box,
+  section:nth-of-type(even) .price-card { color: var(--charcoal); }
+  .sec-label { color: var(--walnut); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .sec-title { font-size: 1.6rem; margin-bottom: 0.9rem; }
+  .sec-body { font-size: 0.98rem; }
+  .sec-body + .sec-body { margin-top: 0.75rem; }
+
+  ul.build-list { list-style: none; margin: 1rem 0; }
+  ul.build-list li { padding: 0.6rem 0 0.6rem 1.6rem; position: relative; border-bottom: 1px solid var(--cream-deep); }
+  ul.build-list li:last-child { border-bottom: none; }
+  ul.build-list li::before { content: "\00b7"; position: absolute; left: 0; top: 0.5rem; color: var(--copper); font-size: 1.5rem; line-height: 1; }
+
+  .instructor-card { background: #fff; border: 1px solid var(--cream-deep); border-radius: 4px; padding: 1.4rem; margin-top: 1rem; }
+  .instructor-photo {
+    width: 76px; height: 76px; border-radius: 50%; flex-shrink: 0;
+    background: var(--cream-deep); border: 2px solid var(--copper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: var(--walnut); text-align: center; padding: 0.3rem;
+  }
+  .instructor-name { font-size: 1.25rem; margin-bottom: 0.25rem; }
+
+  .price-card { background: #fff; border: 1px solid var(--cream-deep); border-top: 4px solid var(--copper); border-radius: 3px; padding: 1.75rem; text-align: center; margin: 1rem 0; }
+  .price-tag { text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.72rem; color: var(--walnut); font-weight: 600; }
+  .price-amount { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 3rem; margin: 0.4rem 0 0.2rem; }
+  .price-note { font-size: 0.9rem; margin-bottom: 1.1rem; }
+
+  .consent-row { display: flex; align-items: flex-start; gap: 0.6rem; max-width: 480px; margin: 1.1rem auto 1.3rem; text-align: left; font-size: 0.85rem; }
+  .consent-row input[type="checkbox"] { margin-top: 0.2rem; flex-shrink: 0; width: 16px; height: 16px; }
+
+  .tbd-box {
+    background: var(--tbd-bg); border: 1.5px dashed var(--tbd-border);
+    border-radius: 4px; padding: 0.8rem 1rem; margin: 1rem 0; font-size: 0.85rem; text-align: left;
+  }
+  .tbd-box .tbd-tag { font-weight: 600; color: var(--tbd-border); font-family: monospace; margin-right: 0.4rem; }
+
+  .disclosure-box {
+    background: #fff; border: 1px solid var(--cream-deep); border-left: 4px solid var(--copper);
+    border-radius: 3px; padding: 1.1rem 1.25rem; margin: 1rem 0;
+  }
+  .disclosure-box h3 { font-size: 1.05rem; margin-bottom: 0.4rem; font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; }
+  .disclosure-box p { font-size: 0.9rem; margin: 0 0 0.5rem; }
+  .disclosure-box p:last-child { margin-bottom: 0; }
+
+  .flow-steps { counter-reset: step; margin: 1rem 0; }
+  .flow-step { display: flex; gap: 0.9rem; padding: 0.7rem 0; border-bottom: 1px solid var(--cream-deep); font-size: 0.92rem; }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    counter-increment: step; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--copper); color: var(--cream); display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  }
+  .flow-num::before { content: counter(step); }
+
+  footer.site-footer { text-align: center; padding: 2rem 1.5rem 1.75rem; font-size: 0.75rem; color: var(--walnut); }
+  footer.site-footer a { color: var(--walnut); }
+  footer.site-footer a:hover { color: var(--copper); }
+  footer.site-footer p { margin: 0.35rem auto; }
+  .disclosure-line { font-size: 0.72rem; opacity: 0.85; max-width: 560px; margin: 0.6rem auto 0; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.85rem; }
+    .price-amount { font-size: 2.4rem; }
+  }
+
+  /* Sticky claim banner — always-visible CTA that follows the scroll */
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+    background: #4A3529; color: var(--cream);
+    display: flex; align-items: center; justify-content: center; gap: 0.55rem 2.2rem; flex-wrap: wrap;
+    padding: 0.6rem 1.25rem;
+    box-shadow: 0 -2px 14px rgba(0,0,0,0.22);
+  }
+  .sticky-cta .cta-group { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
+  .sticky-cta .label, .sticky-cta .wl-note { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em; color: var(--cream); }
+  .sticky-cta .wl-note { opacity: 0.9; }
+  .sticky-cta .cta {
+    background: #FFFFFF; color: var(--charcoal); text-decoration: none;
+    padding: 0.5rem 1.2rem; border-radius: 2px; font-weight: 600;
+    font-size: 0.9rem; letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .sticky-cta .cta:hover { background: var(--cream); }
+  .sticky-cta .cta-alt {
+    background: transparent; color: var(--cream);
+    border: 1px solid rgba(245,240,232,0.55);
+  }
+  .sticky-cta .cta-alt:hover { background: rgba(245,240,232,0.14); }
+  @media (max-width: 620px) {
+    body { padding-bottom: 148px; }
+    .sticky-cta { flex-direction: column; gap: 0.3rem; padding: 0.5rem 0.6rem; }
+    .sticky-cta .cta-group { width: 100%; flex-direction: column; gap: 0.3rem; }
+    .sticky-cta .wl-note { display: none; }
+    .sticky-cta .label { font-size: 0.76rem; }
+    .sticky-cta .cta { width: 100%; text-align: center; font-size: 0.85rem; padding: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<p class="top-link"><a href="https://heflingroup.net/">&larr; Heflin Group</a></p>
+
+<!-- ─── HERO ────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="wrap">
+    <div class="monogram-wrap" aria-hidden="true">
+      <svg class="monogram" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="36,4 65,20 65,52 36,68 7,52 7,20" fill="none" stroke="#B07D55" stroke-width="2.5"/>
+        <polygon points="36,7.5 62,22.25 62,49.75 36,64.5 10,49.75 10,22.25" fill="none" stroke="#F5F0E8" stroke-width="2"/>
+        <text x="36" y="43" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" letter-spacing="2" fill="#6B4C3B">HG</text>
+      </svg>
+    </div>
+    <p class="eyebrow">A Live, Hands-On Course</p>
+    <h1>Building Your AI Digital Workforce</h1>
+    <p class="hero-sub">
+      Stop chatting with AI. Build a system that works for <em>you</em> — one that already knows your life instead of one you re-explain yourself to every time. Two days, live, with an instructor. No coding background required.
+    </p>
+    <p class="hero-aside">
+      CPAs additionally earn 8.0 hours of self-sponsored CPE — a bonus on top of a course that stands on its own for anyone.
+    </p>
+    <a href="https://book.stripe.com/5kQ9AV2Mw6bvgbC6fd14400" class="btn">Claim Your Spot — $495</a>
+  </div>
+</header>
+
+<!-- ─── DIY OBJECTION (up-front value) ──────────────────── -->
+<section style="padding: 0.5rem 0 2rem;">
+  <div class="wrap" style="text-align:center;">
+    <p class="sec-body" style="font-size:1.12rem;">
+      Could you learn all this on your own? <em>Absolutely.</em> It would also take you hundreds of hours to reach the point you'll hit in two days.
+    </p>
+  </div>
+</section>
+
+<!-- ─── WHO IT'S FOR ────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label">Who This Is For</p>
+    <h2 class="sec-title">Built for people, not programmers.</h2>
+    <p class="sec-body">
+      Risk, compliance, operations, HR, sales, marketing, audit, finance. Students, parents, grandparents. This is for anyone who wants to put AI to work in their life — not just people who write code.
+    </p>
+    <p class="sec-body">
+      <strong>No prior AI experience. No programming background. If you can describe what you want in plain English, you can build this.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ─── WHAT YOU'LL BUILD ───────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label">What You'll Build — Live, Over Two Days</p>
+    <h2 class="sec-title">Every concept taught, then shown live — then you build it yourself.</h2>
+    <p class="sec-body">
+      Choose your format: watch each concept get taught and demonstrated live, no laptop required — or build your own alongside as we go, which is highly encouraged, since that's where it actually clicks. Either way, here's what gets built over the two days:
+    </p>
+    <ul class="build-list">
+      <li>Your own personal "chief of staff" AI assistant, configured around your real life and work</li>
+      <li>A "Morning Brief" agent — run it on demand, plus the exact playbook to make it run itself, automatically, every morning</li>
+      <li>A reusable skill you can invoke on demand, for anything you do repeatedly</li>
+      <li>The underlying pattern beneath all three — so you can build the next one yourself, for any task, without an instructor</li>
+    </ul>
+    <p class="sec-body">
+      <strong>Building along?</strong> You'll need a laptop (Windows or Mac) with admin rights and your own Claude Code subscription — not included in the course fee. Whatever recurring task you bring, sanitize it of any confidential data first (client data, patient data, proprietary business data — whatever applies to your own work) and use sample or placeholder data for the hands-on exercises instead.
+    </p>
+    <p class="sec-body">
+      <strong>Just watching and learning?</strong> None of that setup is required — show up and follow along. <span style="color:var(--walnut); font-style:italic;">(Though, real talk — building along is more fun. Just saying.)</span>
+    </p>
+  </div>
+</section>
+
+<!-- ─── FORMAT & DATES ──────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label">Format &amp; Dates</p>
+    <h2 class="sec-title">Two days, four live sessions.</h2>
+    <p class="sec-body">
+      Cohort 1 runs <strong>four two-hour live virtual sessions</strong> across two consecutive days — two each day on <strong>Wednesday, August 5</strong> and <strong>Thursday, August 6, 2026</strong> — eight hours of instruction total. Seats for this cohort are capped for real, hands-on attention during the live labs.
+    </p>
+  </div>
+</section>
+
+<!-- ─── CPE ─────────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label">CPE Credit</p>
+    <h2 class="sec-title">Up to 8.0 hours of CPE for CPAs — a bonus, not the whole point.</h2>
+    <p class="sec-body">
+      Both formats (Build-Along and Watch &amp; Learn) qualify for full CPE credit, subject to standard monitored-attendance requirements. Field of study: Information Technology (technical).
+    </p>
+    <div class="disclosure-box">
+      <p><em>Active CPA (Virginia). This is self-sponsored CPE — confirm acceptance with your own state board before relying on it. Heflin Group LLC is not endorsed, approved, or registered by NASBA, the AICPA, or any state board of accountancy.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MEET YOUR INSTRUCTOR ────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label">Meet Your Instructor</p>
+    <h2 class="sec-title">Whitney Heflin, CPA</h2>
+    <div class="instructor-card">
+      <div>
+        <p class="sec-body" style="font-weight:600; color:var(--walnut); margin-bottom:0.6rem;">Founder, Heflin Group LLC &middot; CPA &middot; Navy veteran</p>
+        <p class="sec-body">
+          Whitney spent 20+ years in risk management, audit, and finance inside one of the country's largest health insurers. She's also a former small business owner — she co-owned and ran a yoga studio — so she knows what it means to hustle and build something from scratch, not just audit it from the outside.
+        </p>
+        <p class="sec-body">
+          This year she founded Heflin Group LLC and set out to build her own working AI agent workforce from scratch — training under one of the world's leading AI authorities, where an app she built was singled out as a standout. This course is her handing you the shortcut.
+        </p>
+        <p class="sec-body">
+          Left brain, right brain, all of it: she'll talk risk models and yoga flows in the same breath, she knits, and she lives in Louisville with three English Cream Golden Retrievers who remain thoroughly unimpressed by artificial intelligence.
+        </p>
+        <p class="sec-body" style="margin-top:0.7rem;">
+          <a href="https://www.linkedin.com/in/whitney-heflin-9536292/" target="_blank" rel="noopener">Connect with Whitney on LinkedIn &rarr;</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICE + RESERVE ─────────────────────────────────── -->
+<section id="reserve">
+  <div class="wrap">
+    <p class="sec-label">Claim Your Spot</p>
+    <h2 class="sec-title">Get in early — at the introductory rate.</h2>
+    <p class="sec-body">Cohort 1 is where you start — priced for the people who move first.</p>
+
+    <div class="price-card">
+      <div class="price-tag">Cohort 1 &middot; Introductory Rate</div>
+      <div class="price-amount">$495</div>
+      <p class="price-note">Wed Aug 5 &amp; Thu Aug 6, 2026 &middot; 8 hours live &middot; seats capped</p>
+
+      <a href="https://book.stripe.com/5kQ9AV2Mw6bvgbC6fd14400" id="stripeBtn" class="btn">
+        Claim Your Spot
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW REGISTRATION WORKS + REFUND POLICY ─────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label">How This Works</p>
+    <h2 class="sec-title">What happens after you pay.</h2>
+    <div class="flow-steps">
+      <div class="flow-step"><div class="flow-num"></div><div>You pay $495 through Stripe's secure checkout. Your seat is confirmed the moment payment completes.</div></div>
+      <div class="flow-step"><div class="flow-num"></div><div>Within 24 hours, you'll receive a confirmation email with the meeting link, a simple setup checklist (if you're building along), and an invite to an optional pre-class tech-support session.</div></div>
+      <div class="flow-step"><div class="flow-num"></div><div>Show up Aug 5 &amp; 6, ready to build.</div></div>
+    </div>
+
+    <div class="disclosure-box">
+      <h3>Refund &amp; cancellation policy</h3>
+      <p>Cancel or change your registration <strong>14 or more calendar days</strong> before Session 1 (by <strong>July 22, 2026</strong>): no cash refund, but your payment converts to a credit toward a future class within 12 months.</p>
+      <p>Cancel or change <strong>less than 14 days</strong> before Session 1, or don't show up: full forfeit — no refund, no credit.</p>
+      <p>Free substitution (send a colleague in your place instead) is available any time with at least three days' notice, regardless of the window above.</p>
+      <p style="margin-top:0.6rem;">Full details are in the <a href="https://heflingroup.net/terms/" target="_blank" rel="noopener">Terms of Participation</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WAITLIST ────────────────────────────────────────── -->
+<section>
+  <div class="wrap" style="text-align:center;">
+    <p class="sec-label">Can't Make These Dates?</p>
+    <h2 class="sec-title">Get first word on the next cohort.</h2>
+    <p class="sec-body">Aug 5&ndash;6 not going to work? Get on the list &mdash; tell us the timeframe that would, and we'll let you know when the next cohort is scheduled. We open new cohorts where the interest is.</p>
+    <a href="https://forms.gle/kStX9iBk8pt6DFJi8" class="btn" style="margin-top:1.2rem;" target="_blank" rel="noopener">Waitlist for Future Cohorts</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ──────────────────────────────────────────── -->
+<footer class="site-footer">
+  <p>&copy; 2026 Heflin Group LLC &middot; Headquartered in Louisville, Kentucky</p>
+  <p>Questions? <a href="mailto:customerSvc@heflingroup.net">customerSvc@heflingroup.net</a></p>
+  <p><a href="https://heflingroup.net/">Home</a> &middot; <a href="https://heflingroup.net/terms/">Terms of Participation</a></p>
+  <p class="disclosure-line">This course provides educational content only and does not constitute tax, legal, or accounting advice. Active CPA (Virginia). Self-sponsored CPE — confirm acceptance with your own state board. Heflin Group LLC is not endorsed, approved, or registered by NASBA, the AICPA, or any state board of accountancy.</p>
+  <p class="disclosure-line">This course is taught and demonstrated using Claude Code, a product of Anthropic. Heflin Group LLC is independent and is not affiliated with, sponsored by, or endorsed by Anthropic.</p>
+</footer>
+
+<!-- Sticky claim banner — pinned CTA, always one tap away -->
+<div class="sticky-cta">
+  <div class="cta-group">
+    <span class="label">Cohort 1 &middot; Aug 5&ndash;6 &middot; $495</span>
+    <a href="https://book.stripe.com/5kQ9AV2Mw6bvgbC6fd14400" class="cta">Claim Your Spot</a>
+  </div>
+  <div class="cta-group">
+    <span class="wl-note">Can't make these dates?</span>
+    <a href="https://forms.gle/kStX9iBk8pt6DFJi8" class="cta cta-alt" target="_blank" rel="noopener">Waitlist for future cohorts</a>
+  </div>
+</div>
+
+<!-- Terms are agreed at Stripe checkout; no separate consent gate needed on this page. -->
+
+<!-- DRAFT — not deployed. No real Stripe link. Do not publish or wire
+     real payment capture until Whitney reviews and approves. -->
+
+</body>
+</html>
