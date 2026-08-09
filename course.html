@@ -4,14 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Building Your AI Digital Workforce — Heflin Group</title>
-<meta name="description" content="A two-day, hands-on course teaching you to build your own AI agents — no coding background required. Cohort 1: Aug 5-6, 2026. $495 introductory rate. Full CPE credit available for CPAs." />
+<meta name="description" content="A two-day, hands-on course teaching you to build your own AI agents — no coding background required. Cohort 2: Oct 14-15, 2026. $595 early-bird (before Sep 15), $795 after. Full CPE credit available for CPAs." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
-  /* Brand palette — matched to live heflingroup.net index.html, 2026-07-17 */
+  /* Brand palette — matched to live heflingroup.net course.html. Cohort 2 (October) page. */
+  /* Dates corrected 2026-08-07: Cohort 2 moved from Oct 21-22 to Oct 14-15 (Equip Exposition conflict); early-bird cutoff moved from Sep 21 to Sep 15. See decisions.md 2026-08-07. */
   :root {
     --copper: #B07D55;
     --charcoal: #3D3D3D;
@@ -20,6 +21,9 @@
     --walnut: #6B4C3B;
     --tbd-bg: #FFF6E5;
     --tbd-border: #C98A2C;
+    --royal: #1E3A8A;
+    --royal-deep: #172554;
+    --electric: #2563EB;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 18px; }
@@ -45,7 +49,8 @@
   .monogram-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
   .monogram { width: 56px; height: 56px; }
   .eyebrow { color: var(--walnut); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; font-weight: 500; margin-bottom: 0.75rem; }
-  .hero h1 { font-size: 2.3rem; line-height: 1.2; margin-bottom: 1rem; }
+  .hero h1 { font-size: 2.3rem; line-height: 1.2; margin-bottom: 0.6rem; }
+  .hero-dates { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5rem; color: var(--royal); line-height: 1.3; margin-bottom: 1rem; }
   .hero-sub { font-size: 1.05rem; max-width: 560px; margin: 0 auto 0.85rem; }
   .hero-aside { font-size: 0.85rem; color: var(--walnut); max-width: 520px; margin: 0 auto 1.5rem; }
   .btn {
@@ -54,24 +59,28 @@
     background: var(--copper); color: var(--cream); letter-spacing: 0.02em;
   }
   .btn:hover { background: var(--walnut); }
+  .btn-blue { background: var(--royal); padding: 0.95rem 2.9rem; font-size: 1.05rem; }
+  .btn-blue:hover { background: var(--royal-deep); }
+  .accent-divider { display: flex; justify-content: center; align-items: center; padding: 0.4rem 0; background: #FEFDFB; }
+  .accent-divider::before { content: ""; width: 64px; height: 3px; border-radius: 2px; background: var(--electric); }
   .btn:disabled, .btn.disabled {
     background: #C9B99A; color: var(--cream); cursor: not-allowed; pointer-events: none;
   }
 
   section { padding: 2.5rem 0; }
   /* Bold alternating sections — even sections go dark, with light text */
-  section:nth-of-type(even) { background: #3E2C23; color: #E7DCC9; }
-  section:nth-of-type(even) > .wrap > .sec-label { color: #D6A15E; }
-  section:nth-of-type(even) > .wrap > .sec-title,
-  section:nth-of-type(even) > .wrap > h2 { color: #FBF4E8; }
-  section:nth-of-type(even) > .wrap > .sec-body { color: #E7DCC9; }
-  section:nth-of-type(even) > .wrap > .sec-body strong { color: #FBF4E8; }
-  section:nth-of-type(even) > .wrap > .sec-body em,
-  section:nth-of-type(even) > .wrap > .sec-body a { color: #D6A15E; }
+  section.dark { background: #3E2C23; color: #E7DCC9; }
+  section.dark > .wrap > .sec-label { color: #D6A15E; }
+  section.dark > .wrap > .sec-title,
+  section.dark > .wrap > h2 { color: #FBF4E8; }
+  section.dark > .wrap > .sec-body { color: #E7DCC9; }
+  section.dark > .wrap > .sec-body strong { color: #FBF4E8; }
+  section.dark > .wrap > .sec-body em,
+  section.dark > .wrap > .sec-body a { color: #D6A15E; }
   /* keep text inside white cards dark even on dark sections */
-  section:nth-of-type(even) .instructor-card,
-  section:nth-of-type(even) .disclosure-box,
-  section:nth-of-type(even) .price-card { color: var(--charcoal); }
+  section.dark .instructor-card,
+  section.dark .disclosure-box,
+  section.dark .price-card { color: var(--charcoal); }
   .sec-label { color: var(--walnut); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.6rem; }
   .sec-title { font-size: 1.6rem; margin-bottom: 0.9rem; }
   .sec-body { font-size: 0.98rem; }
@@ -81,6 +90,11 @@
   ul.build-list li { padding: 0.6rem 0 0.6rem 1.6rem; position: relative; border-bottom: 1px solid var(--cream-deep); }
   ul.build-list li:last-child { border-bottom: none; }
   ul.build-list li::before { content: "\00b7"; position: absolute; left: 0; top: 0.5rem; color: var(--copper); font-size: 1.5rem; line-height: 1; }
+
+  .two-col { display: flex; gap: 1.75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+  .two-col > div { flex: 1 1 240px; }
+  .day-head { font-weight: 600; font-size: 1rem; color: #D6A15E; margin-bottom: 0.2rem; }
+  section.dark .build-list li strong { color: #D6A15E; }
 
   .instructor-card { background: #fff; border: 1px solid var(--cream-deep); border-radius: 4px; padding: 1.4rem; margin-top: 1rem; }
   .instructor-photo {
@@ -93,7 +107,13 @@
 
   .price-card { background: #fff; border: 1px solid var(--cream-deep); border-top: 4px solid var(--copper); border-radius: 3px; padding: 1.75rem; text-align: center; margin: 1rem 0; }
   .price-tag { text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.72rem; color: var(--walnut); font-weight: 600; }
-  .price-amount { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 3rem; margin: 0.4rem 0 0.2rem; }
+  .price-was { font-size: 1.05rem; text-decoration: line-through; opacity: 0.5; margin-top: 0.7rem; }
+  .price-amount { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 3rem; margin: 0.2rem 0 0.3rem; }
+  .price-save {
+    display: inline-block; background: var(--copper); color: var(--cream);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 2px; margin-bottom: 0.9rem;
+  }
   .price-note { font-size: 0.9rem; margin-bottom: 1.1rem; }
 
   .consent-row { display: flex; align-items: flex-start; gap: 0.6rem; max-width: 480px; margin: 1.1rem auto 1.3rem; text-align: left; font-size: 0.85rem; }
@@ -131,13 +151,14 @@
 
   @media (max-width: 480px) {
     .hero h1 { font-size: 1.85rem; }
+    .hero-dates { font-size: 1.2rem; }
     .price-amount { font-size: 2.4rem; }
   }
 
   /* Sticky claim banner — always-visible CTA that follows the scroll */
   .sticky-cta {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
-    background: #4A3529; color: var(--cream);
+    background: var(--royal); color: var(--cream);
     display: flex; align-items: center; justify-content: center; gap: 0.55rem 2.2rem; flex-wrap: wrap;
     padding: 0.6rem 1.25rem;
     box-shadow: 0 -2px 14px rgba(0,0,0,0.22);
@@ -182,58 +203,62 @@
     </div>
     <p class="eyebrow">A Live, Hands-On Course</p>
     <h1>Building Your AI Digital Workforce</h1>
-    <p class="hero-sub">
-      Stop chatting with AI. Build a system that works for <em>you</em> — one that already knows your life instead of one you re-explain yourself to every time. Two days, live, with an instructor. No coding background required.
+    <p class="hero-dates">October 14 &amp; 15, 2026<br>9:30&ndash;11:30 a.m. &amp; 1&ndash;3 p.m. ET each day</p>
+    <p class="hero-sub" style="font-weight:600;">
+      Stop chatting with AI. Build a system that works for <em>you</em>.
     </p>
-    <p class="hero-aside">
-      CPAs additionally earn 8.0 hours of self-sponsored CPE — a bonus on top of a course that stands on its own for anyone.
+    <p style="font-size:1.05rem; color:var(--charcoal); max-width:520px; margin:0 auto 0.35rem;">Two days, live online, with an instructor.</p>
+    <p style="font-size:1.05rem; color:var(--charcoal); max-width:520px; margin:0 auto;">No coding background required.</p>
+    <p style="font-size:1.05rem; color:var(--charcoal); margin:1.6rem auto 0.9rem; max-width:520px;">
+      Can't make every session? <strong>You won't miss a thing.</strong><br>
+      <strong><em>Every session is recorded. Transcript included.</em></strong>
     </p>
-    <a href="https://book.stripe.com/5kQ9AV2Mw6bvgbC6fd14400" class="btn">Claim Your Spot — $495</a>
+    <a href="https://buy.stripe.com/cNi00lgDmfM5gbC8nl14401" class="btn btn-blue">Reserve Your Seat — $595 Early Bird</a>
+    <p style="font-size:0.78rem; color:var(--walnut); margin-top:0.7rem;">
+      Register by Sep 15, 2026 for early-bird pricing &middot; $795 after
+    </p>
   </div>
 </header>
 
-<!-- ─── DIY OBJECTION (up-front value) ──────────────────── -->
-<section style="padding: 0.5rem 0 2rem;">
-  <div class="wrap" style="text-align:center;">
-    <p class="sec-body" style="font-size:1.12rem;">
-      Could you learn all this on your own? <em>Absolutely.</em> It would also take you hundreds of hours to reach the point you'll hit in two days.
-    </p>
-  </div>
-</section>
-
-<!-- ─── WHO IT'S FOR ────────────────────────────────────── -->
-<section>
+<!-- ─── WHO IT'S FOR & WHAT'S COVERED (merged) ──────────── -->
+<section class="dark">
   <div class="wrap">
-    <p class="sec-label">Who This Is For</p>
-    <h2 class="sec-title">Built for people, not programmers.</h2>
+    <p class="sec-label">Who It's For &middot; What's Covered</p>
+    <h2 class="sec-title">Built for people, not just programmers.</h2>
     <p class="sec-body">
-      Risk, compliance, operations, HR, sales, marketing, audit, finance. Students, parents, grandparents. This is for anyone who wants to put AI to work in their life — not just people who write code.
+      No prior AI experience, no programming background. If you can describe what you want in plain English, you can build it.
     </p>
-    <p class="sec-body">
-      <strong>No prior AI experience. No programming background. If you can describe what you want in plain English, you can build this.</strong>
+    <p class="sec-body" style="font-weight:600; margin-top:1.3rem;">
+      Two days, module by module &mdash; taught, demonstrated live, then built by you on your own Claude Code subscription (Pro or Max).
     </p>
-  </div>
-</section>
 
-<!-- ─── WHAT YOU'LL BUILD ───────────────────────────────── -->
-<section>
-  <div class="wrap">
-    <p class="sec-label">What You'll Build — Live, Over Two Days</p>
-    <h2 class="sec-title">Every concept taught, then shown live — then you build it yourself.</h2>
-    <p class="sec-body">
-      Choose your format: watch each concept get taught and demonstrated live, no laptop required — or build your own alongside as we go, which is highly encouraged, since that's where it actually clicks. Either way, here's what gets built over the two days:
+    <div class="two-col">
+      <div>
+        <p class="day-head">Day 1 &mdash; Build the assistant</p>
+        <ul class="build-list">
+          <li><strong>The reframe.</strong> Get your own machine live, and go from chatting with AI to a system that knows your world.</li>
+          <li><strong>Your boot file.</strong> The one file that turns a generic assistant into yours.</li>
+          <li><strong>Context &amp; memory.</strong> Teach it your real world, so it's right between sessions.</li>
+          <li><strong>The permission model.</strong> AI is probabilistic &mdash; this is how you make it deterministic where it counts, so you get the results you want and prevent the ones you don't.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="day-head">Day 2 &mdash; From assistant to workforce</p>
+        <ul class="build-list">
+          <li><strong>Your first skill.</strong> A reusable move for what you do every week.</li>
+          <li><strong>Your first agent.</strong> A working "Morning Brief," built live.</li>
+          <li><strong>Memory, maintenance &amp; orchestration.</strong> How a growing workforce stays in sync instead of drifting.</li>
+          <li><strong>Back it up.</strong> Automatic backups so you never lose everything you've built &mdash; plus a simple plan for what to build next.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="sec-body" style="margin-top:1.3rem;">
+      <strong>Building along?</strong> A laptop (Windows or Mac) with admin rights &mdash; bring a real task, sanitized first (no client, patient, or proprietary data; use sample data). <strong>Just watching?</strong> No setup &mdash; show up and follow along.
     </p>
-    <ul class="build-list">
-      <li>Your own personal "chief of staff" AI assistant, configured around your real life and work</li>
-      <li>A "Morning Brief" agent — run it on demand, plus the exact playbook to make it run itself, automatically, every morning</li>
-      <li>A reusable skill you can invoke on demand, for anything you do repeatedly</li>
-      <li>The underlying pattern beneath all three — so you can build the next one yourself, for any task, without an instructor</li>
-    </ul>
-    <p class="sec-body">
-      <strong>Building along?</strong> You'll need a laptop (Windows or Mac) with admin rights and your own Claude Code subscription — not included in the course fee. Whatever recurring task you bring, sanitize it of any confidential data first (client data, patient data, proprietary business data — whatever applies to your own work) and use sample or placeholder data for the hands-on exercises instead.
-    </p>
-    <p class="sec-body">
-      <strong>Just watching and learning?</strong> None of that setup is required — show up and follow along. <span style="color:var(--walnut); font-style:italic;">(Though, real talk — building along is more fun. Just saying.)</span>
+
+    <p class="sec-body" style="margin-top:1.3rem;">
+      By the end, you've built the two parts every AI worker runs on &mdash; an agent, and the skill it reaches for &mdash; and seen how a whole roster of them stays in sync instead of drifting. You leave with the templates. Then you keep building.
     </p>
   </div>
 </section>
@@ -242,15 +267,18 @@
 <section>
   <div class="wrap">
     <p class="sec-label">Format &amp; Dates</p>
-    <h2 class="sec-title">Two days, four live sessions.</h2>
+    <h2 class="sec-title">Two days, four live online sessions.</h2>
     <p class="sec-body">
-      Cohort 1 runs <strong>four two-hour live virtual sessions</strong> across two consecutive days — two each day on <strong>Wednesday, August 5</strong> and <strong>Thursday, August 6, 2026</strong> — <strong>9:30&ndash;11:30 a.m. and 1:00&ndash;3:00 p.m. each day</strong> — eight hours of instruction total. Seats for this cohort are capped for real, hands-on attention during the live labs.
+      Cohort 2 runs <strong>four two-hour live virtual sessions</strong> across two consecutive days — two each day on <strong>Wednesday, October 14</strong> and <strong>Thursday, October 15, 2026</strong> — <strong>9:30&ndash;11:30 a.m. and 1:00&ndash;3:00 p.m. ET each day</strong> — eight hours of instruction total. Seats for this cohort are capped for real, hands-on attention during the live sessions.
+    </p>
+    <p class="sec-body">
+      <strong>Optional lab sessions</strong> &mdash; extra hands-on lab time on both days, right before each main session: <strong>9:00&ndash;9:30 a.m.</strong> and <strong>12:30&ndash;1:00 p.m. ET</strong>. Completely optional and on top of the eight core hours &mdash; drop in for more build time, or skip them entirely.
     </p>
   </div>
 </section>
 
 <!-- ─── CPE ─────────────────────────────────────────────── -->
-<section>
+<section class="dark">
   <div class="wrap">
     <p class="sec-label">CPE Credit</p>
     <h2 class="sec-title">Up to 8.0 hours of CPE for CPAs — a bonus, not the whole point.</h2>
@@ -262,6 +290,8 @@
     </div>
   </div>
 </section>
+
+<div class="accent-divider" aria-hidden="true"></div>
 
 <!-- ─── MEET YOUR INSTRUCTOR ────────────────────────────── -->
 <section>
@@ -289,19 +319,23 @@
 </section>
 
 <!-- ─── PRICE + RESERVE ─────────────────────────────────── -->
-<section id="reserve">
+<section id="reserve" class="dark">
   <div class="wrap">
-    <p class="sec-label">Claim Your Spot</p>
-    <h2 class="sec-title">Get in early — at the introductory rate.</h2>
-    <p class="sec-body">Cohort 1 is where you start — priced for the people who move first.</p>
+    <p class="sec-label">Reserve Your Seat</p>
+    <h2 class="sec-title">Get in early — at the early-bird rate.</h2>
 
     <div class="price-card">
-      <div class="price-tag">Cohort 1 &middot; Introductory Rate</div>
-      <div class="price-amount">$495</div>
-      <p class="price-note">Wed Aug 5 &amp; Thu Aug 6, 2026 &middot; 9:30&ndash;11:30 a.m. &amp; 1&ndash;3 p.m. daily &middot; seats capped</p>
+      <div class="price-tag">Cohort 2 &middot; Early-Bird Rate</div>
+      <div class="price-was">$795 list price</div>
+      <div class="price-amount">$595</div>
+      <div class="price-save">Save $200</div>
+      <p class="price-note">
+        Register by <strong>September 15, 2026</strong> to lock this rate &mdash; $795 after.<br>
+        Wed Oct 14 &amp; Thu Oct 15, 2026 &middot; 9:30&ndash;11:30 a.m. &amp; 1&ndash;3 p.m. ET daily &middot; seats capped
+      </p>
 
-      <a href="https://book.stripe.com/5kQ9AV2Mw6bvgbC6fd14400" id="stripeBtn" class="btn">
-        Claim Your Spot
+      <a href="https://buy.stripe.com/cNi00lgDmfM5gbC8nl14401" id="stripeBtn" class="btn">
+        Reserve Your Seat
       </a>
     </div>
   </div>
@@ -313,9 +347,9 @@
     <p class="sec-label">How This Works</p>
     <h2 class="sec-title">What happens after you pay.</h2>
     <div class="flow-steps">
-      <div class="flow-step"><div class="flow-num"></div><div>You pay $495 through Stripe's secure checkout. Your seat is confirmed the moment payment completes.</div></div>
-      <div class="flow-step"><div class="flow-num"></div><div>Within 24 hours, you'll receive a confirmation email with the meeting link, a simple setup checklist (if you're building along), and an invite to an optional pre-class tech-support session.</div></div>
-      <div class="flow-step"><div class="flow-num"></div><div>Show up Aug 5 &amp; 6, ready to build.</div></div>
+      <div class="flow-step"><div class="flow-num"></div><div>You reserve your seat through Stripe's secure checkout &mdash; $595 if you register by September 15, 2026, $795 after. Your seat is confirmed the moment payment completes.</div></div>
+      <div class="flow-step"><div class="flow-num"></div><div>Expect to receive a confirmation email with the meeting link, a simple setup checklist (if you're building along), and an invite to an optional pre-class tech-support session.</div></div>
+      <div class="flow-step"><div class="flow-num"></div><div>Show up Oct 14 &amp; 15, ready to build.</div></div>
     </div>
 
     <div class="disclosure-box">
@@ -328,11 +362,11 @@
 </section>
 
 <!-- ─── WAITLIST ────────────────────────────────────────── -->
-<section>
+<section class="dark">
   <div class="wrap" style="text-align:center;">
     <p class="sec-label">Can't Make These Dates?</p>
     <h2 class="sec-title">Get first word on the next cohort.</h2>
-    <p class="sec-body">Aug 5&ndash;6 not going to work? Get on the list &mdash; tell us the timeframe that would, and we'll let you know when the next cohort is scheduled. We open new cohorts where the interest is.</p>
+    <p class="sec-body">Oct 14&ndash;15 not going to work? Get on the list &mdash; tell us the timeframe that would, and we'll let you know when the next cohort is scheduled. We open new cohorts where the interest is.</p>
     <a href="https://forms.gle/kStX9iBk8pt6DFJi8" class="btn" style="margin-top:1.2rem;" target="_blank" rel="noopener">Waitlist for Future Cohorts</a>
   </div>
 </section>
@@ -349,8 +383,8 @@
 <!-- Sticky claim banner — pinned CTA, always one tap away -->
 <div class="sticky-cta">
   <div class="cta-group">
-    <span class="label">Cohort 1 &middot; Aug 5&ndash;6 &middot; $495</span>
-    <a href="https://book.stripe.com/5kQ9AV2Mw6bvgbC6fd14400" class="cta">Claim Your Spot</a>
+    <span class="label">Cohort 2 &middot; Oct 14&ndash;15 &middot; $595 Early Bird</span>
+    <a href="https://buy.stripe.com/cNi00lgDmfM5gbC8nl14401" class="cta">Reserve Your Seat</a>
   </div>
   <div class="cta-group">
     <span class="wl-note">Can't make these dates?</span>
