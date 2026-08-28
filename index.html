@@ -352,6 +352,33 @@
         font-size: 1.4rem;
       }
     }
+  
+    .capabilities {
+      list-style: none;
+      max-width: 360px;
+      margin: 0 auto 1.125rem;
+      padding: 0;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 1rem;
+      color: #3D3D3D;
+      text-align: left;
+    }
+    .capabilities li {
+      position: relative;
+      padding-left: 1.1rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+    .capabilities li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #B07D55;
+    }
   </style>
 </head>
 <body>
@@ -404,13 +431,24 @@
       <h1 class="headline">Helping ambitious organizations put every&nbsp;dollar to&nbsp;work.</h1>
 
       <!-- Supporting copy — sourced from vetted persona artifacts -->
-      <p class="support">Think of me as your exit-strategy consultant — even if you never plan to exit.</p>
+      <p class="support">We work with small businesses and nonprofits that want to grow. The work starts with your numbers and how your days actually run, and ends with systems your team owns.</p>
 
       <div class="divider"></div>
 
-      <p class="support">Twenty years in enterprise risk, governance, and controls. Now I work with small to mid-sized businesses and healthcare organizations to find what's quietly holding back their value.</p>
+      <p class="form-heading">What we help with</p>
+      <ul class="capabilities">
+        <li>AI adoption strategy and training</li>
+        <li>Fractional CFO and COO support</li>
+        <li>Process automation</li>
+        <li>Margin and pricing analysis</li>
+        <li>Reporting and dashboards</li>
+        <li>Privacy, security and regulatory fit</li>
+        <li>Recoverability and operational resilience</li>
+      </ul>
 
-      <p class="support">I leverage emerging technologies to do more with less and move faster. And if something falls outside my lane, I'll find you the right person — I don't oversell what I can't deliver.</p>
+      <div class="divider"></div>
+
+      <p class="support">Heflin Group is led by Whitney Heflin, CPA, whose background is enterprise risk, internal audit, and corporate finance. That discipline sits behind every engagement, whether we&rsquo;re rebuilding a pricing model or standing up your first dashboard. We work alongside your CPA and your existing team.</p>
 
       <!-- Contact form -->
       <div class="form-section">
@@ -487,14 +525,14 @@
               id="message"
               name="message"
               required
-              placeholder="Tell me a bit about what you're working on or what you'd like to explore."
+              placeholder="Tell us a bit about what you're working on or what you'd like to explore."
             ></textarea>
           </div>
 
           <button type="submit" class="form-submit" id="submitBtn">Send</button>
 
           <div class="form-message success" id="successMsg" role="alert">
-            Got it — I'll be in touch soon.
+            Got it — we'll be in touch soon.
           </div>
           <div class="form-message error" id="errorMsg" role="alert">
             Something went wrong. Try emailing directly: whitney@heflingroup.net
