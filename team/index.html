@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<!--
+  WHAT THIS DOES: The "Meet Whitney's digital team" page: a chart of the AI agents Whitney built and runs. Selecting a
+    name shows that agent's purpose, model and accountabilities. Below the chart are all the summaries in full and the
+    scheduled jobs that keep the team running.
+  PARTS, TOP TO BOTTOM: site bar; page title and introduction; chart with its summary panel; the full list of summaries;
+    the jobs list; a pointer to the course; footer.
+  SENDS DATA TO: nowhere.
+  DEPENDS ON: Google Fonts, and one small script for the chart. Without the script the full list of summaries is shown instead.
+  SAME ACROSS PAGES: the site bar and footer pattern match the other pages. The chart, summaries and jobs are identical
+    to the team section of the course page.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meet Whitney's digital team — Heflin Group</title>
+<meta name="description" content="The AI agents Whitney Heflin built and runs: Cooper, Booker, Knox, eight directors and their sidekicks, and the jobs that keep them on schedule. As of October 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+
+  /* COLOURS AND FONTS. Copper #B07D55 is decoration, charcoal #3D3D3D is body text, cream #F5F0E8 is the page, deep navy #172554 is headings and structure. */
+  :root { --charcoal: #3D3D3D; --copper: #B07D55; --cream: #F5F0E8; --navy: #172554; --rule: #E1D9CB; --serif: 'Cormorant Garamond', Georgia, serif; }
+
+  /* PAGE BASICS: a clean slate, text styles, the focus ring, and the page frame. */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 18px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  body { background: #F5F0E8; color: #3D3D3D; font-family: 'IBM Plex Sans', sans-serif; font-weight: 400; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+  a { color: #172554; }
+  :focus-visible { outline: 3px solid #2563EB; outline-offset: 3px; }
+
+  /* PAGE FRAME, TITLES AND TEXT */
+  .page { flex: 1; width: 100%; max-width: 68.89rem; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+  .sheet { border-top: 4px solid #B07D55; padding: 2.5rem 0 0; }
+  .sec-title { font-family: var(--serif); font-weight: 600; font-size: 2.8rem; line-height: 1.12; color: #172554; margin-bottom: 1.1rem; }
+  .sec-body { font-size: 1.05rem; max-width: 40rem; }
+  .sec-body + .sec-body { margin-top: 0.8rem; }
+  .sub-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; line-height: 1.2; color: #172554; margin: 2.2rem 0 0.9rem; }
+  .pointer { margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid #C9B99A; }
+
+  /* DIGITAL TEAM CHART AND SUMMARIES. These rules are the same on the course page. */
+  .wf-wrap { max-width: 68.89rem; }
+  .wf-section .sec-title { max-width: 30ch; }
+  .wf-asof { margin-top: 0.5rem; font-size: 0.92rem; color: var(--navy); font-weight: 600; }
+  .wf-layout { display: grid; grid-template-columns: minmax(0, 1fr) 18.89rem; gap: 2rem; align-items: start; margin-top: 1.8rem; }
+  .wf-chart ul { list-style: none; }
+  .node { display: block; position: relative; text-decoration: none; color: var(--charcoal); background: #fff; border: 1px solid var(--rule); border-radius: 5px; padding: 0.7rem 0.8rem; min-height: 44px; transition: border-color 0.15s, box-shadow 0.15s; }
+  .node:hover { border-color: var(--copper); box-shadow: 0 2px 10px rgba(23,37,84,0.14); }
+  .node[aria-current="true"] { border-color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); background: var(--cream); }
+  .n-name { display: block; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; line-height: 1.1; color: var(--navy); }
+  .n-role { display: block; font-size: 0.82rem; line-height: 1.3; margin-top: 0.15rem; color: var(--charcoal); }
+  .n-model { display: inline-block; margin-top: 0.4rem; font-size: 0.75rem; font-weight: 600; color: var(--navy); border: 1px solid var(--rule); border-radius: 10px; padding: 0 0.5rem; }
+  .node.top { border-top: 4px solid var(--copper); }
+  .node.top .n-name { font-size: 1.5rem; }
+  .wf-top { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 0.9rem; align-items: start; position: relative; padding-bottom: 1.6rem; }
+  .wf-top::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 2px; height: 1.6rem; background: var(--copper); }
+  .wf-dirs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.1rem 0.8rem; }
+  .wf-dir { position: relative; padding-top: 0; }
+  .wf-dir::before { content: ""; position: absolute; top: -1rem; left: -0.4rem; right: -0.4rem; height: 2px; background: var(--copper); opacity: 0.6; }
+  .wf-dir:nth-child(4n+1)::before { left: 50%; }
+  .wf-dir:nth-child(4n)::before { right: 50%; }
+  .wf-dir::after { content: ""; position: absolute; top: -1rem; left: 50%; width: 2px; height: 1rem; background: var(--copper); opacity: 0.6; }
+  .wf-side { margin-top: 0.45rem; display: grid; gap: 0.35rem; }
+  .node.side { padding: 0.45rem 0.6rem; background: var(--cream); border-style: dashed; }
+  .node.side .n-name { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+  .node.side .n-model { display: none; }
+  .wf-panel { position: sticky; top: calc(var(--bar-h) + 1rem); background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--navy); border-radius: 5px; padding: 1.3rem 1.4rem; box-shadow: 0 8px 22px rgba(23,37,84,0.10); }
+  .sum-name { font-family: var(--serif); font-weight: 600; font-size: 1.7rem; line-height: 1.1; color: var(--navy); margin-bottom: 0.8rem; }
+  .sum-name span { display: block; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--navy); margin-top: 0.2rem; }
+  .sum dt { font-weight: 600; font-size: 0.85rem; color: var(--navy); margin-top: 0.8rem; }
+  .sum dd { font-size: 0.98rem; }
+  .sum ul { list-style: none; }
+  .sum li { padding: 0.3rem 0 0.3rem 1.1rem; position: relative; font-size: 0.95rem; }
+  .sum li::before { content: ""; position: absolute; left: 0; top: 0.85rem; width: 6px; height: 6px; background: var(--copper); border-radius: 50%; }
+  .wf-all { margin-top: 2.2rem; }
+  .wf-all .sum { background: #fff; border: 1px solid var(--rule); border-radius: 5px; padding: 1.1rem 1.3rem; margin-top: 0.9rem; }
+  .wf-all .sum:target { border-color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); }
+  .js .wf-all { display: none; }
+  .js .wf-panel[hidden] { display: none; }
+  .wf-jobs-title { margin-top: 3.2rem; }
+  .jobs { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 1.4rem; }
+  .jobs li { background: #fff; border: 1px solid var(--rule); border-radius: 5px; padding: 1.1rem 1.2rem; border-top: 4px solid var(--copper); }
+  .jobs .when { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+  .jobs h3 { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; line-height: 1.15; color: var(--navy); margin: 0.2rem 0 0.4rem; }
+  .jobs li p:last-child { font-size: 0.95rem; }
+  @media (max-width: 1360px) {
+    .wf-layout { grid-template-columns: minmax(0, 1fr) 17.78rem; }
+    .wf-dirs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .wf-dir:nth-child(4n+1)::before, .wf-dir:nth-child(4n)::before { left: -0.4rem; right: -0.4rem; }
+    .wf-dir:nth-child(2n+1)::before { left: 50%; }
+    .wf-dir:nth-child(2n)::before { right: 50%; left: -0.4rem; }
+    .jobs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 1020px) {
+    .wf-layout { grid-template-columns: 1fr; }
+    .wf-panel { position: static; margin-top: 0.6rem; }
+    .wf-top { grid-template-columns: 1fr; padding-bottom: 0; }
+    .wf-top::after, .wf-dir::before, .wf-dir::after { display: none; }
+    .wf-top .wf-booker { order: 2; }
+    .wf-top .wf-knox { order: 3; }
+    .wf-top .wf-cooper { order: 1; }
+    .wf-top, .wf-dirs { gap: 0.7rem; }
+    .wf-dirs { grid-template-columns: 1fr; margin-top: 0.9rem; }
+    .wf-side { display: flex; flex-wrap: wrap; }
+    .node.side { min-height: 44px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+    .jobs { grid-template-columns: 1fr; }
+  }
+
+  /* Chart extras: the skip link, the arrows on names, and a height limit for the summary panel. */
+  .wf-skip { margin-top: 0.3rem; }
+  .wf-skip a { display: inline-flex; align-items: center; min-height: 44px; }
+  .node:not(.side)::after { content: ""; position: absolute; right: 0.9rem; top: 1.1rem; width: 8px; height: 8px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(-45deg); opacity: 0.7; }
+  .node.side { position: relative; padding-right: 1.6rem; }
+  .node.side::after { content: ""; position: absolute; right: 0.6rem; top: 50%; width: 6px; height: 6px; margin-top: -4px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(-45deg); opacity: 0.7; }
+  .node.side .n-role { display: block; font-size: 0.78rem; font-weight: 400; margin-top: 0.1rem; }
+  .node[aria-current="true"]::after { transform: rotate(45deg); }
+  .wf-panel { max-height: calc(100vh - var(--bar-h) - 2rem); overflow: auto; }
+  .wf-side-title { margin-top: 0.55rem; font-size: 0.78rem; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; }
+  .wf-side-title + .wf-side { margin-top: 0.25rem; }
+  @media (max-width: 720px) { html { font-size: 17px; } .page { padding: 1.5rem 1.25rem 2.5rem; } .sec-title { font-size: 2.1rem; } }
+
+  /* SITE BAR. The same bar is on all four pages. On a wide screen the links run across the bar; at 1100px and narrower
+     they fold into the Menu button (a native <details> element, so it works without a script). */
+  :root {
+    --gh: 60px;      /* height of the site bar */
+    --sub-h: 0px;    /* this page has no second bar */
+    --bar-h: calc(var(--gh) + var(--sub-h));   /* total height pinned to the top; keeps anchors and sticky panels clear of it */
+  }
+  html { scroll-padding-top: calc(var(--bar-h) + 12px); }
+  .site-header { position: sticky; top: 0; z-index: 300; background: #fff; }
+  .gbar { position: relative; height: var(--gh); border-bottom: 1px solid #E1D9CB; background: #fff; }
+  .gbar-in { max-width: 73.33rem; height: 100%; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .gbrand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #3D3D3D; min-height: 44px; flex-shrink: 0; }
+  .gbrand svg { width: 36px; height: 36px; flex-shrink: 0; }
+  .gbrand span { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+  .glinks { list-style: none; display: flex; align-items: stretch; height: 100%; margin-left: 0.8rem; }
+  .glinks a { display: flex; align-items: center; height: 100%; padding: 0 0.75rem; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.92rem; font-weight: 500; color: #172554; text-decoration: none; border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+  .glinks a:hover { background: #F5F0E8; }
+  .glinks a[aria-current="page"] { font-weight: 600; border-bottom-color: #B07D55; }
+  .glinks .gcontact a { height: 44px; margin: auto 0 auto 0.4rem; padding: 0 1rem; border: 1.5px solid #172554; border-radius: 4px; }
+  .gright { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; }
+  .gmenu { display: none; }
+  .gmenu > summary { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 0.9rem; border: 1px solid #172554; border-radius: 4px; color: #172554; font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; list-style: none; }
+  .gmenu > summary::-webkit-details-marker { display: none; }
+  .gmenu > summary::after { content: ""; width: 8px; height: 8px; margin: -3px 0 0 0.6rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+  .gmenu[open] > summary { background: #172554; color: #fff; }
+  .gmenu[open] > summary::after { transform: rotate(-135deg); margin-top: 3px; }
+  .gmenu-panel { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid #E1D9CB; box-shadow: 0 12px 24px rgba(23,37,84,0.18); padding: 0.4rem 1.5rem 1rem; max-height: calc(100vh - var(--gh) - 4.4rem); overflow: auto; overscroll-behavior: contain; font-family: 'IBM Plex Sans', sans-serif; }
+  .gmenu-panel ul { list-style: none; }
+  .gmenu-panel a { display: flex; align-items: center; min-height: 48px; font-size: 1.02rem; font-weight: 500; color: #172554; text-decoration: none; border-bottom: 1px solid #E1D9CB; }
+  .gmenu-panel a[aria-current="page"] { font-weight: 600; box-shadow: inset 4px 0 0 #B07D55; padding-left: 0.9rem; }
+  .gmenu-panel li:last-child a { border-bottom: none; }
+  @media (max-width: 1100px) { .glinks-wrap { display: none; } .gmenu { display: block; } }
+  @media (max-width: 720px) {
+    :root { --gh: 56px; }
+    .gbar-in { padding: 0 0.9rem; gap: 0.5rem; }
+    .gbrand { gap: 0.4rem; }
+    .gbrand svg { width: 30px; height: 30px; }
+    .gbrand span { font-size: 0.95rem; }
+    .gmenu > summary { padding: 0 0.65rem; font-size: 0.9rem; }
+    .gmenu-panel { padding: 0.3rem 1.1rem 0.9rem; }
+  }
+  @media (max-width: 440px) { .gbrand { min-width: 44px; justify-content: center; } .gbrand span { display: none; } .gbar-in { padding: 0 0.8rem; } .gmenu > summary { padding: 0 0.6rem; } }
+
+  /* SKIP LINK: hidden until it has keyboard focus. */
+  .skip { position: absolute; left: 0.5rem; top: -4rem; z-index: 999; background: #fff; color: #172554; padding: 0.7rem 1rem; border-radius: 3px; font-weight: 600; }
+  .skip:focus { top: 0.5rem; }
+  main:focus { outline: none; }
+
+  /* FOOTER. The same on all four pages. */
+  .site-footer { text-align: center; padding: 2.2rem 1.5rem 2.4rem; font-size: 0.85rem; color: #172554; border-top: 1px solid #E1D9CB; }
+  .site-footer p { margin: 0.35rem auto; }
+  .site-footer a { color: #172554; display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.3rem; }
+  .disclosure-line { font-size: 0.8rem; max-width: 33.33rem; margin: 0.6rem auto 0; }
+
+  /* VERY WIDE SCREENS. Text and layout widths are set in rem, so raising the root size here scales the whole page
+     and it fills a large monitor the way browser zoom would. */
+  @media (min-width: 2200px) { html { font-size: 23px; } }
+  @media (min-width: 3000px) { html { font-size: 29px; } }
+</style>
+</head>
+<body>
+<script>/* Tells the stylesheet that scripts are running, so the full list of summaries can give way to the chart panel. */ document.documentElement.className += " js";</script>
+<!-- Skip link: the first stop for a keyboard user. It is hidden until it has focus, then jumps past the site bar to the content. -->
+<a class="skip" href="#team">Skip to the main content</a>
+<!-- SITE BAR. The same on all four pages. Wide screens show the links across the bar; narrower screens fold them into the Menu button. -->
+<header class="site-header">
+  <div class="gbar"><div class="gbar-in">
+    <a class="gbrand" href="/" aria-label="Heflin Group, home"><svg viewBox="0 0 72 72" fill="none" aria-hidden="true" focusable="false"><polygon points="36,4 65,20 65,52 36,68 7,52 7,20" fill="none" stroke="#B07D55" stroke-width="2.5"/><polygon points="36,7.5 62,22.25 62,49.75 36,64.5 10,49.75 10,22.25" fill="none" stroke="#F5F0E8" stroke-width="2"/><text x="36" y="43" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" letter-spacing="2" fill="#172554">HG</text></svg><span>Heflin Group</span></a>
+    <nav class="glinks-wrap" aria-label="Site"><ul class="glinks"><li><a href="/">Home</a></li><li><a href="/#about">About Whitney</a></li><li><a href="/team/" aria-current="page">Digital team</a></li><li><a href="/course.html">The course</a></li><li class="gcontact"><a href="/#contact">Contact</a></li></ul></nav>
+    <div class="gright">
+      <details class="gmenu" id="gmenu"><summary aria-label="Menu: pages and sections">Menu</summary>
+        <nav class="gmenu-panel" aria-label="Site menu"><ul class="gmenu-global"><li><a href="/">Home</a></li><li><a href="/#about">About Whitney</a></li><li><a href="/team/" aria-current="page">Digital team</a></li><li><a href="/course.html">The course</a></li><li class="gcontact"><a href="/#contact">Contact</a></li></ul></nav>
+      </details>
+    </div>
+  </div></div>
+</header>
+
+<!-- THE PAGE. The chart, summaries and jobs below are the same ones used in the team section of the course page. -->
+<main class="page" id="team" tabindex="-1">
+  <div class="sheet wf-section">
+    <div class="wf-wrap">
+    <h1 class="sec-title" id="wf-title">Meet Whitney's digital team</h1>
+    <p class="sec-body">Cooper is Whitney's chief of staff. Cooper works with Booker, Knox and eight directors. A director can have sidekicks: smaller agents that each do one narrow job for that director. Together they are the agentic workforce Whitney built and runs.</p>
+    <p class="sec-body">Select any name to see its purpose, the model it runs on and what it is accountable for.</p>
+    <p class="wf-asof">As of October 2026. Models change. Opus, Sonnet and Haiku are families of AI models from Anthropic.</p>
+    <p class="wf-skip"><a href="#wf-jobs">Skip to the jobs</a></p>
+
+    <div class="wf-layout">
+      <nav class="wf-chart" aria-label="The workforce">
+        <ul class="wf-top"><li class="wf-booker"><a class="node top" href="#s-booker" data-sum="booker" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Booker</span><span class="n-role">Memory curator</span><span class="n-model">Opus</span></a></li><li class="wf-cooper"><a class="node top" href="#s-cooper" data-sum="cooper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Cooper</span><span class="n-role">Chief of staff</span><span class="n-model">Opus</span></a></li><li class="wf-knox"><a class="node top" href="#s-knox" data-sum="knox" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Knox</span><span class="n-role">Challenger</span><span class="n-model">Opus</span></a></li></ul>
+        <ul class="wf-dirs"><li class="wf-dir"><a class="node dir" href="#s-alice" data-sum="alice" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Alice</span><span class="n-role">Sales, business development and clients</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Alice"><li><a class="node side" href="#s-numbers-to-decisions" data-sum="numbers-to-decisions" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">numbers-to-decisions</span><span class="n-role">Sales data to decisions</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-jasper" data-sum="jasper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Jasper</span><span class="n-role">Marketing and market intelligence</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Jasper"><li><a class="node side" href="#s-brand-author" data-sum="brand-author" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">brand-author</span><span class="n-role">Brand standards</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-linkedin-post-review" data-sum="linkedin-post-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">linkedin-post-review</span><span class="n-role">Post reviewer</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-institutional-problem-scout" data-sum="institutional-problem-scout" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">institutional-problem-scout</span><span class="n-role">Problem scout</span><span class="n-model">Sonnet</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-carlisle" data-sum="carlisle" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Carlisle</span><span class="n-role">Business administration</span><span class="n-model">Opus</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Carlisle"><li><a class="node side" href="#s-annual-filing-reminder" data-sum="annual-filing-reminder" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">annual-filing-reminder</span><span class="n-role">Filing reminders</span><span class="n-model">Haiku</span></a></li><li><a class="node side" href="#s-imprint" data-sum="imprint" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">imprint</span><span class="n-role">Print shop and filing clerk</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-charlie" data-sum="charlie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Charlie</span><span class="n-role">Finance</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-edward" data-sum="edward" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Edward</span><span class="n-role">Product</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Edward"><li><a class="node side" href="#s-security-weakness-evaluator" data-sum="security-weakness-evaluator" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">security-weakness-evaluator</span><span class="n-role">Security review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-ux-design-review" data-sum="ux-design-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ux-design-review</span><span class="n-role">Usability review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-simplification-auditor" data-sum="simplification-auditor" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">simplification-auditor</span><span class="n-role">Simplification review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-ship-gate-reviewer" data-sum="ship-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ship-gate-reviewer</span><span class="n-role">Pre-delivery review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-code-gate-reviewer" data-sum="code-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">code-gate-reviewer</span><span class="n-role">Code review</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-emmett" data-sum="emmett" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Emmett</span><span class="n-role">Operations</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Emmett"><li><a class="node side" href="#s-vault-ingest" data-sum="vault-ingest" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">vault-ingest</span><span class="n-role">Knowledge-vault intake</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-esme" data-sum="esme" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Esme</span><span class="n-role">Personal life</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-rosalie" data-sum="rosalie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Rosalie</span><span class="n-role">Health</span><span class="n-model">Sonnet</span></a></li></ul>
+      </nav>
+      <aside class="wf-panel sum" id="wfPanel" aria-live="polite" aria-label="Summary of the selected agent" hidden></aside>
+    </div>
+
+    <div class="wf-all" id="wfAll">
+      <h2 class="sub-title">All summaries</h2>
+<article class="sum" id="s-cooper"><h3 class="sum-name">Cooper <span>Chief of staff</span></h3><dl><dt>Purpose</dt><dd>Sends each request to the right director and brings the answers back together.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Routes work to the right director.</li><li>Pulls the directors' answers into one reply.</li><li>Sends important finished work to Knox for a challenge before Whitney sees it.</li><li>Keeps the week's priorities current.</li></ul></dd></dl></article>
+<article class="sum" id="s-booker"><h3 class="sum-name">Booker <span>Memory curator</span></h3><dl><dt>Purpose</dt><dd>Keeps the workforce's shared memory: decisions, lessons, preferences and patterns.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Files what directors flag as worth remembering.</li><li>Notes when other files need updating to match.</li><li>Informs. Whitney and Cooper decide.</li></ul></dd></dl></article>
+<article class="sum" id="s-knox"><h3 class="sum-name">Knox <span>Challenger</span></h3><dl><dt>Purpose</dt><dd>Reads finished work and asks where it could be better.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>One pass on each important deliverable.</li><li>Up to 200 words and one to three questions.</li><li>Asks questions. Whitney decides what happens next.</li><li>Says so plainly when the work is solid.</li></ul></dd></dl></article>
+<article class="sum" id="s-alice"><h3 class="sum-name">Alice <span>Sales, business development and clients</span></h3><dl><dt>Purpose</dt><dd>Takes a prospect from a serious conversation to signed work, runs active client engagements, and keeps what each one teaches as reusable know-how.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Pipeline from the middle of the funnel to close.</li><li>Delivery on active client engagements.</li><li>Capturing reusable lessons from each engagement.</li><li>Works with Carlisle on paperwork and Charlie on pricing.</li></ul></dd></dl></article>
+<article class="sum" id="s-numbers-to-decisions"><h3 class="sum-name">numbers-to-decisions <span>Sales data to decisions</span></h3><dl><dt>Purpose</dt><dd>Turns sales and inventory numbers into the decisions an owner faces in the next 90 days.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>A workbook with live formulas.</li><li>A short decision memo.</li></ul></dd></dl></article>
+<article class="sum" id="s-jasper"><h3 class="sum-name">Jasper <span>Marketing and market intelligence</span></h3><dl><dt>Purpose</dt><dd>Owns the top of the funnel: awareness, positioning, market research and inbound interest.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Positioning and public copy drafts.</li><li>Market and industry research.</li><li>Inbound interest.</li><li>Hands qualified prospects to Alice.</li></ul></dd></dl></article>
+<article class="sum" id="s-brand-author"><h3 class="sum-name">brand-author <span>Brand standards</span></h3><dl><dt>Purpose</dt><dd>Writes the brand standards and the briefs designers work from.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Brand standards sections.</li><li>Designer briefs.</li><li>Mockups of brand options.</li></ul></dd></dl></article>
+<article class="sum" id="s-linkedin-post-review"><h3 class="sum-name">linkedin-post-review <span>Post reviewer</span></h3><dl><dt>Purpose</dt><dd>Reviews LinkedIn and social posts before they go out.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Hook and voice.</li><li>Brand fit.</li><li>Reach.</li></ul></dd></dl></article>
+<article class="sum" id="s-institutional-problem-scout"><h3 class="sum-name">institutional-problem-scout <span>Problem scout</span></h3><dl><dt>Purpose</dt><dd>Looks for named, funded problems at institutions that Heflin Group could help with.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Finds problems that are named, live and funded.</li><li>Passes the strongest ones on for deeper research.</li></ul></dd></dl></article>
+<article class="sum" id="s-carlisle"><h3 class="sum-name">Carlisle <span>Business administration</span></h3><dl><dt>Purpose</dt><dd>Handles the back-office paperwork for Heflin Group: contracts, NDAs and filings.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Contract and NDA templates.</li><li>Business registrations and filings.</li><li>Reminders ahead of deadlines.</li></ul></dd></dl></article>
+<article class="sum" id="s-annual-filing-reminder"><h3 class="sum-name">annual-filing-reminder <span>Filing reminders</span></h3><dl><dt>Purpose</dt><dd>Reminds Whitney of the LLC's annual filings ahead of each deadline.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Says what is due and what to do.</li><li>Speaks up only when a filing is due.</li></ul></dd></dl></article>
+<article class="sum" id="s-imprint"><h3 class="sum-name">imprint <span>Print shop and filing clerk</span></h3><dl><dt>Purpose</dt><dd>Turns finished content into branded Word, Excel, PowerPoint and PDF files. Any director can use it.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Applies the brand to the file.</li><li>Names and files each document the same way.</li><li>Runs a check on each file before release.</li></ul></dd></dl></article>
+<article class="sum" id="s-charlie"><h3 class="sum-name">Charlie <span>Finance</span></h3><dl><dt>Purpose</dt><dd>Runs Heflin Group's financial planning and review.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>A forecast with three scenarios.</li><li>A monthly financial review.</li><li>Financial sections for business plans.</li><li>A KPI dashboard and quarterly variance notes.</li></ul></dd></dl></article>
+<article class="sum" id="s-edward"><h3 class="sum-name">Edward <span>Product</span></h3><dl><dt>Purpose</dt><dd>Builds Heflin Group's own product and runs the quality checks before anything ships.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>The product roadmap and fixes.</li><li>Security, usability and simplicity reviews before release.</li><li>Checks work against real conditions before it goes to a client.</li><li>Works with Carlisle on legal prerequisites.</li></ul></dd></dl></article>
+<article class="sum" id="s-security-weakness-evaluator"><h3 class="sum-name">security-weakness-evaluator <span>Security review</span></h3><dl><dt>Purpose</dt><dd>Reviews a build for security weaknesses.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Ranks what it finds by severity.</li><li>Suggests a specific fix for each one.</li></ul></dd></dl></article>
+<article class="sum" id="s-ux-design-review"><h3 class="sum-name">ux-design-review <span>Usability review</span></h3><dl><dt>Purpose</dt><dd>Reviews anything a real person will use, from the user's side.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Clarity and friction.</li><li>Trust and accessibility.</li><li>Suggests specific improvements.</li></ul></dd></dl></article>
+<article class="sum" id="s-simplification-auditor"><h3 class="sum-name">simplification-auditor <span>Simplification review</span></h3><dl><dt>Purpose</dt><dd>Walks a finished build and asks what can be removed.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Finds extras and repeated parts.</li><li>Recommends cuts.</li></ul></dd></dl></article>
+<article class="sum" id="s-ship-gate-reviewer"><h3 class="sum-name">ship-gate-reviewer <span>Pre-delivery review</span></h3><dl><dt>Purpose</dt><dd>Tries to break client-bound work against real conditions before it ships.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Reports the problems it finds.</li><li>Whitney decides what to do.</li></ul></dd></dl></article>
+<article class="sum" id="s-code-gate-reviewer"><h3 class="sum-name">code-gate-reviewer <span>Code review</span></h3><dl><dt>Purpose</dt><dd>Reviews code against a checklist Whitney approved.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Backs each check with evidence.</li></ul></dd></dl></article>
+<article class="sum" id="s-emmett"><h3 class="sum-name">Emmett <span>Operations</span></h3><dl><dt>Purpose</dt><dd>Runs the infrastructure that keeps the workforce on schedule and keeps track of learning goals.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>The daily briefings.</li><li>Calendar housekeeping.</li><li>The time log.</li><li>The nightly crew check.</li><li>Cadences for learning goals.</li></ul></dd></dl></article>
+<article class="sum" id="s-vault-ingest"><h3 class="sum-name">vault-ingest <span>Knowledge-vault intake</span></h3><dl><dt>Purpose</dt><dd>Files new reference material into the knowledge vault.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Records where each source came from.</li><li>Notes where it overlaps what is already filed.</li></ul></dd></dl></article>
+<article class="sum" id="s-esme"><h3 class="sum-name">Esme <span>Personal life</span></h3><dl><dt>Purpose</dt><dd>Looks after the part of life outside work: family, friends, home and community.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Keeps up with the people and projects outside work.</li><li>Drafts messages for Whitney to review.</li><li>Flags calendar conflicts with Cooper.</li></ul></dd></dl></article>
+<article class="sum" id="s-rosalie"><h3 class="sum-name">Rosalie <span>Health</span></h3><dl><dt>Purpose</dt><dd>Protects time for workouts, sleep, meals and play.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Keeps those blocks on the calendar.</li><li>Is asked before work is routed that would use protected time.</li><li>Says no first. Cooper then asks Whitney whether to override.</li></ul></dd></dl></article>
+    </div>
+
+    <h2 class="sub-title wf-jobs-title" id="wf-jobs">The jobs that keep it running</h2>
+    <p class="sec-body">These run on a schedule. The agents draft, route and check, and Whitney makes the final call.</p>
+    <ul class="jobs"><li><p class="when">Every night</p><h3>Memory consolidation</h3><p>Runs as Booker. Keeps the workforce's shared memory in order.</p></li><li><p class="when">Every night</p><h3>Crew check</h3><p>Notes which agents have been active.</p></li><li><p class="when">Every morning</p><h3>Morning briefings</h3><p>Whitney gets a briefing on the day ahead, a status note for each active project and a back-office list.</p></li><li><p class="when">Every morning</p><h3>Briefing check</h3><p>Confirms the morning briefing went out.</p></li><li><p class="when">Every day</p><h3>Email triage</h3><p>Sorts open loops into what Whitney owes and what she is waiting on.</p></li><li><p class="when">Regularly</p><h3>Backup</h3><p>The workforce's files are backed up regularly.</p></li><li><p class="when">Sunday evenings</p><h3>Weekly reset</h3><p>Runs as Cooper. Tidies the week's lists.</p></li><li><p class="when">Every day</p><h3>Filing reminder</h3><p>Runs the annual-filing-reminder. It speaks up only when a filing is due.</p></li></ul>
+
+    <p class="sec-body pointer">Want to build a small version of this yourself? The two-day live course, <a href="/course.html">Build Your AI Control Room</a>, is where you build one chief of staff and one reviewer.</p>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER. The same pattern on all four pages: copyright line, contact address, links to Home and the Terms. -->
+<footer class="site-footer">
+  <p>&copy; 2026 Heflin Group LLC &middot; Headquartered in Louisville, Kentucky</p>
+  <p>Questions? <a href="mailto:customerSvc@heflingroup.net">customerSvc@heflingroup.net</a></p>
+  <p><a href="/">Heflin Group home</a> &middot; <a href="/terms/">Terms of Participation</a></p>
+  <p class="disclosure-line">Heflin Group LLC is independent and is not affiliated with, sponsored by, or endorsed by Anthropic.</p>
+</footer>
+
+<script>
+/* DIGITAL TEAM CHART. Selecting a name shows that agent's summary in one panel. On a wide screen the panel
+   sits beside the chart; on a narrow screen it opens directly under the name that was selected.
+   If anything here fails, the full list of summaries stays visible under the chart, so nothing is lost. */
+(function () {
+  try {
+    var nameLinks = document.querySelectorAll('.node[data-sum]');
+    var panel = document.getElementById('wfPanel');
+    if (!nameLinks.length || !panel) return;
+    var narrowScreen = window.matchMedia('(max-width: 1020px)');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var selectedId = null;
+
+    // Mark one name as selected and every other name as not. aria-expanded is kept in step so screen readers hear the state.
+    function markSelected(id) {
+      for (var i = 0; i < nameLinks.length; i++) {
+        if (nameLinks[i].getAttribute('data-sum') === id) {
+          nameLinks[i].setAttribute('aria-current', 'true');
+          nameLinks[i].setAttribute('aria-expanded', 'true');
+        } else {
+          nameLinks[i].removeAttribute('aria-current');
+          nameLinks[i].setAttribute('aria-expanded', 'false');
+        }
+      }
+    }
+
+    function showSummary(id, chosenByUser) {
+      var summary = document.getElementById('s-' + id);
+      if (!summary) return;
+      markSelected(id);
+      // The panel shows a copy of the summary. The agent's name in the copy is a plain paragraph, not a heading,
+      // so a panel that comes and goes does not disturb the page's heading order.
+      panel.innerHTML = summary.innerHTML.replace('<h3 ', '<p ').replace('</h3>', '</p>');
+      panel.hidden = false;
+      selectedId = id;
+      if (narrowScreen.matches) {
+        // Narrow screen: move the panel to sit right under the chosen name.
+        var chosenName = document.querySelector('.node[data-sum="' + id + '"]');
+        chosenName.parentNode.insertBefore(panel, chosenName.nextSibling);
+        if (chosenByUser) {
+          // Scroll only if the panel landed out of comfortable view.
+          var panelTop = panel.getBoundingClientRect().top;
+          if (panelTop < 70 || panelTop > window.innerHeight * 0.6) {
+            window.scrollBy({ top: panelTop - 90, behavior: reduceMotion ? 'auto' : 'smooth' });
+          }
+        }
+      }
+    }
+
+    // Put the panel where it belongs for the current screen width. On a wide screen it always shows an agent (Cooper first).
+    function placePanel() {
+      var wideLayout = document.querySelector('.wf-layout');
+      if (!narrowScreen.matches && panel.parentNode !== wideLayout) wideLayout.appendChild(panel);
+      if (!selectedId && !narrowScreen.matches) showSummary('cooper', false);
+      if (narrowScreen.matches && selectedId) showSummary(selectedId, false);
+    }
+
+    for (var i = 0; i < nameLinks.length; i++) {
+      nameLinks[i].addEventListener('click', function (event) {
+        event.preventDefault();
+        var id = this.getAttribute('data-sum');
+        // Narrow screen: choosing the open name again closes its panel.
+        if (narrowScreen.matches && selectedId === id && !panel.hidden) {
+          panel.hidden = true;
+          this.removeAttribute('aria-current');
+          this.setAttribute('aria-expanded', 'false');
+          selectedId = null;
+          return;
+        }
+        showSummary(id, true);
+      });
+    }
+    if (narrowScreen.addEventListener) narrowScreen.addEventListener('change', placePanel);
+    else narrowScreen.addListener(placePanel);
+    placePanel();
+  } catch (error) {
+    // Fallback: show the full list of summaries and hide the panel.
+    var fullList = document.getElementById('wfAll');
+    if (fullList) fullList.style.display = 'block';
+    var hiddenPanel = document.getElementById('wfPanel');
+    if (hiddenPanel) hiddenPanel.style.display = 'none';
+  }
+})();
+</script>
+
+<script>
+/* PHONE MENU. The Menu button is a native <details> element, so it opens and closes with no script at all.
+   This script adds the small courtesies people expect: the menu closes when a link is chosen, when the page
+   is scrolled away from where it opened, when keyboard focus leaves it, and when Escape is pressed.
+   If this script fails to run, the menu still opens and closes by itself. */
+(function () {
+  try {
+    var menu = document.getElementById('gmenu');
+    if (!menu) return;
+    var scrollPositionWhenOpened = 0;
+
+    function closeMenu() { menu.removeAttribute('open'); }
+
+    menu.addEventListener('toggle', function () { scrollPositionWhenOpened = window.pageYOffset; });
+
+    // Close after a real scroll (40px or more) so a tiny nudge does not shut it.
+    window.addEventListener('scroll', function () {
+      var scrolledAway = Math.abs(window.pageYOffset - scrollPositionWhenOpened) > 40;
+      if (menu.hasAttribute('open') && scrolledAway) closeMenu();
+    }, { passive: true });
+
+    menu.addEventListener('click', function (event) {
+      if (event.target.closest && event.target.closest('a')) closeMenu();
+    });
+
+    // Close when keyboard focus moves to something outside the menu.
+    menu.addEventListener('focusout', function (event) {
+      var focusWentElsewhere = event.relatedTarget && !menu.contains(event.relatedTarget);
+      if (menu.hasAttribute('open') && focusWentElsewhere) closeMenu();
+    });
+
+    // Escape closes the menu and returns focus to the Menu button.
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && menu.hasAttribute('open')) {
+        closeMenu();
+        menu.querySelector('summary').focus();
+      }
+    });
+  } catch (error) { /* the menu still opens and closes without the script */ }
+})();
+</script>
+</body>
+</html>
