@@ -8,7 +8,8 @@
   DEPENDS ON: Google Fonts. Three small scripts (section marker, digital-team chart, FAQ links) add conveniences;
     without them every link still works and the chart's summaries are listed in full.
   SAME ACROSS PAGES: the site bar (row 1) and the footer pattern match the home, team and terms pages. The digital-team
-    chart, its summaries and the jobs list are identical to the Digital team page.
+    chart, its summaries and the jobs list match the Digital team page. The Skills section and the page's own jump bar and
+    call to action are on the Digital team page only; this page keeps its own heading level, navigation and Reserve buttons.
 -->
 <html lang="en" class="has-sub">
 <head>
@@ -230,11 +231,15 @@
     .instructor-card { padding: 1.4rem; }
   }
 
-  /* DIGITAL TEAM CHART AND SUMMARIES. These rules are the same on the Digital team page. */
+  /* DIGITAL TEAM CHART AND SUMMARIES. The chart, summary and jobs rules match the Digital team page. The skip link and the Reserve
+     button spacing at the end of this block belong to the course page only. */
   .wf-wrap { max-width: 68.89rem; }
   .wf-section .sec-title { max-width: 30ch; }
   .wf-asof { margin-top: 0.5rem; font-size: 0.92rem; color: var(--navy); font-weight: 600; }
-  .wf-layout { display: grid; grid-template-columns: minmax(0, 1fr) 18.89rem; gap: 2rem; align-items: start; margin-top: 1.8rem; }
+  /* From 1280px up the chart section is wider than the text column: it spans the window (to 92rem) and is centred. The paragraphs
+     above it keep their reading width. */
+  .wf-layout { margin-top: 1.8rem; }
+  @media (min-width: 1280px) { .wf-layout { width: var(--w, 100%); margin-left: calc(50% - var(--w) / 2); } }
   .wf-chart ul { list-style: none; }
   .node { display: block; position: relative; text-decoration: none; color: var(--charcoal); background: #fff; border: 1px solid var(--rule); border-radius: 5px; padding: 0.7rem 0.8rem; min-height: 44px; transition: border-color 0.15s, box-shadow 0.15s; }
   .node:hover { border-color: var(--copper); box-shadow: 0 2px 10px rgba(23,37,84,0.14); }
@@ -244,19 +249,20 @@
   .n-model { display: inline-block; margin-top: 0.4rem; font-size: 0.75rem; font-weight: 600; color: var(--navy); border: 1px solid var(--rule); border-radius: 10px; padding: 0 0.5rem; }
   .node.top { border-top: 4px solid var(--copper); }
   .node.top .n-name { font-size: 1.5rem; }
-  .wf-top { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 0.9rem; align-items: start; position: relative; padding-bottom: 1.6rem; }
-  .wf-top::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 2px; height: 1.6rem; background: var(--copper); }
-  .wf-dirs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.1rem 0.8rem; }
+  /* The top row is three equal boxes. Cooper's box carries the line down to the directors (a stretchy line under the box, so it still
+     joins up when Dax's taller box makes the row taller). */
+  .wf-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; align-items: stretch; }
+  .wf-top > li { display: flex; flex-direction: column; }
+  .wf-top > li > .node { flex: none; }
+  .wf-cooper::after { content: ""; align-self: center; width: 2px; background: var(--copper); }
+  .wf-dirs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; align-items: start; margin-top: 1.8rem; border: 2px solid rgba(176,125,85,0.55); border-radius: 6px; padding: 1rem; }
   .wf-dir { position: relative; padding-top: 0; }
-  .wf-dir::before { content: ""; position: absolute; top: -1rem; left: -0.4rem; right: -0.4rem; height: 2px; background: var(--copper); opacity: 0.6; }
-  .wf-dir:nth-child(4n+1)::before { left: 50%; }
-  .wf-dir:nth-child(4n)::before { right: 50%; }
-  .wf-dir::after { content: ""; position: absolute; top: -1rem; left: 50%; width: 2px; height: 1rem; background: var(--copper); opacity: 0.6; }
+  .node.dir { min-height: 5.6rem; }
   .wf-side { margin-top: 0.45rem; display: grid; gap: 0.35rem; }
   .node.side { padding: 0.45rem 0.6rem; background: var(--cream); border-style: dashed; }
   .node.side .n-name { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
   .node.side .n-model { display: none; }
-  .wf-panel { position: sticky; top: calc(var(--bar-h) + 1rem); background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--navy); border-radius: 5px; padding: 1.3rem 1.4rem; box-shadow: 0 8px 22px rgba(23,37,84,0.10); }
+  .wf-panel { margin-top: 1.6rem; background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--navy); border-radius: 5px; padding: 1.3rem 1.4rem; box-shadow: 0 8px 22px rgba(23,37,84,0.10); }
   .sum-name { font-family: var(--serif); font-weight: 600; font-size: 1.7rem; line-height: 1.1; color: var(--navy); margin-bottom: 0.8rem; }
   .sum-name span { display: block; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--navy); margin-top: 0.2rem; }
   .sum dt { font-weight: 600; font-size: 0.85rem; color: var(--navy); margin-top: 0.8rem; }
@@ -275,33 +281,84 @@
   .jobs .when { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
   .jobs h3 { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; line-height: 1.15; color: var(--navy); margin: 0.2rem 0 0.4rem; }
   .jobs li p:last-child { font-size: 0.95rem; }
-  @media (max-width: 1360px) { .wf-layout { grid-template-columns: minmax(0, 1fr) 17.78rem; } .wf-dirs { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wf-dir:nth-child(4n+1)::before, .wf-dir:nth-child(4n)::before { left: -0.4rem; right: -0.4rem; } .wf-dir:nth-child(2n+1)::before { left: 50%; } .wf-dir:nth-child(2n)::before { right: 50%; left: -0.4rem; } .jobs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 1020px) {
-    .wf-layout { grid-template-columns: 1fr; }
-    .wf-panel { position: static; margin-top: 0.6rem; }
-    .wf-top { grid-template-columns: 1fr; padding-bottom: 0; }
-    .wf-top::after, .wf-dir::before, .wf-dir::after { display: none; }
-    .wf-top .wf-booker { order: 2; } .wf-top .wf-knox { order: 3; } .wf-top .wf-cooper { order: 1; }
+  @media (max-width: 1360px) { .jobs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 1020px) { .jobs { grid-template-columns: 1fr; } }
+
+  /* BREAKPOINTS FOR THE CHART. Directors are always three across, in three rows of three, so none is ever alone on a row.
+     1280px and up : chart on the left (to 92rem wide in all), Dax level with the top row at the right, summary panel under Dax.
+     721 to 1279px : same three-by-three frame, Dax in a strip under it, summary panel under the chart.
+     720px and under (phone) : one column, the summary opens under the name that was chosen. */
+  @media (min-width: 1280px) {
+    .wf-layout { --w: min(calc(100vw - 3rem), 92rem); display: grid; grid-template-columns: minmax(0, 1fr) 22rem; column-gap: 2rem; row-gap: 1.8rem; align-items: start; }
+    .wf-chart { display: contents; }
+    .wf-top { grid-column: 1; grid-row: 1; align-self: stretch; }
+    .wf-layout .wf-apart { grid-column: 2; grid-row: 1; margin-top: 0; }
+    .wf-dirs { grid-column: 1; grid-row: 2; margin-top: 0; }
+    .wf-panel { grid-column: 2; grid-row: 2; margin: 0; position: sticky; top: calc(var(--bar-h) + 1rem); max-height: calc(100vh - var(--bar-h) - 2rem); overflow: auto; }
+    .wf-cooper::after { flex: 1 1 0; min-height: 1.5rem; height: auto; margin-bottom: -1.8rem; }
+  }
+  @media (min-width: 721px) and (max-width: 1279px) {
+    .wf-cooper::after { flex: none; height: 1.8rem; margin-bottom: -1.8rem; }
+  }
+  @media (min-width: 721px) and (max-width: 1279px) {
+    .wf-panel { max-width: 64rem; margin: 1.6rem auto 0; }
+    .wf-panel dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); column-gap: 2.5rem; align-items: start; }
+    .wf-panel dt:nth-of-type(1) { grid-column: 1; grid-row: 1; margin-top: 0; }
+    .wf-panel dd:nth-of-type(1) { grid-column: 1; grid-row: 2; }
+    .wf-panel dt:nth-of-type(2) { grid-column: 1; grid-row: 3; }
+    .wf-panel dd:nth-of-type(2) { grid-column: 1; grid-row: 4; }
+    .wf-panel dt:nth-of-type(3) { grid-column: 2; grid-row: 1; margin-top: 0; }
+    .wf-panel dd:nth-of-type(3) { grid-column: 2; grid-row: 2 / span 4; }
+  }
+  @media (max-width: 720px) {
+    .wf-cooper::after { display: none; }
+    .wf-top { grid-template-columns: 1fr; }
+    .wf-top .wf-booker { order: 2; }
+    .wf-top .wf-knox { order: 3; }
+    .wf-top .wf-cooper { order: 1; }
     .wf-top, .wf-dirs { gap: 0.7rem; }
-    .wf-dirs { grid-template-columns: 1fr; margin-top: 0.9rem; }
+    .wf-dirs { grid-template-columns: 1fr; margin-top: 0.9rem; border: 0; border-radius: 0; padding: 0; }
+    .node.dir { min-height: 44px; }
     .wf-side { display: flex; flex-wrap: wrap; }
     .node.side { min-height: 44px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-    .jobs { grid-template-columns: 1fr; }
+    .wf-panel { margin-top: 0.6rem; }
   }
 
   /* Chart extras: the skip link, the arrows on names, and a height limit for the summary panel. */
-  .wf-skip { margin-top: 0.3rem; }
-  .wf-skip a { display: inline-flex; align-items: center; min-height: 44px; }
-  .wf-reserve { margin-top: 2rem; }
   .node:not(.side)::after { content: ""; position: absolute; right: 0.9rem; top: 1.1rem; width: 8px; height: 8px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(-45deg); opacity: 0.7; }
   .node.side { position: relative; padding-right: 1.6rem; }
   .node.side::after { content: ""; position: absolute; right: 0.6rem; top: 50%; width: 6px; height: 6px; margin-top: -4px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(-45deg); opacity: 0.7; }
   .node.side .n-role { display: block; font-size: 0.78rem; font-weight: 400; margin-top: 0.1rem; }
   .node[aria-current="true"]::after { transform: rotate(45deg); }
-  .wf-panel { max-height: calc(100vh - var(--bar-h) - 2rem); overflow: auto; }
-
   .wf-side-title { margin-top: 0.55rem; font-size: 0.78rem; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; }
   .wf-side-title + .wf-side { margin-top: 0.25rem; }
+
+  /* DAX AND THE NINTH DIRECTOR. The separate box for Dax beside the chart, and the sidekick toggle buttons. */
+  .wf-apart { margin-top: 1.6rem; padding: 0.7rem 0.9rem 0.9rem; border: 2px dashed var(--navy); border-radius: 6px; background: transparent; }
+  .wf-apart-title { font-size: 0.78rem; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin-bottom: 0.4rem; }
+  .wf-apart-note { margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.4; }
+  @media (min-width: 721px) and (max-width: 1279px) {
+    .wf-apart { display: grid; grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr); column-gap: 1.2rem; align-items: center; }
+    .wf-apart-title { grid-column: 1 / -1; }
+    .wf-apart-note { margin-top: 0; }
+  }
+  @media (max-width: 720px) { .wf-apart { max-width: 22rem; } }
+
+  /* The sidekick toggle. The script adds one small button per director that has sidekicks and folds the list away. Without the
+     script there is no button and every sidekick list stays open. */
+  .wf-toggle { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; width: 100%; margin-top: 0.45rem; min-height: 44px; padding: 0.2rem 0.7rem; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--navy); background: var(--cream); border: 1px dashed var(--navy); border-radius: 16px; cursor: pointer; text-align: left; }
+  .wf-toggle:hover { border-color: var(--copper); box-shadow: 0 2px 10px rgba(23,37,84,0.14); }
+  .wf-toggle::after { content: ""; flex: none; width: 6px; height: 6px; margin-top: -3px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(45deg); }
+  .wf-toggle[aria-expanded="true"]::after { margin-top: 3px; transform: rotate(-135deg); }
+  .wf-chart.has-toggles .wf-side-title { display: none; }
+  .wf-chart.has-toggles .wf-side-title + .wf-side, .wf-chart.has-toggles .wf-toggle + .wf-side { margin-top: 0.35rem; }
+  .wf-side[hidden] { display: none; }
+  @media (max-width: 720px) { .wf-toggle { min-height: 44px; } }
+
+  /* Course page only: the skip link under the chart introduction and the Reserve button under the jobs. */
+  .wf-skip { margin-top: 0.3rem; }
+  .wf-skip a { display: inline-flex; align-items: center; min-height: 44px; }
+  .wf-reserve { margin-top: 2rem; }
 
   /* FAQ GROUPS. Six collapsible groups, closed on load; each question is its own expander inside. */
   #faq details.faq-grp { margin-top: 0.9rem; border: 1px solid var(--navy); border-radius: 6px; background: #fff; }
@@ -665,7 +722,8 @@
 <section id="workforce" class="wf-section" data-group="team" aria-labelledby="wf-title">
   <div class="wrap wf-wrap">
     <h2 class="sec-title wide" id="wf-title">Meet Whitney's digital team</h2>
-    <p class="sec-body">Cooper is Whitney's chief of staff. Cooper works with Booker, Knox and eight directors. A director can have sidekicks: smaller agents that each do one narrow job for that director. Together they are the agentic workforce Whitney built and runs. In the course you build a small version of this: one chief of staff and one reviewer.</p>
+    <p class="sec-body">Cooper is Whitney's chief of staff. Cooper works with Booker, Knox and nine directors. A director can have sidekicks: smaller agents that each do one narrow job for that director. Together they are the agentic workforce Whitney built and runs. In the course you build a small version of this: one chief of staff and one reviewer.</p>
+    <p class="sec-body">This team is the product of months of work. When an agent gave a made-up answer, Whitney found the cause and added a rule or a check. The team also checks itself on a schedule, and looks at how others run agents before building anything new.</p>
     <p class="sec-body">Select any name to see its purpose, the model it runs on and what it is accountable for.</p>
     <p class="wf-asof">As of October 2026. Models change. Opus, Sonnet and Haiku are families of AI models from Anthropic.</p>
     <p class="wf-skip"><a href="#wf-jobs">Skip to the jobs</a></p>
@@ -673,7 +731,12 @@
     <div class="wf-layout">
       <nav class="wf-chart" aria-label="The workforce">
         <ul class="wf-top"><li class="wf-booker"><a class="node top" href="#s-booker" data-sum="booker" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Booker</span><span class="n-role">Memory curator</span><span class="n-model">Opus</span></a></li><li class="wf-cooper"><a class="node top" href="#s-cooper" data-sum="cooper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Cooper</span><span class="n-role">Chief of staff</span><span class="n-model">Opus</span></a></li><li class="wf-knox"><a class="node top" href="#s-knox" data-sum="knox" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Knox</span><span class="n-role">Challenger</span><span class="n-model">Opus</span></a></li></ul>
-        <ul class="wf-dirs"><li class="wf-dir"><a class="node dir" href="#s-alice" data-sum="alice" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Alice</span><span class="n-role">Sales, business development and clients</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Alice"><li><a class="node side" href="#s-numbers-to-decisions" data-sum="numbers-to-decisions" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">numbers-to-decisions</span><span class="n-role">Sales data to decisions</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-jasper" data-sum="jasper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Jasper</span><span class="n-role">Marketing and market intelligence</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Jasper"><li><a class="node side" href="#s-brand-author" data-sum="brand-author" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">brand-author</span><span class="n-role">Brand standards</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-linkedin-post-review" data-sum="linkedin-post-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">linkedin-post-review</span><span class="n-role">Post reviewer</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-institutional-problem-scout" data-sum="institutional-problem-scout" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">institutional-problem-scout</span><span class="n-role">Problem scout</span><span class="n-model">Sonnet</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-carlisle" data-sum="carlisle" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Carlisle</span><span class="n-role">Business administration</span><span class="n-model">Opus</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Carlisle"><li><a class="node side" href="#s-annual-filing-reminder" data-sum="annual-filing-reminder" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">annual-filing-reminder</span><span class="n-role">Filing reminders</span><span class="n-model">Haiku</span></a></li><li><a class="node side" href="#s-imprint" data-sum="imprint" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">imprint</span><span class="n-role">Print shop and filing clerk</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-charlie" data-sum="charlie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Charlie</span><span class="n-role">Finance</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-edward" data-sum="edward" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Edward</span><span class="n-role">Product</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Edward"><li><a class="node side" href="#s-security-weakness-evaluator" data-sum="security-weakness-evaluator" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">security-weakness-evaluator</span><span class="n-role">Security review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-ux-design-review" data-sum="ux-design-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ux-design-review</span><span class="n-role">Usability review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-simplification-auditor" data-sum="simplification-auditor" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">simplification-auditor</span><span class="n-role">Simplification review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-ship-gate-reviewer" data-sum="ship-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ship-gate-reviewer</span><span class="n-role">Pre-delivery review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-code-gate-reviewer" data-sum="code-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">code-gate-reviewer</span><span class="n-role">Code review</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-emmett" data-sum="emmett" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Emmett</span><span class="n-role">Operations</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Emmett"><li><a class="node side" href="#s-vault-ingest" data-sum="vault-ingest" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">vault-ingest</span><span class="n-role">Knowledge-vault intake</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-esme" data-sum="esme" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Esme</span><span class="n-role">Personal life</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-rosalie" data-sum="rosalie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Rosalie</span><span class="n-role">Health</span><span class="n-model">Sonnet</span></a></li></ul>
+        <ul class="wf-dirs"><li class="wf-dir"><a class="node dir" href="#s-alice" data-sum="alice" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Alice</span><span class="n-role">Sales, business development and clients</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-jasper" data-sum="jasper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Jasper</span><span class="n-role">Marketing and market intelligence</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Jasper"><li><a class="node side" href="#s-brand-author" data-sum="brand-author" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">brand-author</span><span class="n-role">Brand standards</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-linkedin-post-review" data-sum="linkedin-post-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">linkedin-post-review</span><span class="n-role">Post reviewer</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-institutional-problem-scout" data-sum="institutional-problem-scout" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">institutional-problem-scout</span><span class="n-role">Problem scout</span><span class="n-model">Sonnet</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-carlisle" data-sum="carlisle" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Carlisle</span><span class="n-role">Business administration</span><span class="n-model">Opus</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Carlisle"><li><a class="node side" href="#s-annual-filing-reminder" data-sum="annual-filing-reminder" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">annual-filing-reminder</span><span class="n-role">Filing reminders</span><span class="n-model">Haiku</span></a></li><li><a class="node side" href="#s-imprint" data-sum="imprint" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">imprint</span><span class="n-role">Print shop and filing clerk</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-charlie" data-sum="charlie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Charlie</span><span class="n-role">Finance</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-leah" data-sum="leah" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Leah</span><span class="n-role">Data analysis</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-edward" data-sum="edward" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Edward</span><span class="n-role">Product</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Edward"><li><a class="node side" href="#s-security-weakness-evaluator" data-sum="security-weakness-evaluator" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">security-weakness-evaluator</span><span class="n-role">Security review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-ux-design-review" data-sum="ux-design-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ux-design-review</span><span class="n-role">Usability review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-simplification-auditor" data-sum="simplification-auditor" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">simplification-auditor</span><span class="n-role">Simplification review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-ship-gate-reviewer" data-sum="ship-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ship-gate-reviewer</span><span class="n-role">Pre-delivery review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-code-gate-reviewer" data-sum="code-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">code-gate-reviewer</span><span class="n-role">Code review</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-emmett" data-sum="emmett" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Emmett</span><span class="n-role">Operations</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Emmett"><li><a class="node side" href="#s-vault-ingest" data-sum="vault-ingest" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">vault-ingest</span><span class="n-role">Knowledge-vault intake</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-esme" data-sum="esme" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Esme</span><span class="n-role">Personal life</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-rosalie" data-sum="rosalie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Rosalie</span><span class="n-role">Health</span><span class="n-model">Sonnet</span></a></li></ul>
+        <div class="wf-apart">
+          <p class="wf-apart-title">Works apart from the team</p>
+          <a class="node apart" href="#s-dax" data-sum="dax" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Dax</span><span class="n-role">Executive coach</span><span class="n-model">Opus</span></a>
+          <p class="wf-apart-note">Dax reports to Whitney alone. Cooper cannot send Dax work, and Dax's notes stay with Whitney.</p>
+        </div>
       </nav>
       <aside class="wf-panel sum" id="wfPanel" aria-live="polite" aria-label="Summary of the selected agent" hidden></aside>
     </div>
@@ -684,7 +747,6 @@
 <article class="sum" id="s-booker"><h3 class="sum-name">Booker <span>Memory curator</span></h3><dl><dt>Purpose</dt><dd>Keeps the workforce's shared memory: decisions, lessons, preferences and patterns.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Files what directors flag as worth remembering.</li><li>Notes when other files need updating to match.</li><li>Informs. Whitney and Cooper decide.</li></ul></dd></dl></article>
 <article class="sum" id="s-knox"><h3 class="sum-name">Knox <span>Challenger</span></h3><dl><dt>Purpose</dt><dd>Reads finished work and asks where it could be better.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>One pass on each important deliverable.</li><li>Up to 200 words and one to three questions.</li><li>Asks questions. Whitney decides what happens next.</li><li>Says so plainly when the work is solid.</li></ul></dd></dl></article>
 <article class="sum" id="s-alice"><h3 class="sum-name">Alice <span>Sales, business development and clients</span></h3><dl><dt>Purpose</dt><dd>Takes a prospect from a serious conversation to signed work, runs active client engagements, and keeps what each one teaches as reusable know-how.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Pipeline from the middle of the funnel to close.</li><li>Delivery on active client engagements.</li><li>Capturing reusable lessons from each engagement.</li><li>Works with Carlisle on paperwork and Charlie on pricing.</li></ul></dd></dl></article>
-<article class="sum" id="s-numbers-to-decisions"><h3 class="sum-name">numbers-to-decisions <span>Sales data to decisions</span></h3><dl><dt>Purpose</dt><dd>Turns sales and inventory numbers into the decisions an owner faces in the next 90 days.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>A workbook with live formulas.</li><li>A short decision memo.</li></ul></dd></dl></article>
 <article class="sum" id="s-jasper"><h3 class="sum-name">Jasper <span>Marketing and market intelligence</span></h3><dl><dt>Purpose</dt><dd>Owns the top of the funnel: awareness, positioning, market research and inbound interest.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Positioning and public copy drafts.</li><li>Market and industry research.</li><li>Inbound interest.</li><li>Hands qualified prospects to Alice.</li></ul></dd></dl></article>
 <article class="sum" id="s-brand-author"><h3 class="sum-name">brand-author <span>Brand standards</span></h3><dl><dt>Purpose</dt><dd>Writes the brand standards and the briefs designers work from.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Brand standards sections.</li><li>Designer briefs.</li><li>Mockups of brand options.</li></ul></dd></dl></article>
 <article class="sum" id="s-linkedin-post-review"><h3 class="sum-name">linkedin-post-review <span>Post reviewer</span></h3><dl><dt>Purpose</dt><dd>Reviews LinkedIn and social posts before they go out.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Hook and voice.</li><li>Brand fit.</li><li>Reach.</li></ul></dd></dl></article>
@@ -693,6 +755,7 @@
 <article class="sum" id="s-annual-filing-reminder"><h3 class="sum-name">annual-filing-reminder <span>Filing reminders</span></h3><dl><dt>Purpose</dt><dd>Reminds Whitney of the LLC's annual filings ahead of each deadline.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Says what is due and what to do.</li><li>Speaks up only when a filing is due.</li></ul></dd></dl></article>
 <article class="sum" id="s-imprint"><h3 class="sum-name">imprint <span>Print shop and filing clerk</span></h3><dl><dt>Purpose</dt><dd>Turns finished content into branded Word, Excel, PowerPoint and PDF files. Any director can use it.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Applies the brand to the file.</li><li>Names and files each document the same way.</li><li>Runs a check on each file before release.</li></ul></dd></dl></article>
 <article class="sum" id="s-charlie"><h3 class="sum-name">Charlie <span>Finance</span></h3><dl><dt>Purpose</dt><dd>Runs Heflin Group's financial planning and review.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>A forecast with three scenarios.</li><li>A monthly financial review.</li><li>Financial sections for business plans.</li><li>A KPI dashboard and quarterly variance notes.</li></ul></dd></dl></article>
+<article class="sum" id="s-leah"><h3 class="sum-name">Leah <span>Data analysis</span></h3><dl><dt>Purpose</dt><dd>Analyzes data for any job that needs it: a client's sales and inventory numbers, and the examples used in the Heflin Group course.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Follows CRISP-DM, the Cross-Industry Standard Process for Data Mining: six steps that start with the business question and end with delivery.</li><li>Turns a client's numbers into the decisions the owner faces next.</li><li>A workbook with live formulas and a short decision memo.</li><li>Says what the data can and cannot support, in plain words, beside the findings.</li></ul></dd></dl></article>
 <article class="sum" id="s-edward"><h3 class="sum-name">Edward <span>Product</span></h3><dl><dt>Purpose</dt><dd>Builds Heflin Group's own product and runs the quality checks before anything ships.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>The product roadmap and fixes.</li><li>Security, usability and simplicity reviews before release.</li><li>Checks work against real conditions before it goes to a client.</li><li>Works with Carlisle on legal prerequisites.</li></ul></dd></dl></article>
 <article class="sum" id="s-security-weakness-evaluator"><h3 class="sum-name">security-weakness-evaluator <span>Security review</span></h3><dl><dt>Purpose</dt><dd>Reviews a build for security weaknesses.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Ranks what it finds by severity.</li><li>Suggests a specific fix for each one.</li></ul></dd></dl></article>
 <article class="sum" id="s-ux-design-review"><h3 class="sum-name">ux-design-review <span>Usability review</span></h3><dl><dt>Purpose</dt><dd>Reviews anything a real person will use, from the user's side.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Clarity and friction.</li><li>Trust and accessibility.</li><li>Suggests specific improvements.</li></ul></dd></dl></article>
@@ -703,6 +766,7 @@
 <article class="sum" id="s-vault-ingest"><h3 class="sum-name">vault-ingest <span>Knowledge-vault intake</span></h3><dl><dt>Purpose</dt><dd>Files new reference material into the knowledge vault.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Records where each source came from.</li><li>Notes where it overlaps what is already filed.</li></ul></dd></dl></article>
 <article class="sum" id="s-esme"><h3 class="sum-name">Esme <span>Personal life</span></h3><dl><dt>Purpose</dt><dd>Looks after the part of life outside work: family, friends, home and community.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Keeps up with the people and projects outside work.</li><li>Drafts messages for Whitney to review.</li><li>Flags calendar conflicts with Cooper.</li></ul></dd></dl></article>
 <article class="sum" id="s-rosalie"><h3 class="sum-name">Rosalie <span>Health</span></h3><dl><dt>Purpose</dt><dd>Protects time for workouts, sleep, meals and play.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Keeps those blocks on the calendar.</li><li>Is asked before work is routed that would use protected time.</li><li>Says no first. Cooper then asks Whitney whether to override.</li></ul></dd></dl></article>
+<article class="sum" id="s-dax"><h3 class="sum-name">Dax <span>Executive coach</span></h3><dl><dt>Purpose</dt><dd>Coaches Whitney on big decisions, and ends each session with one small action to try.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Asks one question to find the real issue before offering advice.</li><li>Names the pattern and the question underneath a decision.</li><li>Ends each session with one specific action and a deadline.</li><li>Asks about the last session's action at the start of the next.</li><li>Works apart from the team, with its own instructions and its own memory. Cooper cannot send it work, and its notes stay with Whitney.</li></ul></dd></dl></article>
     </div>
 
     <h2 class="sub-title wf-jobs-title" id="wf-jobs">The jobs that keep it running</h2>
@@ -1029,15 +1093,15 @@
 </script>
 
 <script>
-/* DIGITAL TEAM CHART. Selecting a name shows that agent's summary in one panel. On a wide screen the panel
-   sits beside the chart; on a narrow screen it opens directly under the name that was selected.
+/* DIGITAL TEAM CHART. Selecting a name shows that agent's summary in one panel. On a wide screen the panel sits at the right of the
+   chart, under Dax; on a tablet it sits under the chart; on a phone it opens directly under the name that was selected.
    If anything here fails, the full list of summaries stays visible under the chart, so nothing is lost. */
 (function () {
   try {
     var nameLinks = document.querySelectorAll('.node[data-sum]');
     var panel = document.getElementById('wfPanel');
     if (!nameLinks.length || !panel) return;
-    var narrowScreen = window.matchMedia('(max-width: 1020px)');
+    var narrowScreen = window.matchMedia('(max-width: 720px)');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var selectedId = null;
 
@@ -1083,6 +1147,35 @@
       if (!narrowScreen.matches && panel.parentNode !== wideLayout) wideLayout.appendChild(panel);
       if (!selectedId && !narrowScreen.matches) showSummary('cooper', false);
       if (narrowScreen.matches && selectedId) showSummary(selectedId, false);
+    }
+
+    // Sidekick lists: fold each one away behind a small button that says how many it holds. Built here, so without the script
+    // there is no button and every list stays open. If this part fails, the lists simply stay open.
+    try {
+      var sideLists = document.querySelectorAll('.wf-dir .wf-side');
+      for (var k = 0; k < sideLists.length; k++) {
+        (function (list) {
+          var count = list.children.length;
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'wf-toggle';
+          button.textContent = count + (count === 1 ? ' sidekick' : ' sidekicks');
+          list.id = list.id || 'wfSide' + k;
+          button.setAttribute('aria-controls', list.id);
+          button.setAttribute('aria-expanded', 'false');
+          button.addEventListener('click', function () {
+            var opening = list.hidden;
+            list.hidden = !opening;
+            button.setAttribute('aria-expanded', opening ? 'true' : 'false');
+          });
+          list.parentNode.insertBefore(button, list);
+          list.hidden = true;
+        })(sideLists[k]);
+      }
+      if (sideLists.length) document.querySelector('.wf-chart').className += ' has-toggles';
+    } catch (toggleError) {
+      var openLists = document.querySelectorAll('.wf-side');
+      for (var m = 0; m < openLists.length; m++) openLists[m].hidden = false;
     }
 
     for (var i = 0; i < nameLinks.length; i++) {

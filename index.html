@@ -58,6 +58,9 @@ body { background: var(--cream); color: var(--charcoal); font-family: 'IBM Plex 
   .on-navy a { color: var(--gold); }
   .cap-grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
   .cap-grid li { background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--copper); border-radius: 5px; padding: 1.4rem 1.3rem; font-size: 1.1rem; line-height: 1.4; min-height: 7.5rem; display: flex; align-items: flex-start; }
+  .cap-grid li.cap-link { flex-direction: column; gap: 0.6rem; }
+  .cap-link a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; border-bottom: 2px solid var(--copper); text-decoration: none; }
+  .cap-note { font-size: 0.85rem; line-height: 1.45; }
   .about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 55.56rem; }
   .about-cols .support { font-size: 1.1rem; }
   .team-link { margin-top: 2rem; }
@@ -232,7 +235,7 @@ body { background: var(--cream); color: var(--charcoal); font-family: 'IBM Plex 
   <section id="help">
     <div class="wrap">
       <h2 class="sec-title">What we help with</h2>
-      <ul class="cap-grid"><li>AI adoption strategy and training</li><li>Fractional CFO and COO support</li><li>Process automation</li><li>Margin and pricing analysis</li><li>Reporting and dashboards</li><li>Privacy, security and regulatory fit</li><li>Recoverability and operational resilience</li></ul>
+      <ul class="cap-grid"><li>AI adoption strategy and training</li><li class="cap-link"><a href="/team/">Digital workforce setup</a><span class="cap-note">See Whitney&rsquo;s own team as an example. What we set up for you is scoped to your work.</span></li><li>Fractional CFO and COO support</li><li>Process automation</li><li>Margin and pricing analysis</li><li>Reporting and dashboards</li><li>Privacy, security and regulatory fit</li><li>Recoverability and operational resilience</li></ul>
     </div>
   </section>
 
