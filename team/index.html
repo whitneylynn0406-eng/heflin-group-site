@@ -2,20 +2,19 @@
 <!--
   WHAT THIS DOES: The "Meet Whitney's digital team" page: a chart of the AI agents Whitney built and runs. Selecting a
     name shows that agent's purpose, model and accountabilities. Below the chart are all the summaries in full and the
-    scheduled jobs that keep the team running.
-  PARTS, TOP TO BOTTOM: site bar; page title and introduction; chart with its summary panel; the full list of summaries;
-    the jobs list; a pointer to the course; footer.
+    scheduled jobs that keep the team running. A Skills section sits between the chart and the jobs.
+  PARTS, TOP TO BOTTOM: site bar with a second row of jump links; page title and introduction; chart with its summary panel; the full list of summaries;
+    the skills (legend, network diagram, lists); the jobs list; a pointer to the course; footer.
   SENDS DATA TO: nowhere.
-  DEPENDS ON: Google Fonts, and one small script for the chart. Without the script the full list of summaries is shown instead.
-  SAME ACROSS PAGES: the site bar and footer pattern match the other pages. The chart, summaries and jobs are identical
-    to the team section of the course page.
+  DEPENDS ON: Google Fonts, and small scripts for the chart and the skills diagram. Without the scripts the full list of summaries and the skills lists are shown instead.
+  SAME ACROSS PAGES: the site bar and footer pattern match the other pages. The chart, summaries, skills and jobs on this page are the current ones.
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Meet Whitney's digital team — Heflin Group</title>
-<meta name="description" content="The AI agents Whitney Heflin built and runs: Cooper, Booker, Knox, eight directors and their sidekicks, and the jobs that keep them on schedule. As of October 2026." />
+<meta name="description" content="The AI agents Whitney Heflin built and runs: Cooper, Booker, Knox, nine directors and their sidekicks, and the jobs that keep them on schedule. As of October 2026." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -40,12 +39,19 @@
   .sec-body + .sec-body { margin-top: 0.8rem; }
   .sub-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; line-height: 1.2; color: #172554; margin: 2.2rem 0 0.9rem; }
   .pointer { margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid #C9B99A; }
+  .wf-cta { margin-top: 2.8rem; padding-top: 2rem; border-top: 1px solid #C9B99A; text-align: center; }
+  .wf-cta .sec-body { margin: 0.6rem auto 0; }
+  .wf-cta-btn { display: inline-block; margin-top: 1.3rem; padding: 0.85rem 1.8rem; min-height: 44px; background: var(--navy); color: #fff; font-weight: 600; text-decoration: none; border-radius: 5px; }
+  .wf-cta-btn:hover, .wf-cta-btn:focus-visible { background: var(--copper); color: #fff; }
 
   /* DIGITAL TEAM CHART AND SUMMARIES. These rules are the same on the course page. */
   .wf-wrap { max-width: 68.89rem; }
   .wf-section .sec-title { max-width: 30ch; }
   .wf-asof { margin-top: 0.5rem; font-size: 0.92rem; color: var(--navy); font-weight: 600; }
-  .wf-layout { display: grid; grid-template-columns: minmax(0, 1fr) 18.89rem; gap: 2rem; align-items: start; margin-top: 1.8rem; }
+  /* The chart section is no longer limited to the text width. From 1280px up it spans the window (to 92rem) and is centred;
+     the paragraphs above keep their reading width. The summary panel now sits under the chart instead of beside it. */
+  .wf-layout { margin-top: 1.8rem; }
+  @media (min-width: 1280px) { .wf-layout { width: var(--w, 100%); margin-left: calc(50% - var(--w) / 2); } }
   .wf-chart ul { list-style: none; }
   .node { display: block; position: relative; text-decoration: none; color: var(--charcoal); background: #fff; border: 1px solid var(--rule); border-radius: 5px; padding: 0.7rem 0.8rem; min-height: 44px; transition: border-color 0.15s, box-shadow 0.15s; }
   .node:hover { border-color: var(--copper); box-shadow: 0 2px 10px rgba(23,37,84,0.14); }
@@ -55,19 +61,20 @@
   .n-model { display: inline-block; margin-top: 0.4rem; font-size: 0.75rem; font-weight: 600; color: var(--navy); border: 1px solid var(--rule); border-radius: 10px; padding: 0 0.5rem; }
   .node.top { border-top: 4px solid var(--copper); }
   .node.top .n-name { font-size: 1.5rem; }
-  .wf-top { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 0.9rem; align-items: start; position: relative; padding-bottom: 1.6rem; }
-  .wf-top::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 2px; height: 1.6rem; background: var(--copper); }
-  .wf-dirs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.1rem 0.8rem; }
+  /* The top row is three equal boxes. Cooper's box carries the line down to the directors (a stretchy line under the box, so it still
+     joins up when Dax's taller box makes the row taller). */
+  .wf-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; align-items: stretch; }
+  .wf-top > li { display: flex; flex-direction: column; }
+  .wf-top > li > .node { flex: none; }
+  .wf-cooper::after { content: ""; align-self: center; width: 2px; background: var(--copper); }
+  .wf-dirs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; align-items: start; margin-top: 1.8rem; border: 2px solid rgba(176,125,85,0.55); border-radius: 6px; padding: 1rem; }
   .wf-dir { position: relative; padding-top: 0; }
-  .wf-dir::before { content: ""; position: absolute; top: -1rem; left: -0.4rem; right: -0.4rem; height: 2px; background: var(--copper); opacity: 0.6; }
-  .wf-dir:nth-child(4n+1)::before { left: 50%; }
-  .wf-dir:nth-child(4n)::before { right: 50%; }
-  .wf-dir::after { content: ""; position: absolute; top: -1rem; left: 50%; width: 2px; height: 1rem; background: var(--copper); opacity: 0.6; }
+  .node.dir { min-height: 5.6rem; }
   .wf-side { margin-top: 0.45rem; display: grid; gap: 0.35rem; }
   .node.side { padding: 0.45rem 0.6rem; background: var(--cream); border-style: dashed; }
   .node.side .n-name { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
   .node.side .n-model { display: none; }
-  .wf-panel { position: sticky; top: calc(var(--bar-h) + 1rem); background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--navy); border-radius: 5px; padding: 1.3rem 1.4rem; box-shadow: 0 8px 22px rgba(23,37,84,0.10); }
+  .wf-panel { margin-top: 1.6rem; background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--navy); border-radius: 5px; padding: 1.3rem 1.4rem; box-shadow: 0 8px 22px rgba(23,37,84,0.10); }
   .sum-name { font-family: var(--serif); font-weight: 600; font-size: 1.7rem; line-height: 1.1; color: var(--navy); margin-bottom: 0.8rem; }
   .sum-name span { display: block; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--navy); margin-top: 0.2rem; }
   .sum dt { font-weight: 600; font-size: 0.85rem; color: var(--navy); margin-top: 0.8rem; }
@@ -86,47 +93,181 @@
   .jobs .when { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
   .jobs h3 { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; line-height: 1.15; color: var(--navy); margin: 0.2rem 0 0.4rem; }
   .jobs li p:last-child { font-size: 0.95rem; }
-  @media (max-width: 1360px) {
-    .wf-layout { grid-template-columns: minmax(0, 1fr) 17.78rem; }
-    .wf-dirs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .wf-dir:nth-child(4n+1)::before, .wf-dir:nth-child(4n)::before { left: -0.4rem; right: -0.4rem; }
-    .wf-dir:nth-child(2n+1)::before { left: 50%; }
-    .wf-dir:nth-child(2n)::before { right: 50%; left: -0.4rem; }
-    .jobs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 1360px) { .jobs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 1020px) { .jobs { grid-template-columns: 1fr; } }
+
+  /* BREAKPOINTS FOR THE CHART. Directors are always three across, in three rows of three, so none is ever alone on a row.
+     1280px and up : chart on the left (to 92rem wide in all), Dax level with the top row at the right, summary panel under Dax.
+     721 to 1279px : same three-by-three frame, Dax in a strip under it, summary panel under the chart.
+     720px and under (phone) : one column, the summary opens under the name that was chosen. */
+  @media (min-width: 1280px) {
+    .wf-layout { --w: min(calc(100vw - 3rem), 92rem); display: grid; grid-template-columns: minmax(0, 1fr) 22rem; column-gap: 2rem; row-gap: 1.8rem; align-items: start; }
+    .wf-chart { display: contents; }
+    .wf-top { grid-column: 1; grid-row: 1; align-self: stretch; }
+    .wf-layout .wf-apart { grid-column: 2; grid-row: 1; margin-top: 0; }
+    .wf-dirs { grid-column: 1; grid-row: 2; margin-top: 0; }
+    .wf-panel { grid-column: 2; grid-row: 2; margin: 0; position: sticky; top: calc(var(--bar-h) + 1rem); max-height: calc(100vh - var(--bar-h) - 2rem); overflow: auto; }
+    .wf-cooper::after { flex: 1 1 0; min-height: 1.5rem; height: auto; margin-bottom: -1.8rem; }
   }
-  @media (max-width: 1020px) {
-    .wf-layout { grid-template-columns: 1fr; }
-    .wf-panel { position: static; margin-top: 0.6rem; }
-    .wf-top { grid-template-columns: 1fr; padding-bottom: 0; }
-    .wf-top::after, .wf-dir::before, .wf-dir::after { display: none; }
+  @media (min-width: 721px) and (max-width: 1279px) {
+    .wf-cooper::after { flex: none; height: 1.8rem; margin-bottom: -1.8rem; }
+  }
+  @media (min-width: 721px) and (max-width: 1279px) {
+    .wf-panel { max-width: 64rem; margin: 1.6rem auto 0; }
+    .wf-panel dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); column-gap: 2.5rem; align-items: start; }
+    .wf-panel dt:nth-of-type(1) { grid-column: 1; grid-row: 1; margin-top: 0; }
+    .wf-panel dd:nth-of-type(1) { grid-column: 1; grid-row: 2; }
+    .wf-panel dt:nth-of-type(2) { grid-column: 1; grid-row: 3; }
+    .wf-panel dd:nth-of-type(2) { grid-column: 1; grid-row: 4; }
+    .wf-panel dt:nth-of-type(3) { grid-column: 2; grid-row: 1; margin-top: 0; }
+    .wf-panel dd:nth-of-type(3) { grid-column: 2; grid-row: 2 / span 4; }
+  }
+  @media (max-width: 720px) {
+    .wf-cooper::after { display: none; }
+    .wf-top { grid-template-columns: 1fr; }
     .wf-top .wf-booker { order: 2; }
     .wf-top .wf-knox { order: 3; }
     .wf-top .wf-cooper { order: 1; }
     .wf-top, .wf-dirs { gap: 0.7rem; }
-    .wf-dirs { grid-template-columns: 1fr; margin-top: 0.9rem; }
+    .wf-dirs { grid-template-columns: 1fr; margin-top: 0.9rem; border: 0; border-radius: 0; padding: 0; }
+    .node.dir { min-height: 44px; }
     .wf-side { display: flex; flex-wrap: wrap; }
     .node.side { min-height: 44px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-    .jobs { grid-template-columns: 1fr; }
+    .wf-panel { margin-top: 0.6rem; }
   }
 
   /* Chart extras: the skip link, the arrows on names, and a height limit for the summary panel. */
-  .wf-skip { margin-top: 0.3rem; }
-  .wf-skip a { display: inline-flex; align-items: center; min-height: 44px; }
   .node:not(.side)::after { content: ""; position: absolute; right: 0.9rem; top: 1.1rem; width: 8px; height: 8px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(-45deg); opacity: 0.7; }
   .node.side { position: relative; padding-right: 1.6rem; }
   .node.side::after { content: ""; position: absolute; right: 0.6rem; top: 50%; width: 6px; height: 6px; margin-top: -4px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(-45deg); opacity: 0.7; }
   .node.side .n-role { display: block; font-size: 0.78rem; font-weight: 400; margin-top: 0.1rem; }
   .node[aria-current="true"]::after { transform: rotate(45deg); }
-  .wf-panel { max-height: calc(100vh - var(--bar-h) - 2rem); overflow: auto; }
   .wf-side-title { margin-top: 0.55rem; font-size: 0.78rem; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; }
   .wf-side-title + .wf-side { margin-top: 0.25rem; }
+
+  /* ADDITIONS. The origin note under the introduction, the separate item for Dax beside the chart, and the ninth director. */
+  .wf-origin { border-left: 4px solid var(--copper); padding-left: 1rem; font-weight: 500; color: var(--navy); margin-top: 1.1rem; }
+  .wf-apart { margin-top: 1.6rem; padding: 0.7rem 0.9rem 0.9rem; border: 2px dashed var(--navy); border-radius: 6px; background: transparent; }
+  .wf-apart-title { font-size: 0.78rem; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin-bottom: 0.4rem; }
+  .wf-apart-note { margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.4; }
+  @media (min-width: 721px) and (max-width: 1279px) {
+    .wf-apart { display: grid; grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr); column-gap: 1.2rem; align-items: center; }
+    .wf-apart-title { grid-column: 1 / -1; }
+    .wf-apart-note { margin-top: 0; }
+  }
+  @media (max-width: 720px) { .wf-apart { max-width: 22rem; } }
+
+  /* The sidekick toggle. The script adds one small button per director that has sidekicks and folds the list away. Without the
+     script there is no button and every sidekick list stays open. */
+  .wf-toggle { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; width: 100%; margin-top: 0.45rem; min-height: 44px; padding: 0.2rem 0.7rem; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--navy); background: var(--cream); border: 1px dashed var(--navy); border-radius: 16px; cursor: pointer; text-align: left; }
+  .wf-toggle:hover { border-color: var(--copper); box-shadow: 0 2px 10px rgba(23,37,84,0.14); }
+  .wf-toggle::after { content: ""; flex: none; width: 6px; height: 6px; margin-top: -3px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: rotate(45deg); }
+  .wf-toggle[aria-expanded="true"]::after { margin-top: 3px; transform: rotate(-135deg); }
+  .wf-chart.has-toggles .wf-side-title { display: none; }
+  .wf-chart.has-toggles .wf-side-title + .wf-side, .wf-chart.has-toggles .wf-toggle + .wf-side { margin-top: 0.35rem; }
+  .wf-side[hidden] { display: none; }
+  @media (max-width: 720px) { .wf-toggle { min-height: 44px; } }
   @media (max-width: 720px) { html { font-size: 17px; } .page { padding: 1.5rem 1.25rem 2.5rem; } .sec-title { font-size: 2.1rem; } }
+
+
+  /* SKILLS SECTION. Sits between the chart and the jobs. Three groups share one set of colours: navy for skills Heflin
+     Group built, copper for skills from Anthropic, green for community-built skills. Group names are always written out, so
+     colour is never the only cue. */
+  :root { --sk-ours: #172554; --sk-anthropic: #B07D55; --sk-community: #4F7A6A; --sk-anthropic-text: #8A5A35; --sk-community-text: #3C6153; }
+  .sk-section { margin-top: 3.2rem; }
+  .sk-title { margin-top: 0; }
+  .sk-section .wf-asof { max-width: 40rem; font-weight: 500; }
+  .sk-legend { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1.4rem; }
+  .sk-legend li { display: flex; gap: 0.6rem; align-items: flex-start; background: #fff; border: 1px solid var(--rule); border-radius: 5px; padding: 0.7rem 0.9rem; font-size: 0.92rem; line-height: 1.4; }
+  .sk-legend strong { color: var(--navy); }
+  .sk-key { flex: none; display: inline-block; width: 14px; height: 14px; margin-top: 0.2rem; border-radius: 2px; background: var(--sk-ours); }
+  .sk-anthropic .sk-key { background: var(--sk-anthropic); border-radius: 50%; }
+  .sk-community .sk-key { background: var(--sk-community); transform: rotate(45deg) scale(0.85); }
+  .sk-diagram { display: none; margin-top: 1.6rem; background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--copper); border-radius: 5px; padding: 1rem 1.2rem 1.1rem; }
+  .sk-diagram.ready { display: block; }
+  .sk-filter { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .sk-filter::before { content: "Show lines for"; font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-right: 0.3rem; }
+  .sk-filter button { min-height: 44px; padding: 0 0.9rem; font: inherit; font-size: 0.9rem; font-weight: 500; color: var(--navy); background: #fff; border: 1px solid var(--navy); border-radius: 4px; cursor: pointer; }
+  .sk-filter button[aria-pressed="true"] { background: var(--navy); color: #fff; }
+  .sk-svg-wrap { margin-top: 0.6rem; }
+  .sk-svg { display: block; width: 100%; height: auto; }
+  .sk-svg text { font-family: 'IBM Plex Sans', sans-serif; fill: var(--charcoal); }
+  .sk-svg .col-head { font-size: 12px; font-weight: 600; fill: var(--navy); }
+  .sk-svg .caller-box { fill: #fff; stroke: var(--navy); stroke-width: 1.5; }
+  .sk-svg .caller-name { font-size: 14px; font-weight: 600; fill: var(--navy); }
+  .sk-svg .skill-box { fill: var(--cream); stroke: var(--rule); stroke-width: 1; }
+  .sk-svg .skill-name { font-size: 13px; font-weight: 500; }
+  .sk-svg .skill-total { font-size: 12px; font-weight: 600; fill: var(--navy); }
+  .sk-svg .group-name { font-size: 12px; font-weight: 600; }
+  .sk-svg .g-ours .group-name { fill: var(--sk-ours); }
+  .sk-svg .g-anthropic .group-name { fill: var(--sk-anthropic-text); }
+  .sk-svg .g-community .group-name { fill: var(--sk-community-text); }
+  .sk-svg .group-rule { stroke: var(--rule); stroke-width: 1; }
+  .sk-svg .edge { fill: none; stroke-opacity: 0.5; }
+  .sk-svg .edge.g-ours { stroke: var(--sk-ours); }
+  .sk-svg .edge.g-anthropic { stroke: var(--sk-anthropic); stroke-opacity: 0.7; }
+  .sk-svg .edge.g-community { stroke: var(--sk-community); stroke-opacity: 0.7; }
+  .sk-svg .pill-box { fill: #fff; stroke: var(--navy); stroke-width: 1; }
+  .sk-svg .pill-text { font-size: 11px; font-weight: 600; fill: var(--navy); }
+  .sk-svg .skill-bar.g-ours { fill: var(--sk-ours); }
+  .sk-svg .skill-bar.g-anthropic { fill: var(--sk-anthropic); }
+  .sk-svg .skill-bar.g-community { fill: var(--sk-community); }
+  /* Choosing a caller (or pointing at a line) fades everything that is not part of it. */
+  .sk-svg.focus .edge, .sk-svg.focus .pill, .sk-svg.focus .caller, .sk-svg.focus .skill { opacity: 0.12; }
+  .sk-svg.focus .on { opacity: 1; }
+  .sk-svg.focus .edge.on { stroke-opacity: 0.9; }
+  @media (prefers-reduced-motion: no-preference) { .sk-svg .edge, .sk-svg .pill, .sk-svg .caller, .sk-svg .skill { transition: opacity 0.15s; } }
+  .sk-scale { margin-top: 0.4rem; font-size: 0.85rem; max-width: 40rem; }
+  .sk-phone { display: none; margin-top: 1.4rem; font-size: 0.95rem; font-weight: 500; color: var(--navy); }
+  .sk-list-title { margin-top: 2.4rem; }
+  .sk-group { margin-top: 1.4rem; }
+  .sk-group-title { display: flex; gap: 0.6rem; align-items: center; font-family: var(--serif); font-size: 1.35rem; font-weight: 600; line-height: 1.2; color: var(--navy); margin-bottom: 0.5rem; }
+  .sk-group-title .sk-key { margin-top: 0; }
+  .sk-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--rule); border-radius: 5px; font-size: 0.95rem; }
+  .sk-table th, .sk-table td { text-align: left; vertical-align: top; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--rule); }
+  .sk-table thead th { font-size: 0.85rem; font-weight: 600; color: var(--navy); background: var(--cream); }
+  .sk-table tbody th { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .sk-table tbody tr:last-child th, .sk-table tbody tr:last-child td { border-bottom: none; }
+  .sk-total { font-weight: 600; color: var(--navy); font-variant-numeric: tabular-nums; }
+  /* Links between the diagram and the list. The diagram's skill boxes jump to a row; each row's "Show ... in the diagram" link jumps back.
+     The row links appear only while the diagram is showing. A row reached by a link is outlined, as a summary is further up the page. */
+  .sk-show { display: none; align-items: center; min-height: 44px; margin-top: 0.2rem; font-size: 0.88rem; font-weight: 500; }
+  .sk-live .sk-show { display: flex; width: fit-content; }
+  /* When the diagram is showing, it already carries who calls each skill and how often, so the list drops those two columns
+     and keeps only the skill and its description. They stay in the page (the diagram is drawn from them) and remain visible
+     on a phone or with scripts off, where there is no diagram. */
+  @media (min-width: 721px) { .sk-live .sk-table th:nth-child(n+3), .sk-live .sk-table td:nth-child(n+3) { display: none; } }
+  .sk-table tbody tr:target { outline: 2px solid var(--navy); outline-offset: -2px; }
+  .sk-table tbody tr:target > * { background: var(--cream); }
+  .sk-svg a.skill { cursor: pointer; outline: none; }
+  .sk-svg a.skill:hover .skill-box { stroke: var(--navy); }
+  .sk-svg a.skill:focus-visible .skill-box { stroke: #2563EB; stroke-width: 3; }
+  .sk-status { flex-basis: 100%; min-height: 1.4em; font-size: 0.88rem; color: var(--navy); font-weight: 500; }
+  .sk-callers { list-style: none; }
+  .sk-callers li { font-variant-numeric: tabular-nums; }
+  @media (max-width: 1020px) { .sk-legend { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) {
+    .sk-diagram, .sk-diagram.ready { display: none; }
+    .sk-phone { display: block; }
+    .sk-live .sk-show { display: none; }
+    .sk-table thead { position: absolute; left: -9999px; }
+    .sk-table, .sk-table tbody, .sk-table tr, .sk-table th, .sk-table td { display: block; }
+    .sk-table tr { padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--rule); }
+    .sk-table tbody tr:last-child { border-bottom: none; }
+    .sk-table th, .sk-table td { padding: 0.15rem 0; border: none; }
+    .sk-table tbody th { font-size: 1.05rem; white-space: normal; }
+    .sk-table td[data-label]::before { content: attr(data-label) ": "; font-weight: 600; font-size: 0.85rem; color: var(--navy); }
+    .sk-table td.sk-total { display: block; }
+    .sk-table .sk-callers { display: inline; }
+    .sk-table .sk-callers li { display: inline; }
+    .sk-table .sk-callers li + li::before { content: ", "; }
+  }
 
   /* SITE BAR. The same bar is on all four pages. On a wide screen the links run across the bar; at 1100px and narrower
      they fold into the Menu button (a native <details> element, so it works without a script). */
   :root {
     --gh: 60px;      /* height of the site bar */
-    --sub-h: 0px;    /* this page has no second bar */
+    --sub-h: 45px;   /* height of the second row of the site bar (the jump links): 44px of links plus a 1px border */
     --bar-h: calc(var(--gh) + var(--sub-h));   /* total height pinned to the top; keeps anchors and sticky panels clear of it */
   }
   html { scroll-padding-top: calc(var(--bar-h) + 12px); }
@@ -142,6 +283,16 @@
   .glinks a[aria-current="page"] { font-weight: 600; border-bottom-color: #B07D55; }
   .glinks .gcontact a { height: 44px; margin: auto 0 auto 0.4rem; padding: 0 1rem; border: 1.5px solid #172554; border-radius: 4px; }
   .gright { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; }
+  /* SECOND ROW (this page only): jump links to the team chart, the skills and the jobs, pinned under the site bar. The same row as on the
+     course page, but it stays in view at every width because it holds only three short links. */
+  .subbar { background: #F5F0E8; border-bottom: 1px solid #E1D9CB; height: var(--sub-h); }
+  .subbar-in { max-width: 73.33rem; height: 100%; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; }
+  .sublinks-wrap, .sublinks { height: 100%; }
+  .sublinks { list-style: none; display: flex; align-items: stretch; }
+  .sublinks a { display: flex; align-items: center; height: 100%; padding: 0 0.8rem; font-size: 0.9rem; color: #3D3D3D; text-decoration: none; border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+  .sublinks li:first-child a { padding-left: 0; }
+  .sublinks a:hover { background: #fff; }
+  .sublinks a[aria-current] { font-weight: 600; color: #172554; border-bottom-color: #B07D55; }
   .gmenu { display: none; }
   .gmenu > summary { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 0.9rem; border: 1px solid #172554; border-radius: 4px; color: #172554; font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; list-style: none; }
   .gmenu > summary::-webkit-details-marker { display: none; }
@@ -157,6 +308,7 @@
   @media (max-width: 720px) {
     :root { --gh: 56px; }
     .gbar-in { padding: 0 0.9rem; gap: 0.5rem; }
+    .subbar-in { padding: 0 0.9rem; }
     .gbrand { gap: 0.4rem; }
     .gbrand svg { width: 30px; height: 30px; }
     .gbrand span { font-size: 0.95rem; }
@@ -197,22 +349,29 @@
       </details>
     </div>
   </div></div>
+  <div class="subbar"><div class="subbar-in">
+    <nav class="sublinks-wrap" aria-label="On this page"><ul class="sublinks"><li><a href="#wf-chart" data-nav="team">The team</a></li><li><a href="#wf-skills" data-nav="skills">The skills</a></li><li><a href="#wf-jobs" data-nav="jobs">The jobs</a></li></ul></nav>
+  </div></div>
 </header>
 
-<!-- THE PAGE. The chart, summaries and jobs below are the same ones used in the team section of the course page. -->
+<!-- THE PAGE. -->
 <main class="page" id="team" tabindex="-1">
   <div class="sheet wf-section">
     <div class="wf-wrap">
     <h1 class="sec-title" id="wf-title">Meet Whitney's digital team</h1>
-    <p class="sec-body">Cooper is Whitney's chief of staff. Cooper works with Booker, Knox and eight directors. A director can have sidekicks: smaller agents that each do one narrow job for that director. Together they are the agentic workforce Whitney built and runs.</p>
+    <p class="sec-body">Cooper is Whitney's chief of staff. Cooper works with Booker, Knox and nine directors. A director can have sidekicks: smaller agents that each do one narrow job for that director. Together they are the agentic workforce Whitney built and runs.</p>
+    <p class="sec-body" id="wf-origin">This team is the product of months of work. When an agent gave a made-up answer, Whitney found the cause and added a rule or a check. The team also checks itself on a schedule, and looks at how others run agents before building anything new.</p>
     <p class="sec-body">Select any name to see its purpose, the model it runs on and what it is accountable for.</p>
     <p class="wf-asof">As of October 2026. Models change. Opus, Sonnet and Haiku are families of AI models from Anthropic.</p>
-    <p class="wf-skip"><a href="#wf-jobs">Skip to the jobs</a></p>
-
-    <div class="wf-layout">
+    <div class="wf-layout" id="wf-chart">
       <nav class="wf-chart" aria-label="The workforce">
         <ul class="wf-top"><li class="wf-booker"><a class="node top" href="#s-booker" data-sum="booker" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Booker</span><span class="n-role">Memory curator</span><span class="n-model">Opus</span></a></li><li class="wf-cooper"><a class="node top" href="#s-cooper" data-sum="cooper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Cooper</span><span class="n-role">Chief of staff</span><span class="n-model">Opus</span></a></li><li class="wf-knox"><a class="node top" href="#s-knox" data-sum="knox" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Knox</span><span class="n-role">Challenger</span><span class="n-model">Opus</span></a></li></ul>
-        <ul class="wf-dirs"><li class="wf-dir"><a class="node dir" href="#s-alice" data-sum="alice" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Alice</span><span class="n-role">Sales, business development and clients</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Alice"><li><a class="node side" href="#s-numbers-to-decisions" data-sum="numbers-to-decisions" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">numbers-to-decisions</span><span class="n-role">Sales data to decisions</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-jasper" data-sum="jasper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Jasper</span><span class="n-role">Marketing and market intelligence</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Jasper"><li><a class="node side" href="#s-brand-author" data-sum="brand-author" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">brand-author</span><span class="n-role">Brand standards</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-linkedin-post-review" data-sum="linkedin-post-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">linkedin-post-review</span><span class="n-role">Post reviewer</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-institutional-problem-scout" data-sum="institutional-problem-scout" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">institutional-problem-scout</span><span class="n-role">Problem scout</span><span class="n-model">Sonnet</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-carlisle" data-sum="carlisle" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Carlisle</span><span class="n-role">Business administration</span><span class="n-model">Opus</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Carlisle"><li><a class="node side" href="#s-annual-filing-reminder" data-sum="annual-filing-reminder" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">annual-filing-reminder</span><span class="n-role">Filing reminders</span><span class="n-model">Haiku</span></a></li><li><a class="node side" href="#s-imprint" data-sum="imprint" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">imprint</span><span class="n-role">Print shop and filing clerk</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-charlie" data-sum="charlie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Charlie</span><span class="n-role">Finance</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-edward" data-sum="edward" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Edward</span><span class="n-role">Product</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Edward"><li><a class="node side" href="#s-security-weakness-evaluator" data-sum="security-weakness-evaluator" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">security-weakness-evaluator</span><span class="n-role">Security review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-ux-design-review" data-sum="ux-design-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ux-design-review</span><span class="n-role">Usability review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-simplification-auditor" data-sum="simplification-auditor" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">simplification-auditor</span><span class="n-role">Simplification review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-ship-gate-reviewer" data-sum="ship-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ship-gate-reviewer</span><span class="n-role">Pre-delivery review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-code-gate-reviewer" data-sum="code-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">code-gate-reviewer</span><span class="n-role">Code review</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-emmett" data-sum="emmett" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Emmett</span><span class="n-role">Operations</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Emmett"><li><a class="node side" href="#s-vault-ingest" data-sum="vault-ingest" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">vault-ingest</span><span class="n-role">Knowledge-vault intake</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-esme" data-sum="esme" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Esme</span><span class="n-role">Personal life</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-rosalie" data-sum="rosalie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Rosalie</span><span class="n-role">Health</span><span class="n-model">Sonnet</span></a></li></ul>
+        <ul class="wf-dirs"><li class="wf-dir"><a class="node dir" href="#s-alice" data-sum="alice" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Alice</span><span class="n-role">Sales, business development and clients</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-jasper" data-sum="jasper" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Jasper</span><span class="n-role">Marketing and market intelligence</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Jasper"><li><a class="node side" href="#s-brand-author" data-sum="brand-author" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">brand-author</span><span class="n-role">Brand standards</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-linkedin-post-review" data-sum="linkedin-post-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">linkedin-post-review</span><span class="n-role">Post reviewer</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-institutional-problem-scout" data-sum="institutional-problem-scout" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">institutional-problem-scout</span><span class="n-role">Problem scout</span><span class="n-model">Sonnet</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-carlisle" data-sum="carlisle" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Carlisle</span><span class="n-role">Business administration</span><span class="n-model">Opus</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Carlisle"><li><a class="node side" href="#s-annual-filing-reminder" data-sum="annual-filing-reminder" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">annual-filing-reminder</span><span class="n-role">Filing reminders</span><span class="n-model">Haiku</span></a></li><li><a class="node side" href="#s-imprint" data-sum="imprint" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">imprint</span><span class="n-role">Print shop and filing clerk</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-charlie" data-sum="charlie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Charlie</span><span class="n-role">Finance</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-leah" data-sum="leah" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Leah</span><span class="n-role">Data analysis</span><span class="n-model">Opus</span></a></li><li class="wf-dir"><a class="node dir" href="#s-edward" data-sum="edward" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Edward</span><span class="n-role">Product</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Edward"><li><a class="node side" href="#s-security-weakness-evaluator" data-sum="security-weakness-evaluator" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">security-weakness-evaluator</span><span class="n-role">Security review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-ux-design-review" data-sum="ux-design-review" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ux-design-review</span><span class="n-role">Usability review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-simplification-auditor" data-sum="simplification-auditor" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">simplification-auditor</span><span class="n-role">Simplification review</span><span class="n-model">Sonnet</span></a></li><li><a class="node side" href="#s-ship-gate-reviewer" data-sum="ship-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">ship-gate-reviewer</span><span class="n-role">Pre-delivery review</span><span class="n-model">Opus</span></a></li><li><a class="node side" href="#s-code-gate-reviewer" data-sum="code-gate-reviewer" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">code-gate-reviewer</span><span class="n-role">Code review</span><span class="n-model">Opus</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-emmett" data-sum="emmett" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Emmett</span><span class="n-role">Operations</span><span class="n-model">Sonnet</span></a><p class="wf-side-title">Sidekicks</p><ul class="wf-side" aria-label="Sidekicks of Emmett"><li><a class="node side" href="#s-vault-ingest" data-sum="vault-ingest" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">vault-ingest</span><span class="n-role">Knowledge-vault intake</span><span class="n-model">Haiku</span></a></li></ul></li><li class="wf-dir"><a class="node dir" href="#s-esme" data-sum="esme" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Esme</span><span class="n-role">Personal life</span><span class="n-model">Sonnet</span></a></li><li class="wf-dir"><a class="node dir" href="#s-rosalie" data-sum="rosalie" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Rosalie</span><span class="n-role">Health</span><span class="n-model">Sonnet</span></a></li></ul>
+        <div class="wf-apart">
+          <p class="wf-apart-title">Works apart from the team</p>
+          <a class="node apart" href="#s-dax" data-sum="dax" aria-controls="wfPanel" aria-expanded="false"><span class="n-name">Dax</span><span class="n-role">Executive coach</span><span class="n-model">Opus</span></a>
+          <p class="wf-apart-note">Dax reports to Whitney alone. Cooper cannot send Dax work, and Dax's notes stay with Whitney.</p>
+        </div>
       </nav>
       <aside class="wf-panel sum" id="wfPanel" aria-live="polite" aria-label="Summary of the selected agent" hidden></aside>
     </div>
@@ -223,7 +382,6 @@
 <article class="sum" id="s-booker"><h3 class="sum-name">Booker <span>Memory curator</span></h3><dl><dt>Purpose</dt><dd>Keeps the workforce's shared memory: decisions, lessons, preferences and patterns.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Files what directors flag as worth remembering.</li><li>Notes when other files need updating to match.</li><li>Informs. Whitney and Cooper decide.</li></ul></dd></dl></article>
 <article class="sum" id="s-knox"><h3 class="sum-name">Knox <span>Challenger</span></h3><dl><dt>Purpose</dt><dd>Reads finished work and asks where it could be better.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>One pass on each important deliverable.</li><li>Up to 200 words and one to three questions.</li><li>Asks questions. Whitney decides what happens next.</li><li>Says so plainly when the work is solid.</li></ul></dd></dl></article>
 <article class="sum" id="s-alice"><h3 class="sum-name">Alice <span>Sales, business development and clients</span></h3><dl><dt>Purpose</dt><dd>Takes a prospect from a serious conversation to signed work, runs active client engagements, and keeps what each one teaches as reusable know-how.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Pipeline from the middle of the funnel to close.</li><li>Delivery on active client engagements.</li><li>Capturing reusable lessons from each engagement.</li><li>Works with Carlisle on paperwork and Charlie on pricing.</li></ul></dd></dl></article>
-<article class="sum" id="s-numbers-to-decisions"><h3 class="sum-name">numbers-to-decisions <span>Sales data to decisions</span></h3><dl><dt>Purpose</dt><dd>Turns sales and inventory numbers into the decisions an owner faces in the next 90 days.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>A workbook with live formulas.</li><li>A short decision memo.</li></ul></dd></dl></article>
 <article class="sum" id="s-jasper"><h3 class="sum-name">Jasper <span>Marketing and market intelligence</span></h3><dl><dt>Purpose</dt><dd>Owns the top of the funnel: awareness, positioning, market research and inbound interest.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Positioning and public copy drafts.</li><li>Market and industry research.</li><li>Inbound interest.</li><li>Hands qualified prospects to Alice.</li></ul></dd></dl></article>
 <article class="sum" id="s-brand-author"><h3 class="sum-name">brand-author <span>Brand standards</span></h3><dl><dt>Purpose</dt><dd>Writes the brand standards and the briefs designers work from.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Brand standards sections.</li><li>Designer briefs.</li><li>Mockups of brand options.</li></ul></dd></dl></article>
 <article class="sum" id="s-linkedin-post-review"><h3 class="sum-name">linkedin-post-review <span>Post reviewer</span></h3><dl><dt>Purpose</dt><dd>Reviews LinkedIn and social posts before they go out.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Hook and voice.</li><li>Brand fit.</li><li>Reach.</li></ul></dd></dl></article>
@@ -232,6 +390,7 @@
 <article class="sum" id="s-annual-filing-reminder"><h3 class="sum-name">annual-filing-reminder <span>Filing reminders</span></h3><dl><dt>Purpose</dt><dd>Reminds Whitney of the LLC's annual filings ahead of each deadline.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Says what is due and what to do.</li><li>Speaks up only when a filing is due.</li></ul></dd></dl></article>
 <article class="sum" id="s-imprint"><h3 class="sum-name">imprint <span>Print shop and filing clerk</span></h3><dl><dt>Purpose</dt><dd>Turns finished content into branded Word, Excel, PowerPoint and PDF files. Any director can use it.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Applies the brand to the file.</li><li>Names and files each document the same way.</li><li>Runs a check on each file before release.</li></ul></dd></dl></article>
 <article class="sum" id="s-charlie"><h3 class="sum-name">Charlie <span>Finance</span></h3><dl><dt>Purpose</dt><dd>Runs Heflin Group's financial planning and review.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>A forecast with three scenarios.</li><li>A monthly financial review.</li><li>Financial sections for business plans.</li><li>A KPI dashboard and quarterly variance notes.</li></ul></dd></dl></article>
+<article class="sum" id="s-leah"><h3 class="sum-name">Leah <span>Data analysis</span></h3><dl><dt>Purpose</dt><dd>Analyzes data for any job that needs it: a client's sales and inventory numbers, and the examples used in the Heflin Group course.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Follows CRISP-DM, the Cross-Industry Standard Process for Data Mining: six steps that start with the business question and end with delivery.</li><li>Turns a client's numbers into the decisions the owner faces next.</li><li>A workbook with live formulas and a short decision memo.</li><li>Says what the data can and cannot support, in plain words, beside the findings.</li></ul></dd></dl></article>
 <article class="sum" id="s-edward"><h3 class="sum-name">Edward <span>Product</span></h3><dl><dt>Purpose</dt><dd>Builds Heflin Group's own product and runs the quality checks before anything ships.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>The product roadmap and fixes.</li><li>Security, usability and simplicity reviews before release.</li><li>Checks work against real conditions before it goes to a client.</li><li>Works with Carlisle on legal prerequisites.</li></ul></dd></dl></article>
 <article class="sum" id="s-security-weakness-evaluator"><h3 class="sum-name">security-weakness-evaluator <span>Security review</span></h3><dl><dt>Purpose</dt><dd>Reviews a build for security weaknesses.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Ranks what it finds by severity.</li><li>Suggests a specific fix for each one.</li></ul></dd></dl></article>
 <article class="sum" id="s-ux-design-review"><h3 class="sum-name">ux-design-review <span>Usability review</span></h3><dl><dt>Purpose</dt><dd>Reviews anything a real person will use, from the user's side.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Clarity and friction.</li><li>Trust and accessibility.</li><li>Suggests specific improvements.</li></ul></dd></dl></article>
@@ -242,13 +401,51 @@
 <article class="sum" id="s-vault-ingest"><h3 class="sum-name">vault-ingest <span>Knowledge-vault intake</span></h3><dl><dt>Purpose</dt><dd>Files new reference material into the knowledge vault.</dd><dt>Model</dt><dd>Haiku</dd><dt>Core accountabilities</dt><dd><ul><li>Records where each source came from.</li><li>Notes where it overlaps what is already filed.</li></ul></dd></dl></article>
 <article class="sum" id="s-esme"><h3 class="sum-name">Esme <span>Personal life</span></h3><dl><dt>Purpose</dt><dd>Looks after the part of life outside work: family, friends, home and community.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Keeps up with the people and projects outside work.</li><li>Drafts messages for Whitney to review.</li><li>Flags calendar conflicts with Cooper.</li></ul></dd></dl></article>
 <article class="sum" id="s-rosalie"><h3 class="sum-name">Rosalie <span>Health</span></h3><dl><dt>Purpose</dt><dd>Protects time for workouts, sleep, meals and play.</dd><dt>Model</dt><dd>Sonnet</dd><dt>Core accountabilities</dt><dd><ul><li>Keeps those blocks on the calendar.</li><li>Is asked before work is routed that would use protected time.</li><li>Says no first. Cooper then asks Whitney whether to override.</li></ul></dd></dl></article>
+    <article class="sum" id="s-dax"><h3 class="sum-name">Dax <span>Executive coach</span></h3><dl><dt>Purpose</dt><dd>Coaches Whitney on big decisions, and ends each session with one small action to try.</dd><dt>Model</dt><dd>Opus</dd><dt>Core accountabilities</dt><dd><ul><li>Asks one question to find the real issue before offering advice.</li><li>Names the pattern and the question underneath a decision.</li><li>Ends each session with one specific action and a deadline.</li><li>Asks about the last session's action at the start of the next.</li><li>Works apart from the team, with its own instructions and its own memory. Cooper cannot send it work, and its notes stay with Whitney.</li></ul></dd></dl></article>
     </div>
+
+
+    <!-- SKILLS. A skill is a saved set of instructions an agent loads for one kind of job. The lists below are the single
+         source for every number: the diagram is drawn from them by the script at the bottom of the page. Without the script,
+         or on a phone, the lists are all that shows. -->
+    <section class="sk-section" id="wf-skills" aria-labelledby="skTitle">
+      <h2 class="sub-title sk-title" id="skTitle">The skills it uses</h2>
+      <p class="sec-body">A skill is a saved set of instructions that an agent loads when a job calls for it. Whitney types some skills herself. Cooper calls others in the middle of a task, and the directors call the rest.</p>
+      <p class="sec-body">Each line in the diagram joins one caller to one skill. The number on the line is how many times that caller used that skill, and thicker lines mean more.</p>
+
+      <ul class="sk-legend" aria-label="Where each skill comes from"><li class="sk-ours"><span class="sk-key" aria-hidden="true"></span><span><strong>Built by Heflin Group.</strong> Written by Heflin Group for its own work.</span></li><li class="sk-anthropic"><span class="sk-key" aria-hidden="true"></span><span><strong>From Anthropic.</strong> Published by Anthropic.</span></li><li class="sk-community"><span class="sk-key" aria-hidden="true"></span><span><strong>Community-built.</strong> Written by outside developers and installed for our use.</span></li></ul>
+
+      <p class="wf-asof sk-period">Whitney's counts start August 15, 2026 and the agents' start September 9. Both run to October 12. Only the most-used skills are shown.</p>
+      <div class="sk-diagram" id="skDiagram">
+        <div class="sk-filter" id="skFilter" role="group" aria-label="Show the lines for one caller"></div>
+        <div class="sk-svg-wrap" id="skSvgWrap"></div>
+        <p class="sk-scale">Thicker lines mean more use. The number on each line is the exact count.</p>
+      </div>
+      <p class="sk-phone">On a phone the diagram gives way to the list below. The list holds the same numbers.</p>
+
+      <h3 class="sub-title sk-list-title">What each skill does</h3>
+      <div class="sk-group sk-ours">
+        <h3 class="sk-group-title"><span class="sk-key" aria-hidden="true"></span>Built by Heflin Group</h3>
+        <table class="sk-table"><thead><tr><th scope="col">Skill</th><th scope="col">What it does</th><th scope="col">Who calls it</th><th scope="col">Total runs</th></tr></thead>
+        <tbody><tr id="sk-wrap-up" data-skill="wrap-up" data-group="ours"><th scope="row" data-label="Skill">wrap-up</th><td data-label="What it does">At the end of a working session, lists what is worth keeping and saves it where it belongs once Whitney approves. It exists because a conversation that has closed is hard to find again.<a class="sk-show" href="#skDiagram" data-show="wrap-up">Show wrap-up in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="51">Whitney: 51</li></ul></td><td class="sk-total" data-label="Total runs">51</td></tr><tr id="sk-md-to-docx" data-skill="md-to-docx" data-group="ours"><th scope="row" data-label="Skill">md-to-docx</th><td data-label="What it does">Turns a plain-text working file into a Word document that looks the same every time. It exists because Whitney does not want to read the raw files.<a class="sk-show" href="#skDiagram" data-show="md-to-docx">Show md-to-docx in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="29">Cooper: 29</li><li data-caller="Jasper" data-n="10">Jasper: 10</li><li data-caller="Emmett" data-n="1">Emmett: 1</li><li data-caller="Edward" data-n="1">Edward: 1</li><li data-caller="Alice" data-n="1">Alice: 1</li><li data-caller="Charlie" data-n="1">Charlie: 1</li></ul></td><td class="sk-total" data-label="Total runs">43</td></tr><tr id="sk-what-the-data-supports" data-skill="what-the-data-supports" data-group="ours"><th scope="row" data-label="Skill">what-the-data-supports</th><td data-label="What it does">Before anyone studies a set of numbers, works out what they can and cannot prove, and states those limits as clearly as the findings. It exists because an answer can look finished, pass review and still be wrong when the numbers could never have supported it.<a class="sk-show" href="#skDiagram" data-show="what-the-data-supports">Show what-the-data-supports in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="4">Jasper: 4</li><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total runs">7</td></tr><tr id="sk-problem-to-ship" data-skill="problem-to-ship" data-group="ours"><th scope="row" data-label="Skill">problem-to-ship</th><td data-label="What it does">Sets the order of work on a new project and holds the checks that must pass before anything goes to someone outside the company. It starts from the client's problem in the client's own words, because Whitney builds to solve problems.<a class="sk-show" href="#skDiagram" data-show="problem-to-ship">Show problem-to-ship in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="4">Cooper: 4</li></ul></td><td class="sk-total" data-label="Total runs">4</td></tr><tr id="sk-code-quality-gate" data-skill="code-quality-gate" data-group="ours"><th scope="row" data-label="Skill">code-quality-gate</th><td data-label="What it does">Has a second reviewer check any software before it is used for real, and keeps a record showing each check was done. It exists because software that runs without errors can still give the wrong answer.<a class="sk-show" href="#skDiagram" data-show="code-quality-gate">Show code-quality-gate in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="1">Cooper: 1</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total runs">2</td></tr><tr id="sk-linkedin-caption" data-skill="linkedin-caption" data-group="ours"><th scope="row" data-label="Skill">linkedin-caption</th><td data-label="What it does">Suggests three ideas for a LinkedIn post, then writes the one Whitney picks. It draws only on Whitney's written project records, so every post is built from work that happened.<a class="sk-show" href="#skDiagram" data-show="linkedin-caption">Show linkedin-caption in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="1">Whitney: 1</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total runs">2</td></tr><tr id="sk-convene-board" data-skill="convene-board" data-group="ours"><th scope="row" data-label="Skill">convene-board</th><td data-label="What it does">A standing panel of five AI advisers, each arguing from a different point of view, that Whitney calls together on a strategic question. It keeps minutes and an action list, and opens each meeting by checking what happened to the last meeting's actions. Only Whitney can call it. It exists because advisers who agree with everything add nothing, so its rules require disagreement.<a class="sk-show" href="#skDiagram" data-show="convene-board">Show convene-board in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="2">Whitney: 2</li></ul></td><td class="sk-total" data-label="Total runs">2</td></tr></tbody></table>
+      </div>
+      <div class="sk-group sk-anthropic">
+        <h3 class="sk-group-title"><span class="sk-key" aria-hidden="true"></span>From Anthropic</h3>
+        <table class="sk-table"><thead><tr><th scope="col">Skill</th><th scope="col">What it does</th><th scope="col">Who calls it</th><th scope="col">Total runs</th></tr></thead>
+        <tbody><tr id="sk-claude-api" data-skill="claude-api" data-group="anthropic"><th scope="row" data-label="Skill">claude-api</th><td data-label="What it does">Gives current, accurate facts when Whitney is building software that uses Claude, such as which versions exist and what they cost. It exists because Whitney's rule is to read facts like these from the current source each time.<a class="sk-show" href="#skDiagram" data-show="claude-api">Show claude-api in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li><li data-caller="Edward" data-n="3">Edward: 3</li></ul></td><td class="sk-total" data-label="Total runs">6</td></tr><tr id="sk-docx" data-skill="docx" data-group="anthropic"><th scope="row" data-label="Skill">docx</th><td data-label="What it does">Creates, reads and edits Word documents and templates. The workforce's own Word converter relies on it for the detailed rules of building Word files.<a class="sk-show" href="#skDiagram" data-show="docx">Show docx in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Emmett" data-n="4">Emmett: 4</li></ul></td><td class="sk-total" data-label="Total runs">4</td></tr><tr id="sk-frontend-design" data-skill="frontend-design" data-group="anthropic"><th scope="row" data-label="Skill">frontend-design</th><td data-label="What it does">Helps design web pages and app screens with a look of their own instead of a generic one. It is the fallback for page design because it runs inside Claude, with no outside service to lose access to.<a class="sk-show" href="#skDiagram" data-show="frontend-design">Show frontend-design in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Edward" data-n="2">Edward: 2</li><li data-caller="Jasper" data-n="1">Jasper: 1</li></ul></td><td class="sk-total" data-label="Total runs">3</td></tr><tr id="sk-skill-creator" data-skill="skill-creator" data-group="anthropic"><th scope="row" data-label="Skill">skill-creator</th><td data-label="What it does">Builds new skills, improves existing ones and tests how well they work. It exists because Whitney's rule is that work with a purpose-built tool is done with that tool.<a class="sk-show" href="#skDiagram" data-show="skill-creator">Show skill-creator in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total runs">3</td></tr><tr id="sk-artifact-capabilities" data-skill="artifact-capabilities" data-group="anthropic"><th scope="row" data-label="Skill">artifact-capabilities</th><td data-label="What it does">Lets a web page Whitney publishes do more than display text, such as remembering what visitors enter in a poll or sign-up sheet.<a class="sk-show" href="#skDiagram" data-show="artifact-capabilities">Show artifact-capabilities in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="2">Cooper: 2</li></ul></td><td class="sk-total" data-label="Total runs">2</td></tr><tr id="sk-update-config" data-skill="update-config" data-group="anthropic"><th scope="row" data-label="Skill">update-config</th><td data-label="What it does">Changes the settings that control the AI tool on Whitney's computer, such as what it may do without asking and what it does automatically. It exists because Whitney's rule is that work with a purpose-built tool is done with that tool.<a class="sk-show" href="#skDiagram" data-show="update-config">Show update-config in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="2">Cooper: 2</li></ul></td><td class="sk-total" data-label="Total runs">2</td></tr></tbody></table>
+      </div>
+      <div class="sk-group sk-community">
+        <h3 class="sk-group-title"><span class="sk-key" aria-hidden="true"></span>Community-built</h3>
+        <table class="sk-table"><thead><tr><th scope="col">Skill</th><th scope="col">What it does</th><th scope="col">Who calls it</th><th scope="col">Total runs</th></tr></thead>
+        <tbody><tr id="sk-ss" data-skill="ss" data-group="community"><th scope="row" data-label="Skill">ss</th><td data-label="What it does">Gives Claude eyes. He sees what Whitney sees on her screen, so she does not have to describe it.<a class="sk-show" href="#skDiagram" data-show="ss">Show ss in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="96">Whitney: 96</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total runs">97</td></tr><tr id="sk-last30days" data-skill="last30days" data-group="community"><th scope="row" data-label="Skill">last30days</th><td data-label="What it does">Finds what people have been saying online about a topic over the past month. It exists because Whitney's rule is to look at what others have done recently before designing anything.<a class="sk-show" href="#skDiagram" data-show="last30days">Show last30days in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="3">Jasper: 3</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total runs">4</td></tr><tr id="sk-brainstorming" data-skill="brainstorming" data-group="community"><th scope="row" data-label="Skill">brainstorming</th><td data-label="What it does">Talks an idea through with Whitney first, to settle what she wants and how it should work, before anything is built.<a class="sk-show" href="#skDiagram" data-show="brainstorming">Show brainstorming in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total runs">3</td></tr></tbody></table>
+      </div>
+    </section>
 
     <h2 class="sub-title wf-jobs-title" id="wf-jobs">The jobs that keep it running</h2>
     <p class="sec-body">These run on a schedule. The agents draft, route and check, and Whitney makes the final call.</p>
     <ul class="jobs"><li><p class="when">Every night</p><h3>Memory consolidation</h3><p>Runs as Booker. Keeps the workforce's shared memory in order.</p></li><li><p class="when">Every night</p><h3>Crew check</h3><p>Notes which agents have been active.</p></li><li><p class="when">Every morning</p><h3>Morning briefings</h3><p>Whitney gets a briefing on the day ahead, a status note for each active project and a back-office list.</p></li><li><p class="when">Every morning</p><h3>Briefing check</h3><p>Confirms the morning briefing went out.</p></li><li><p class="when">Every day</p><h3>Email triage</h3><p>Sorts open loops into what Whitney owes and what she is waiting on.</p></li><li><p class="when">Regularly</p><h3>Backup</h3><p>The workforce's files are backed up regularly.</p></li><li><p class="when">Sunday evenings</p><h3>Weekly reset</h3><p>Runs as Cooper. Tidies the week's lists.</p></li><li><p class="when">Every day</p><h3>Filing reminder</h3><p>Runs the annual-filing-reminder. It speaks up only when a filing is due.</p></li></ul>
 
-    <p class="sec-body pointer">Want to build a small version of this yourself? The two-day live course, <a href="/course.html">Build Your AI Control Room</a>, is where you build one chief of staff and one reviewer.</p>
+    <div class="wf-cta"><h2 class="sub-title">Are you ready to get started building your own?</h2><p class="sec-body">Build Your AI Control Room is a two-day live course. You build one chief of staff and one reviewer.</p><a class="wf-cta-btn" href="/course.html">See the course</a></div>
     </div>
   </div>
 </main>
@@ -263,14 +460,14 @@
 
 <script>
 /* DIGITAL TEAM CHART. Selecting a name shows that agent's summary in one panel. On a wide screen the panel
-   sits beside the chart; on a narrow screen it opens directly under the name that was selected.
+   sits under the chart; on a phone it opens directly under the name that was selected.
    If anything here fails, the full list of summaries stays visible under the chart, so nothing is lost. */
 (function () {
   try {
     var nameLinks = document.querySelectorAll('.node[data-sum]');
     var panel = document.getElementById('wfPanel');
     if (!nameLinks.length || !panel) return;
-    var narrowScreen = window.matchMedia('(max-width: 1020px)');
+    var narrowScreen = window.matchMedia('(max-width: 720px)');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var selectedId = null;
 
@@ -316,6 +513,35 @@
       if (!narrowScreen.matches && panel.parentNode !== wideLayout) wideLayout.appendChild(panel);
       if (!selectedId && !narrowScreen.matches) showSummary('cooper', false);
       if (narrowScreen.matches && selectedId) showSummary(selectedId, false);
+    }
+
+    // Sidekick lists: fold each one away behind a small button that says how many it holds. Built here, so without the script
+    // there is no button and every list stays open. If this part fails, the lists simply stay open.
+    try {
+      var sideLists = document.querySelectorAll('.wf-dir .wf-side');
+      for (var k = 0; k < sideLists.length; k++) {
+        (function (list) {
+          var count = list.children.length;
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'wf-toggle';
+          button.textContent = count + (count === 1 ? ' sidekick' : ' sidekicks');
+          list.id = list.id || 'wfSide' + k;
+          button.setAttribute('aria-controls', list.id);
+          button.setAttribute('aria-expanded', 'false');
+          button.addEventListener('click', function () {
+            var opening = list.hidden;
+            list.hidden = !opening;
+            button.setAttribute('aria-expanded', opening ? 'true' : 'false');
+          });
+          list.parentNode.insertBefore(button, list);
+          list.hidden = true;
+        })(sideLists[k]);
+      }
+      if (sideLists.length) document.querySelector('.wf-chart').className += ' has-toggles';
+    } catch (toggleError) {
+      var openLists = document.querySelectorAll('.wf-side');
+      for (var m = 0; m < openLists.length; m++) openLists[m].hidden = false;
     }
 
     for (var i = 0; i < nameLinks.length; i++) {
@@ -387,5 +613,212 @@
   } catch (error) { /* the menu still opens and closes without the script */ }
 })();
 </script>
+<script>
+/* SKILLS DIAGRAM. Reads the skills lists on this page and draws one line from each caller to each skill it used,
+   with the count on the line. Line thickness is 1.5 + 1.5 x the square root of the count, in pixels, so 1 draws at 3 and 96 at about 16.
+   Choosing a caller button, pointing at a line or a skill, or using a "Show ... in the diagram" link in the list fades everything else.
+   Each skill box is a link to that skill's row in the list. Nothing is fetched or sent anywhere.
+   If anything here fails, the diagram stays hidden and the lists remain, so nothing is lost. */
+(function () {
+  try {
+    var rows = document.querySelectorAll('.sk-table tbody tr[data-skill]');
+    var wrap = document.getElementById('skSvgWrap');
+    var filter = document.getElementById('skFilter');
+    var diagram = document.getElementById('skDiagram');
+    if (!rows.length || !wrap || !filter || !diagram) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var GROUPS = [['ours', 'Built by Heflin Group'], ['anthropic', 'From Anthropic'], ['community', 'Community-built']];
+
+    /* 1. READ THE LISTS: one entry per skill, with its group, total and callers. */
+    var skills = [];
+    rows.forEach(function (row) {
+      var callers = [];
+      row.querySelectorAll('li[data-caller]').forEach(function (li) {
+        callers.push({ name: li.getAttribute('data-caller'), n: Number(li.getAttribute('data-n')) });
+      });
+      skills.push({ name: row.getAttribute('data-skill'), group: row.getAttribute('data-group'), callers: callers,
+                    total: Number(row.querySelector('.sk-total').textContent), row: row });
+    });
+
+    /* 2. PLACE THE SKILLS in a column on the right, group by group. Each line gets its own slot on its skill so every
+       count has room. Callers within a skill keep one fixed order so lines do not tangle. */
+    var W = 760, SLOT = 20, PAD = 5, GAP = 10, GROUP_GAP = 36, TOP = 40;
+    var SKILL_X = 520, SKILL_W = 240, CALLER_W = 104, CALLER_H = 40, PILL_W = 30;
+    var callerOrder = ['Whitney', 'Cooper', 'Jasper', 'Emmett', 'Edward', 'Alice', 'Charlie'];
+    var y = TOP, groupMarks = [];
+    GROUPS.forEach(function (g) {
+      var inGroup = skills.filter(function (s) { return s.group === g[0]; });
+      if (!inGroup.length) return;
+      groupMarks.push({ id: g[0], label: g[1], y: y });
+      y += 20;
+      inGroup.forEach(function (s) {
+        s.callers.sort(function (a, b) { return callerOrder.indexOf(a.name) - callerOrder.indexOf(b.name); });
+        s.h = Math.max(30, s.callers.length * SLOT + 2 * PAD);
+        s.top = y;
+        s.callers.forEach(function (c, i) { c.endY = s.top + (s.h - s.callers.length * SLOT) / 2 + SLOT * (i + 0.5); });
+        y += s.h + GAP;
+      });
+      y += GROUP_GAP - GAP;
+    });
+    var H = y - GROUP_GAP + GAP;
+
+    /* 3. PLACE THE CALLERS in a column on the left, ordered by the average height of the skills they use. */
+    var callers = {};
+    skills.forEach(function (s) { s.callers.forEach(function (c) {
+      var k = callers[c.name] || (callers[c.name] = { name: c.name, sum: 0, count: 0 });
+      k.sum += c.endY; k.count += 1;
+    }); });
+    var list = Object.keys(callers).map(function (n) { return callers[n]; });
+    list.sort(function (a, b) { return a.sum / a.count - b.sum / b.count; });
+    list.forEach(function (k, i) { k.y = TOP + (H - TOP) * (i + 0.5) / list.length; });
+
+    /* 4. DRAW. */
+    function el(tag, attrs, parent) {
+      var node = document.createElementNS(NS, tag);
+      for (var a in attrs) node.setAttribute(a, attrs[a]);
+      if (parent) parent.appendChild(node);
+      return node;
+    }
+    function text(str, attrs, parent) { var t = el('text', attrs, parent); t.textContent = str; return t; }
+    function thickness(n) { return 1.5 + 1.5 * Math.sqrt(n); }
+    function times(n) { return n === 1 ? '1 time' : n + ' times'; }
+
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, 'class': 'sk-svg', role: 'group',
+      'aria-label': 'Diagram joining each caller to the skills it used. Each skill links to its description in the list below.' }, wrap);
+    text('Who calls it', { x: 0, y: 14, 'class': 'col-head' }, svg);
+    text('The skill and its total runs', { x: SKILL_X, y: 14, 'class': 'col-head' }, svg);
+
+    /* Lines, counts, callers and group names are hidden from screen readers (the list below carries them); the skill links stay available. */
+    var edgeLayer = el('g', { 'aria-hidden': 'true' }, svg), pillLayer = el('g', { 'aria-hidden': 'true' }, svg), nodeLayer = el('g', {}, svg);
+    var edges = [];
+
+    groupMarks.forEach(function (m) {
+      var g = el('g', { 'class': 'g-' + m.id, 'aria-hidden': 'true' }, nodeLayer);
+      text(m.label, { x: SKILL_X, y: m.y + 12, 'class': 'group-name' }, g);
+    });
+
+    skills.forEach(function (s) {
+      var g = el('a', { 'class': 'skill g-' + s.group, href: '#sk-' + s.name,
+        'aria-label': s.name + ', ' + s.total + (s.total === 1 ? ' run' : ' runs') + ': read the description' }, nodeLayer);
+      g.addEventListener('mouseenter', function () { show(function (e) { return e.skill === s.name; }); });
+      g.addEventListener('mouseleave', refresh);
+      g.addEventListener('focus', function () { show(function (e) { return e.skill === s.name; }); });
+      g.addEventListener('blur', refresh);
+      el('rect', { x: SKILL_X, y: s.top, width: SKILL_W, height: s.h, rx: 3, 'class': 'skill-box' }, g);
+      el('rect', { x: SKILL_X, y: s.top, width: 5, height: s.h, 'class': 'skill-bar g-' + s.group }, g);
+      text(s.name, { x: SKILL_X + 14, y: s.top + s.h / 2 + 4.5, 'class': 'skill-name' }, g);
+      text(String(s.total), { x: SKILL_X + SKILL_W - 10, y: s.top + s.h / 2 + 4.5, 'text-anchor': 'end', 'class': 'skill-total' }, g);
+      s.node = g;
+    });
+
+    list.forEach(function (k) {
+      var g = el('g', { 'class': 'caller', 'aria-hidden': 'true' }, nodeLayer);
+      el('rect', { x: 1, y: k.y - CALLER_H / 2, width: CALLER_W, height: CALLER_H, rx: 4, 'class': 'caller-box' }, g);
+      text(k.name, { x: 1 + CALLER_W / 2, y: k.y + 5, 'text-anchor': 'middle', 'class': 'caller-name' }, g);
+      k.node = g;
+    });
+
+    skills.forEach(function (s) {
+      s.callers.forEach(function (c) {
+        var x0 = 1 + CALLER_W, x1 = SKILL_X, y0 = callers[c.name].y, y1 = c.endY, xm = (x0 + x1) / 2;
+        var path = el('path', { d: 'M' + x0 + ',' + y0 + ' C' + xm + ',' + y0 + ' ' + xm + ',' + y1 + ' ' + x1 + ',' + y1,
+          'stroke-width': thickness(c.n).toFixed(2), 'class': 'edge g-' + s.group }, edgeLayer);
+        el('title', {}, path).textContent = c.name + ' used ' + s.name + ' ' + times(c.n);
+        var pill = el('g', { 'class': 'pill' }, pillLayer);
+        el('rect', { x: x1 - PILL_W - 8, y: y1 - 8, width: PILL_W, height: 16, rx: 8, 'class': 'pill-box' }, pill);
+        text(String(c.n), { x: x1 - PILL_W / 2 - 8, y: y1 + 4, 'text-anchor': 'middle', 'class': 'pill-text' }, pill);
+        edges.push({ caller: c.name, skill: s.name, path: path, pill: pill, skillNode: s.node, callerNode: callers[c.name].node });
+        [path, pill].forEach(function (n) {
+          n.addEventListener('mouseenter', function () { show(function (e) { return e.path === path; }); });
+          n.addEventListener('mouseleave', refresh);
+        });
+      });
+    });
+
+    /* 5. HIGHLIGHTING. "show" lights the lines the test picks and fades the rest; "refresh" returns to the chosen caller. */
+    var chosen = null, chosenSkill = null;
+    var status = document.createElement('p');
+    status.className = 'sk-status'; status.setAttribute('aria-live', 'polite');
+    function show(test) {
+      svg.classList.add('focus');
+      document.querySelectorAll('.on').forEach(function (n) { n.classList.remove('on'); });
+      edges.forEach(function (e) {
+        if (!test(e)) return;
+        [e.path, e.pill, e.skillNode, e.callerNode].forEach(function (n) { n.classList.add('on'); });
+      });
+    }
+    function refresh() {
+      status.textContent = chosenSkill ? 'Showing the lines for ' + chosenSkill + '. Choose Everyone to clear.' : '';
+      if (!chosen && !chosenSkill) { svg.classList.remove('focus'); document.querySelectorAll('.on').forEach(function (n) { n.classList.remove('on'); }); return; }
+      show(function (e) { return chosenSkill ? e.skill === chosenSkill : e.caller === chosen; });
+    }
+    /* Sets which caller or skill is chosen (at most one) and updates the buttons and the lines. */
+    function choose(caller, skill) {
+      chosen = caller; chosenSkill = skill;
+      buttons.forEach(function (x) { x.btn.setAttribute('aria-pressed', (!skill && x.value === caller) ? 'true' : 'false'); });
+      refresh();
+    }
+
+    /* 6. CALLER BUTTONS: real buttons, so the keyboard can reach every caller. */
+    var buttons = [];
+    function addButton(label, value) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = label; b.setAttribute('aria-pressed', value === null ? 'true' : 'false');
+      b.addEventListener('click', function () { choose(value, null); });
+      filter.appendChild(b); buttons.push({ btn: b, value: value });
+    }
+    addButton('Everyone', null);
+    list.forEach(function (k) { addButton(k.name, k.name); });
+    filter.appendChild(status);
+
+    /* 7. LINKS FROM THE LIST BACK TO THE DIAGRAM. Each "Show ... in the diagram" link picks that skill, then scrolls the skill's box into
+       view and puts keyboard focus on it. The page's scroll-padding keeps it clear of the site bar, and the page's own
+       reduced-motion rule keeps the scroll from animating, because no scroll behaviour is set here. */
+    skills.forEach(function (s) {
+      var back = s.row.querySelector('.sk-show');
+      var box = s.node;
+      if (!back) return;
+      back.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        choose(null, s.name);
+        box.scrollIntoView({ block: 'center' });
+        box.focus({ preventScroll: true });
+      });
+    });
+
+    diagram.className += ' ready';
+    document.getElementById('wf-skills').className += ' sk-live';
+  } catch (err) { /* The lists below still hold every number. */ }
+})();
+</script>
+
+<script>
+/* WHERE YOU ARE. Marks the jump link for the section on screen: The team, The skills or The jobs. A section counts once its top
+   has passed just under the pinned bars, and at the very bottom of the page the last one counts, because the jobs section is
+   too short to scroll its heading up that far. If this fails, the links still jump; they just stay unmarked. */
+(function () {
+  try {
+    var links = document.querySelectorAll('.sublinks a[data-nav]');
+    var sections = [document.getElementById('wf-chart'), document.getElementById('wf-skills'), document.getElementById('wf-jobs')];
+    var header = document.querySelector('.site-header');
+    if (links.length !== 3 || !sections[0] || !sections[1] || !sections[2] || !header) return;
+    var waiting = false;
+    function mark() {
+      waiting = false;
+      var line = header.offsetHeight + 24, current = 0;
+      for (var i = 1; i < 3; i++) if (sections[i].getBoundingClientRect().top <= line) current = i;
+      if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 2) current = 2;
+      for (var j = 0; j < 3; j++) {
+        if (j === current) links[j].setAttribute('aria-current', 'location'); else links[j].removeAttribute('aria-current');
+      }
+    }
+    function queue() { if (!waiting) { waiting = true; window.requestAnimationFrame(mark); } }
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    mark();
+  } catch (err) { /* the links still jump without the marker */ }
+})();
+</script>
+
 </body>
 </html>
