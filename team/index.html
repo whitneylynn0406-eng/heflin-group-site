@@ -218,7 +218,10 @@
   .sk-svg.focus .edge.on { stroke-opacity: 0.9; }
   @media (prefers-reduced-motion: no-preference) { .sk-svg .edge, .sk-svg .pill, .sk-svg .caller, .sk-svg .skill { transition: opacity 0.15s; } }
   .sk-scale { margin-top: 0.4rem; font-size: 0.85rem; max-width: 40rem; }
-  .sk-phone { display: none; margin-top: 1.4rem; font-size: 0.95rem; font-weight: 500; color: var(--navy); }
+  /* PHONE CHART (720px and narrower only). The wide diagram above is unchanged; on a phone a treemap is drawn from the same lists. */
+  .sk-pchart { display: none; }
+  .sk-narrow { display: none; }
+  .sk-backcell { display: none; }
   .sk-list-title { margin-top: 2.4rem; }
   .sk-group { margin-top: 1.4rem; }
   .sk-group-title { display: flex; gap: 0.6rem; align-items: center; font-family: var(--serif); font-size: 1.35rem; font-weight: 600; line-height: 1.2; color: var(--navy); margin-bottom: 0.5rem; }
@@ -248,8 +251,33 @@
   @media (max-width: 1020px) { .sk-legend { grid-template-columns: 1fr; } }
   @media (max-width: 720px) {
     .sk-diagram, .sk-diagram.ready { display: none; }
-    .sk-phone { display: block; }
     .sk-live .sk-show { display: none; }
+    /* The intro sentence about lines is shown only where the diagram is; the phone sentence only once the treemap has drawn.
+       If the treemap is missing (scripts off, or it failed), the phone shows the lists and no intro paragraph about a chart. */
+    .sk-lines { display: none; }
+    .sk-pready .sk-lines { display: block; }
+    .sk-pready .sk-wide { display: none; }
+    .sk-pready .sk-narrow { display: inline; }
+    .sk-pchart.ready { display: block; margin-top: 1.4rem; font-size: 13px; line-height: 1.3; color: var(--charcoal);
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    .sk-pchart button, .sk-pchart a { font: inherit; }
+    .sk-pnote { font-size: 13px; line-height: 1.4; margin-bottom: 0.2rem; }
+    .tm-row { display: flex; width: 100%; }
+    .tm-box { flex: none; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 2px; height: 100%; overflow: hidden;
+      padding: 5px 7px 4px; border: 1px solid var(--cream); border-radius: 0; text-align: left; text-decoration: none; cursor: pointer; color: #fff; }
+    .tm-box.g-ours { background: #172554; }
+    .tm-box.g-anthropic { background: #B07D55; color: #121212; }
+    .tm-box.g-community { background: #4F7A6A; }
+    .tm-name { flex: 0 1 auto; min-width: 0; min-height: 0; overflow: hidden; font-size: 13px; font-weight: 500; line-height: 1.2; overflow-wrap: anywhere; }
+    .tm-box.sm .tm-name { font-size: 12px; line-height: 1.2; }
+    .tm-n { flex: none; font-size: 17px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
+    /* Marks the box you came back to (:target) and the box the keyboard is on (:focus-visible): a dark outer band and a white inner band, both drawn
+       inside the box so neighbouring boxes cannot cover them. White touches the fill and is at least 3.5:1 on all three fills; the dark band is 15:1
+       against the page and 18:1 against the white. */
+    .tm-box:focus-visible, .tm-box:target { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 3px #121212, inset 0 0 0 6px #fff; }
+    /* Back to the chart: a link at the end of each list row, on a phone, once the treemap is drawn. */
+    .sk-pready .sk-backcell { display: block; }
+    .sk-back { display: flex; align-items: center; min-height: 44px; font-weight: 500; }
     .sk-table thead { position: absolute; left: -9999px; }
     .sk-table, .sk-table tbody, .sk-table tr, .sk-table th, .sk-table td { display: block; }
     .sk-table tr { padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--rule); }
@@ -261,6 +289,11 @@
     .sk-table .sk-callers { display: inline; }
     .sk-table .sk-callers li { display: inline; }
     .sk-table .sk-callers li + li::before { content: ", "; }
+  }
+
+  /* PRINT at 720px or narrower: no treemap, no phone sentence, no back links. The lists already carry both columns. */
+  @media print and (max-width: 720px) {
+    .sk-pchart, .sk-pchart.ready, .sk-lines, .sk-backcell, .sk-pready .sk-backcell { display: none !important; }
   }
 
   /* SITE BAR. The same bar is on all four pages. On a wide screen the links run across the bar; at 1100px and narrower
@@ -407,54 +440,52 @@
 
     <!-- SKILLS. A skill is a saved set of instructions an agent loads for one kind of job. The lists below are the single
          source for every number: the diagram is drawn from them by the script at the bottom of the page. Without the script,
-         or on a phone, the lists are all that shows. -->
+         the lists are all that shows. On a phone a treemap is drawn from the same lists. -->
     <section class="sk-section" id="wf-skills" aria-labelledby="skTitle">
       <h2 class="sub-title sk-title" id="skTitle">The skills it uses</h2>
       <p class="sec-body">A skill is a saved set of instructions that an agent loads when a job calls for it. Whitney types some skills herself. Cooper calls others in the middle of a task, and the directors call the rest.</p>
-      <p class="sec-body">Each line in the diagram joins one caller to one skill. The number on the line is how many times that caller used that skill, and thicker lines mean more.</p>
+      <p class="sec-body sk-lines"><span class="sk-wide">Each line in the diagram joins one caller to one skill. The number on the line is how many times that caller used that skill, and thicker lines mean more.</span><span class="sk-narrow">Each box is one skill. The number is how many times it was used. Tap a box to read what it does.</span></p>
 
       <ul class="sk-legend" aria-label="Where each skill comes from"><li class="sk-ours"><span class="sk-key" aria-hidden="true"></span><span><strong>Built by Heflin Group.</strong> Written by Heflin Group for its own work.</span></li><li class="sk-anthropic"><span class="sk-key" aria-hidden="true"></span><span><strong>From Anthropic.</strong> Published by Anthropic.</span></li><li class="sk-community"><span class="sk-key" aria-hidden="true"></span><span><strong>Community-built.</strong> Written by outside developers and installed for our use.</span></li></ul>
 
-      <p class="wf-asof sk-period">Whitney's counts start August 15, 2026 and the agents' start September 9. Both run to October 12. Most skills used only once are left out.</p>
+      <p class="wf-asof sk-period">Whitney's counts start August 15, 2026 and the agents' start September 9. Both run to October 12. Not every skill is shown.</p>
       <div class="sk-diagram" id="skDiagram">
         <div class="sk-filter" id="skFilter" role="group" aria-label="Show the lines for one caller"></div>
         <div class="sk-svg-wrap" id="skSvgWrap"></div>
         <p class="sk-scale">Thicker lines mean more use. The number on each line is the exact count.</p>
       </div>
-      <p class="sk-phone">On a phone the diagram gives way to the list below. The list holds the same numbers.</p>
+      <div class="sk-pchart" id="skPChart"></div>
 
       <h3 class="sub-title sk-list-title">What each skill does</h3>
       <div class="sk-group sk-ours">
         <h3 class="sk-group-title"><span class="sk-key" aria-hidden="true"></span>Built by Heflin Group</h3>
         <table class="sk-table"><thead><tr><th scope="col">Skill</th><th scope="col">What it does</th><th scope="col">Who calls it</th><th scope="col">Total uses</th></tr></thead>
-        <tbody><tr id="sk-wrap-up" data-skill="wrap-up" data-group="ours"><th scope="row" data-label="Skill">wrap-up</th><td data-label="What it does">At the end of a working session, lists what is worth keeping and saves it where it belongs once Whitney approves. It exists because a conversation that has closed is hard to find again.<a class="sk-show" href="#skDiagram" data-show="wrap-up">Show wrap-up in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="53">Whitney: 53</li></ul></td><td class="sk-total" data-label="Total uses">53</td></tr>
-<tr id="sk-md-to-docx" data-skill="md-to-docx" data-group="ours"><th scope="row" data-label="Skill">md-to-docx</th><td data-label="What it does">Turns a plain-text working file into a Word document that looks the same every time. It exists because Whitney does not want to read the raw files.<a class="sk-show" href="#skDiagram" data-show="md-to-docx">Show md-to-docx in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="30">Cooper: 30</li><li data-caller="Jasper" data-n="10">Jasper: 10</li><li data-caller="Emmett" data-n="3">Emmett: 3</li><li data-caller="Edward" data-n="2">Edward: 2</li><li data-caller="Alice" data-n="1">Alice: 1</li><li data-caller="Charlie" data-n="1">Charlie: 1</li><li data-caller="Carlisle" data-n="1">Carlisle: 1</li></ul></td><td class="sk-total" data-label="Total uses">48</td></tr>
-<tr id="sk-what-the-data-supports" data-skill="what-the-data-supports" data-group="ours"><th scope="row" data-label="Skill">what-the-data-supports</th><td data-label="What it does">Before anyone studies a set of numbers, works out what they can and cannot prove, and states those limits as clearly as the findings. It exists because an answer can look finished, pass review and still be wrong when the numbers could never have supported it.<a class="sk-show" href="#skDiagram" data-show="what-the-data-supports">Show what-the-data-supports in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="4">Cooper: 4</li><li data-caller="Jasper" data-n="4">Jasper: 4</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">9</td></tr>
-<tr id="sk-problem-to-ship" data-skill="problem-to-ship" data-group="ours"><th scope="row" data-label="Skill">problem-to-ship</th><td data-label="What it does">Sets the order of work on a new project and holds the checks that must pass before anything goes to someone outside the company. It starts from the client's problem in the client's own words, because Whitney builds to solve problems.<a class="sk-show" href="#skDiagram" data-show="problem-to-ship">Show problem-to-ship in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="7">Cooper: 7</li></ul></td><td class="sk-total" data-label="Total uses">7</td></tr>
-<tr id="sk-code-quality-gate" data-skill="code-quality-gate" data-group="ours"><th scope="row" data-label="Skill">code-quality-gate</th><td data-label="What it does">Has a second reviewer check any software before it is used for real, and keeps a record showing each check was done. It exists because software that runs without errors can still give the wrong answer.<a class="sk-show" href="#skDiagram" data-show="code-quality-gate">Show code-quality-gate in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="4">Cooper: 4</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">5</td></tr>
-<tr id="sk-linkedin-caption" data-skill="linkedin-caption" data-group="ours"><th scope="row" data-label="Skill">linkedin-caption</th><td data-label="What it does">Suggests three ideas for a LinkedIn post, then writes the one Whitney picks. It draws only on Whitney's written project records, so every post is built from work that happened.<a class="sk-show" href="#skDiagram" data-show="linkedin-caption">Show linkedin-caption in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="2">Cooper: 2</li><li data-caller="Whitney" data-n="1">Whitney: 1</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">4</td></tr>
-<tr id="sk-verify-before-deliver" data-skill="verify-before-deliver" data-group="ours"><th scope="row" data-label="Skill">verify-before-deliver</th><td data-label="What it does">Before an agent reports that something was saved, sent or scheduled, checks that it really happened. It exists because an agent can report finished work that was never done.<a class="sk-show" href="#skDiagram" data-show="verify-before-deliver">Show verify-before-deliver in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
-<tr id="sk-automation-qa" data-skill="automation-qa" data-group="ours"><th scope="row" data-label="Skill">automation-qa</th><td data-label="What it does">Checks a task that runs on its own before it goes live, for the mistakes such tasks tend to make, such as guessing today's date or relying on a tool that is missing. It exists because a task that fails with no one watching can go unnoticed until someone finds the bad result.<a class="sk-show" href="#skDiagram" data-show="automation-qa">Show automation-qa in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
-<tr id="sk-numbers-to-decisions" data-skill="numbers-to-decisions" data-group="ours"><th scope="row" data-label="Skill">numbers-to-decisions</th><td data-label="What it does">Turns a client's sales and inventory export into the two or three decisions the owner faces in the next 90 days, with a workbook and a short memo. It exists because an analysis that stops at what the numbers say leaves the owner with homework.<a class="sk-show" href="#skDiagram" data-show="numbers-to-decisions">Show numbers-to-decisions in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="2">Jasper: 2</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
-<tr id="sk-convene-board" data-skill="convene-board" data-group="ours"><th scope="row" data-label="Skill">convene-board</th><td data-label="What it does">A standing panel of five AI advisers, each arguing from a different point of view, that Whitney calls together on a strategic question. It keeps minutes and an action list, and opens each meeting by checking what happened to the last meeting's actions. Only Whitney can call it. It exists because advisers who agree with everything add nothing, so its rules require disagreement.<a class="sk-show" href="#skDiagram" data-show="convene-board">Show convene-board in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="2">Whitney: 2</li></ul></td><td class="sk-total" data-label="Total uses">2</td></tr>
-<tr id="sk-shopify-config" data-skill="shopify-config" data-group="ours"><th scope="row" data-label="Skill">shopify-config</th><td data-label="What it does">Checks Shopify's current help pages and a client's live online store before giving any instruction for changing the store. It exists because Shopify's screens change and a confident but wrong step can leave a live store in the wrong state. It was in use before these counts begin.<a class="sk-show" href="#skDiagram" data-show="shopify-config">Show shopify-config in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="1">Jasper: 1</li></ul></td><td class="sk-total" data-label="Total uses">1</td></tr></tbody></table>
+        <tbody><tr id="sk-wrap-up" data-skill="wrap-up" data-group="ours"><th scope="row" data-label="Skill">wrap-up</th><td data-label="What it does">Memory management: choosing on purpose what gets remembered. Lists what a session produced and saves it in the right file once approved.<a class="sk-show" href="#skDiagram" data-show="wrap-up">Show wrap-up in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="53">Whitney: 53</li></ul></td><td class="sk-total" data-label="Total uses">53</td></tr>
+<tr id="sk-md-to-docx" data-skill="md-to-docx" data-group="ours"><th scope="row" data-label="Skill">md-to-docx</th><td data-label="What it does">Turns plain-text working files into Word documents, so nobody has to read the raw files.<a class="sk-show" href="#skDiagram" data-show="md-to-docx">Show md-to-docx in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="30">Cooper: 30</li><li data-caller="Jasper" data-n="10">Jasper: 10</li><li data-caller="Emmett" data-n="3">Emmett: 3</li><li data-caller="Edward" data-n="2">Edward: 2</li><li data-caller="Alice" data-n="1">Alice: 1</li><li data-caller="Charlie" data-n="1">Charlie: 1</li><li data-caller="Carlisle" data-n="1">Carlisle: 1</li></ul></td><td class="sk-total" data-label="Total uses">48</td></tr>
+<tr id="sk-what-the-data-supports" data-skill="what-the-data-supports" data-group="ours"><th scope="row" data-label="Skill">what-the-data-supports</th><td data-label="What it does">A check before any analysis: is there enough data, and the right data, to answer the question? If not, it says so first.<a class="sk-show" href="#skDiagram" data-show="what-the-data-supports">Show what-the-data-supports in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="4">Cooper: 4</li><li data-caller="Jasper" data-n="4">Jasper: 4</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">9</td></tr>
+<tr id="sk-problem-to-ship" data-skill="problem-to-ship" data-group="ours"><th scope="row" data-label="Skill">problem-to-ship</th><td data-label="What it does">Our project playbook. Every new project follows the same steps, from understanding the client's problem to the final checks before delivery, so nothing gets skipped.<a class="sk-show" href="#skDiagram" data-show="problem-to-ship">Show problem-to-ship in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="7">Cooper: 7</li></ul></td><td class="sk-total" data-label="Total uses">7</td></tr>
+<tr id="sk-code-quality-gate" data-skill="code-quality-gate" data-group="ours"><th scope="row" data-label="Skill">code-quality-gate</th><td data-label="What it does">Quality control and segregation of duties for software. One agent writes the code. A second agent reviews the test results, and a record of each check is kept before anyone uses it.<a class="sk-show" href="#skDiagram" data-show="code-quality-gate">Show code-quality-gate in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="4">Cooper: 4</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">5</td></tr>
+<tr id="sk-verify-before-deliver" data-skill="verify-before-deliver" data-group="ours"><th scope="row" data-label="Skill">verify-before-deliver</th><td data-label="What it does">Trust but verify. Before an agent says something was saved, sent or scheduled, it checks that it really happened. A separate control, run by the computer and not the model, catches some of these claims when no action is behind them.<a class="sk-show" href="#skDiagram" data-show="verify-before-deliver">Show verify-before-deliver in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
+<tr id="sk-automation-qa" data-skill="automation-qa" data-group="ours"><th scope="row" data-label="Skill">automation-qa</th><td data-label="What it does">Tests a scheduled job before it runs unattended.<a class="sk-show" href="#skDiagram" data-show="automation-qa">Show automation-qa in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
+<tr id="sk-numbers-to-decisions" data-skill="numbers-to-decisions" data-group="ours"><th scope="row" data-label="Skill">numbers-to-decisions</th><td data-label="What it does">Turns a business's transaction records into decisions the owner can act on.<a class="sk-show" href="#skDiagram" data-show="numbers-to-decisions">Show numbers-to-decisions in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="2">Jasper: 2</li><li data-caller="Emmett" data-n="1">Emmett: 1</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
+<tr id="sk-convene-board" data-skill="convene-board" data-group="ours"><th scope="row" data-label="Skill">convene-board</th><td data-label="What it does">A board of five AI advisers for big decisions. They check on the last meeting's actions, question the owner, state their positions, debate each other for two rounds, then vote. Its rules guard against easy agreement and keep dissent on the record. Minutes and action items carry over to the next meeting.<a class="sk-show" href="#skDiagram" data-show="convene-board">Show convene-board in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="2">Whitney: 2</li></ul></td><td class="sk-total" data-label="Total uses">2</td></tr>
+<tr id="sk-shopify-config" data-skill="shopify-config" data-group="ours"><th scope="row" data-label="Skill">shopify-config</th><td data-label="What it does">Answers questions about a client's Shopify store. It checks Shopify's current help pages and the store itself first, so no advice comes from memory. Used before these counts began.<a class="sk-show" href="#skDiagram" data-show="shopify-config">Show shopify-config in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="1">Jasper: 1</li></ul></td><td class="sk-total" data-label="Total uses">1</td></tr></tbody></table>
       </div>
       <div class="sk-group sk-anthropic">
         <h3 class="sk-group-title"><span class="sk-key" aria-hidden="true"></span>From Anthropic</h3>
         <table class="sk-table"><thead><tr><th scope="col">Skill</th><th scope="col">What it does</th><th scope="col">Who calls it</th><th scope="col">Total uses</th></tr></thead>
-        <tbody><tr id="sk-claude-api" data-skill="claude-api" data-group="anthropic"><th scope="row" data-label="Skill">claude-api</th><td data-label="What it does">Gives current, accurate facts when Whitney is building software that uses Claude, such as which versions exist and what they cost. It exists because Whitney's rule is to read facts like these from the current source each time.<a class="sk-show" href="#skDiagram" data-show="claude-api">Show claude-api in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li><li data-caller="Edward" data-n="3">Edward: 3</li></ul></td><td class="sk-total" data-label="Total uses">6</td></tr>
-<tr id="sk-docx" data-skill="docx" data-group="anthropic"><th scope="row" data-label="Skill">docx</th><td data-label="What it does">Creates, reads and edits Word documents and templates. The workforce's own Word converter relies on it for the detailed rules of building Word files.<a class="sk-show" href="#skDiagram" data-show="docx">Show docx in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Emmett" data-n="5">Emmett: 5</li></ul></td><td class="sk-total" data-label="Total uses">5</td></tr>
-<tr id="sk-frontend-design" data-skill="frontend-design" data-group="anthropic"><th scope="row" data-label="Skill">frontend-design</th><td data-label="What it does">Helps design web pages and app screens with a look of their own instead of a generic one. It is the fallback for page design because it runs inside Claude, with no outside service to lose access to.<a class="sk-show" href="#skDiagram" data-show="frontend-design">Show frontend-design in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Edward" data-n="3">Edward: 3</li><li data-caller="Jasper" data-n="1">Jasper: 1</li></ul></td><td class="sk-total" data-label="Total uses">4</td></tr>
-<tr id="sk-skill-creator" data-skill="skill-creator" data-group="anthropic"><th scope="row" data-label="Skill">skill-creator</th><td data-label="What it does">Builds new skills, improves existing ones and tests how well they work. It exists because Whitney's rule is that work with a purpose-built tool is done with that tool.<a class="sk-show" href="#skDiagram" data-show="skill-creator">Show skill-creator in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
-<tr id="sk-artifact-capabilities" data-skill="artifact-capabilities" data-group="anthropic"><th scope="row" data-label="Skill">artifact-capabilities</th><td data-label="What it does">Lets a web page Whitney publishes do more than display text, such as remembering what visitors enter in a poll or sign-up sheet.<a class="sk-show" href="#skDiagram" data-show="artifact-capabilities">Show artifact-capabilities in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="2">Cooper: 2</li></ul></td><td class="sk-total" data-label="Total uses">2</td></tr>
-<tr id="sk-update-config" data-skill="update-config" data-group="anthropic"><th scope="row" data-label="Skill">update-config</th><td data-label="What it does">Changes the settings that control the AI tool on Whitney's computer, such as what it may do without asking and what it does automatically. It exists because Whitney's rule is that work with a purpose-built tool is done with that tool.<a class="sk-show" href="#skDiagram" data-show="update-config">Show update-config in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="2">Cooper: 2</li></ul></td><td class="sk-total" data-label="Total uses">2</td></tr></tbody></table>
+        <tbody><tr id="sk-claude-api" data-skill="claude-api" data-group="anthropic"><th scope="row" data-label="Skill">claude-api</th><td data-label="What it does">Current facts for building software that uses Claude, such as which versions exist and what they cost.<a class="sk-show" href="#skDiagram" data-show="claude-api">Show claude-api in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li><li data-caller="Edward" data-n="3">Edward: 3</li></ul></td><td class="sk-total" data-label="Total uses">6</td></tr>
+<tr id="sk-docx" data-skill="docx" data-group="anthropic"><th scope="row" data-label="Skill">docx</th><td data-label="What it does">Creates, reads and edits Word documents.<a class="sk-show" href="#skDiagram" data-show="docx">Show docx in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Emmett" data-n="5">Emmett: 5</li></ul></td><td class="sk-total" data-label="Total uses">5</td></tr>
+<tr id="sk-frontend-design" data-skill="frontend-design" data-group="anthropic"><th scope="row" data-label="Skill">frontend-design</th><td data-label="What it does">Designs how web pages and app screens look: layout, fonts and color.<a class="sk-show" href="#skDiagram" data-show="frontend-design">Show frontend-design in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Edward" data-n="3">Edward: 3</li><li data-caller="Jasper" data-n="1">Jasper: 1</li></ul></td><td class="sk-total" data-label="Total uses">4</td></tr>
+<tr id="sk-skill-creator" data-skill="skill-creator" data-group="anthropic"><th scope="row" data-label="Skill">skill-creator</th><td data-label="What it does">Builds new skills, improves existing ones and tests how well they work.<a class="sk-show" href="#skDiagram" data-show="skill-creator">Show skill-creator in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr>
+<tr id="sk-update-config" data-skill="update-config" data-group="anthropic"><th scope="row" data-label="Skill">update-config</th><td data-label="What it does">Sets the agents' permissions: what they may do on their own and what needs approval first.<a class="sk-show" href="#skDiagram" data-show="update-config">Show update-config in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="2">Cooper: 2</li></ul></td><td class="sk-total" data-label="Total uses">2</td></tr></tbody></table>
       </div>
       <div class="sk-group sk-community">
         <h3 class="sk-group-title"><span class="sk-key" aria-hidden="true"></span>Community-built</h3>
         <table class="sk-table"><thead><tr><th scope="col">Skill</th><th scope="col">What it does</th><th scope="col">Who calls it</th><th scope="col">Total uses</th></tr></thead>
-        <tbody><tr id="sk-ss" data-skill="ss" data-group="community"><th scope="row" data-label="Skill">ss</th><td data-label="What it does">Gives Claude eyes. He sees what Whitney sees on her screen, so she does not have to describe it.<a class="sk-show" href="#skDiagram" data-show="ss">Show ss in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="98">Whitney: 98</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total uses">99</td></tr>
-<tr id="sk-last30days" data-skill="last30days" data-group="community"><th scope="row" data-label="Skill">last30days</th><td data-label="What it does">Finds what people have been saying online about a topic over the past month. It exists because Whitney's rule is to look at what others have done recently before designing anything.<a class="sk-show" href="#skDiagram" data-show="last30days">Show last30days in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="3">Jasper: 3</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total uses">4</td></tr>
-<tr id="sk-brainstorming" data-skill="brainstorming" data-group="community"><th scope="row" data-label="Skill">brainstorming</th><td data-label="What it does">Talks an idea through with Whitney first, to settle what she wants and how it should work, before anything is built.<a class="sk-show" href="#skDiagram" data-show="brainstorming">Show brainstorming in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr></tbody></table>
+        <tbody><tr id="sk-ss" data-skill="ss" data-group="community"><th scope="row" data-label="Skill">ss</th><td data-label="What it does">Gives Claude eyes. He sees what you see on your screen, so you don't have to describe it.<a class="sk-show" href="#skDiagram" data-show="ss">Show ss in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Whitney" data-n="98">Whitney: 98</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total uses">99</td></tr>
+<tr id="sk-last30days" data-skill="last30days" data-group="community"><th scope="row" data-label="Skill">last30days</th><td data-label="What it does">Researches the past month of online discussion on a topic. It ranks what it finds by how much response each post drew, and links every source.<a class="sk-show" href="#skDiagram" data-show="last30days">Show last30days in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Jasper" data-n="3">Jasper: 3</li><li data-caller="Cooper" data-n="1">Cooper: 1</li></ul></td><td class="sk-total" data-label="Total uses">4</td></tr>
+<tr id="sk-brainstorming" data-skill="brainstorming" data-group="community"><th scope="row" data-label="Skill">brainstorming</th><td data-label="What it does">Talks an idea through before anything is built, to settle what's wanted and how it should work.<a class="sk-show" href="#skDiagram" data-show="brainstorming">Show brainstorming in the diagram</a></td><td data-label="Who calls it"><ul class="sk-callers"><li data-caller="Cooper" data-n="3">Cooper: 3</li></ul></td><td class="sk-total" data-label="Total uses">3</td></tr></tbody></table>
       </div>
     </section>
 
@@ -806,6 +837,149 @@
     diagram.className += ' ready';
     document.getElementById('wf-skills').className += ' sk-live';
   } catch (err) { /* The lists below still hold every number. */ }
+})();
+</script>
+
+<script>
+/* PHONE CHART. On a phone (720px and narrower) the wide diagram is hidden and this treemap is drawn instead. It reads the same lists
+   as the diagram (data-skill, data-group, data-caller, data-n) and types in no numbers of its own.
+   One box per skill, grouped by where the skill comes from, largest first. Box area follows the SQUARE ROOT of total uses, so a skill
+   used once stays big enough to read and tap; the exact count is printed in every box. Each box is a plain link to the skill's row
+   in the list, and each row on a phone gets a "Back to the chart" link to its box. Nothing is fetched or sent anywhere.
+   If anything here fails, the chart is removed and the phone shows exactly what it shows with scripts off: the lists. */
+(function () {
+  var host = document.getElementById('skPChart'), section = document.getElementById('wf-skills');
+  if (!host || !section) return;
+  var dead = false;
+  function fail() {
+    dead = true;
+    try {
+      host.classList.remove('ready'); host.textContent = ''; section.classList.remove('sk-pready');
+      document.querySelectorAll('.sk-backcell').forEach(function (c) { c.parentNode.removeChild(c); });
+    } catch (e) { /* nothing more to undo */ }
+  }
+  try {
+    var rows = document.querySelectorAll('.sk-table tbody tr[data-skill]');
+    if (!rows.length) return;
+    var GROUPS = [['ours', 'Built by Heflin Group'], ['anthropic', 'From Anthropic'], ['community', 'Community-built']];
+    var K = 6500;   /* square pixels of box area for each unit of square-root-of-uses */
+
+    /* 1. READ THE LISTS: one entry per skill, with its group, total and callers (in the order the list gives them). */
+    var skills = [];
+    rows.forEach(function (row) {
+      var callers = [];
+      row.querySelectorAll('li[data-caller]').forEach(function (li) {
+        callers.push({ name: li.getAttribute('data-caller'), n: Number(li.getAttribute('data-n')) });
+      });
+      var total = Number(row.querySelector('.sk-total').textContent);
+      if (!(total > 0)) throw new Error('bad total');
+      skills.push({ name: row.getAttribute('data-skill'), group: row.getAttribute('data-group'), callers: callers, total: total, row: row });
+    });
+    function node(tag, cls, parent, txt) {
+      var n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (txt != null) n.textContent = txt;
+      if (parent) parent.appendChild(n);
+      return n;
+    }
+    function times(n) { return n === 1 ? 'once' : n + ' times'; }
+
+    var inner = node('div', 'tm-inner', host), lastW = 0;
+
+    /* 2. FIT CHECK. Measures a name at the box's size: does its longest unbroken piece fit across, and do the lines of the name plus the
+       count fit down? Names only break at their hyphens, so the pieces are measured one by one. Returns spare pixels (negative = does not fit). */
+    var ctx = document.createElement('canvas').getContext('2d');
+    function slack(r, px, lh) {
+      ctx.font = '500 ' + px + 'px "IBM Plex Sans", sans-serif';
+      var inW = r.w - 16, inH = r.h - 11, lines = 1, cur = 0, slackW = Infinity, bits = r.it.s.name.split('-');
+      bits.forEach(function (p, i) {
+        var seg = ctx.measureText(p + (i < bits.length - 1 ? '-' : '')).width;
+        slackW = Math.min(slackW, inW - seg);
+        if (cur > 0 && cur + seg > inW) { lines++; cur = 0; }
+        cur += seg;
+      });
+      return Math.min(slackW, inH - (lines * lh + 2 + 20.4));
+    }
+    function room(boxes) {
+      var worst = Infinity;
+      boxes.forEach(function (r) { worst = Math.min(worst, slack(r, 13, 15.6)); });
+      return worst;
+    }
+
+    /* 3. LAY OUT, largest first, in rows. Every way of cutting the sorted list into rows of 1 to 4 skills is tried; each row is as tall as
+       its boxes need, so box area follows the weights. The winner is the one in which every name fits (spare room counts up to 10px),
+       then the one with the squarest boxes. */
+    function layout(items, w) {
+      var top = null, topScore = -Infinity;
+      function aspect(boxes) { var m = 1; boxes.forEach(function (r) { m = Math.max(m, r.w / r.h, r.h / r.w); }); return m; }
+      function tryRows(sizes) {
+        var rowsOut = [], flat = [], k = 0;
+        sizes.forEach(function (n) {
+          var chunk = items.slice(k, k + n), sum = chunk.reduce(function (s, r) { return s + r.a; }, 0), rh = sum / w, row = { h: rh, boxes: [] };
+          chunk.forEach(function (r) { var b = { it: r, w: r.a / rh, h: rh }; row.boxes.push(b); flat.push(b); });
+          rowsOut.push(row); k += n;
+        });
+        var score = Math.min(room(flat), 10) * 1000 - aspect(flat);
+        if (score > topScore) { topScore = score; top = rowsOut; }
+      }
+      (function walk(left, sizes) {
+        if (!left) { tryRows(sizes); return; }
+        for (var n = 1; n <= Math.min(4, left); n++) walk(left - n, sizes.concat([n]));
+      })(items.length, []);
+      return top;
+    }
+
+    function render() {
+      if (dead) return;
+      var w = host.clientWidth;
+      if (!w || w === lastW) return;
+      lastW = w;
+      var kk = K * Math.max(1, w / 348);   /* on a wider box (a tablet) the boxes grow with it, so none gets short */
+      var ae = document.activeElement, focusId = (ae && ae.classList && ae.classList.contains('tm-box')) ? ae.id : null;
+      inner.textContent = '';
+      node('p', 'sk-pnote', inner, 'Bigger boxes were used more. Sizes are not exact, so small skills stay readable.');
+      GROUPS.forEach(function (g) {
+        var list = skills.filter(function (s) { return s.group === g[0]; }).sort(function (a, b) { return b.total - a.total; });
+        if (!list.length) return;
+        var blk = node('div', 'sk-group sk-' + g[0], inner);
+        var h3 = node('h3', 'sk-group-title', blk);
+        node('span', 'sk-key', h3).setAttribute('aria-hidden', 'true');
+        h3.appendChild(document.createTextNode(g[1]));
+        var wrap = node('div', 'tm-wrap', blk);
+        var items = list.map(function (s) { return { s: s, a: Math.sqrt(s.total) * kk }; });
+        layout(items, w).forEach(function (r) {
+          var row = node('div', 'tm-row', wrap), sum = r.boxes.reduce(function (t, b) { return t + b.it.a; }, 0);
+          row.style.height = r.h.toFixed(1) + 'px';
+          r.boxes.forEach(function (bx) {
+            var s = bx.it.s, b = node('a', 'tm-box g-' + s.group, row);
+            b.href = '#sk-' + s.name; b.id = 'tm-' + s.name;
+            b.style.width = (100 * bx.it.a / sum).toFixed(3) + '%';
+            if (slack(bx, 13, 15.6) < 0) b.className += ' sm';   /* a name that cannot fit at 13px drops to 12px; the count never goes */
+            b.setAttribute('aria-label', s.name + ', used ' + times(s.total) + ': read what it does');
+            node('span', 'tm-name', b, s.name);
+            node('span', 'tm-n', b, String(s.total));
+          });
+        });
+      });
+      var back = focusId && document.getElementById(focusId);
+      if (back) back.focus({ preventScroll: true });
+    }
+    function safeRender() { try { render(); } catch (err) { fail(); } }
+
+    host.classList.add('ready');   /* the box is only measured once it is showing */
+    render();                      /* a failure here lands in the catch below and leaves the page as it is with scripts off */
+    /* The way back: one link at the end of each list row, shown on a phone only while the treemap is drawn. */
+    skills.forEach(function (s) {
+      var cell = node('td', 'sk-backcell', s.row), a = node('a', 'sk-back', cell, 'Back to the chart');
+      a.href = '#tm-' + s.name;
+      a.setAttribute('aria-label', 'Back to the chart: ' + s.name);
+    });
+    section.classList.add('sk-pready');
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { lastW = 0; safeRender(); }); }
+    /* Draw again whenever the box changes width (turning the phone, or a scroll bar appearing). */
+    if (window.ResizeObserver) { new ResizeObserver(safeRender).observe(host); }
+    else { window.addEventListener('resize', safeRender); }
+  } catch (err) { fail(); }
 })();
 </script>
 
