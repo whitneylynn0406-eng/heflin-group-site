@@ -1,15 +1,15 @@
 # Heflin Group LLC
 
-> Fractional CFO support for small and middle-market businesses and nonprofits: margins, billing, reporting and process automation, delivered by a CPA with a digital workforce. Based in Louisville, Kentucky. The work starts with the client's numbers and how their days actually run, and ends with systems their team owns. Founded by Whitney Heflin, CPA. Headquartered in Louisville, Kentucky.
+> Fractional CFO support for small and middle-market businesses and nonprofits: margins, billing, reporting and process automation, delivered by a CPA with a digital workforce. Based in Louisville, Kentucky. The work starts with the client's numbers and how their days actually run, and ends with systems their team owns. Founded by Whitney Heflin, CPA. Works with clients in Louisville and remotely.
 
 Heflin Group works alongside a client's CPA and existing team. Services:
 
-- AI adoption strategy and training
-- Digital workforce setup, scoped to the client's work
 - Fractional CFO and COO support
-- Process automation
-- Margin and pricing analysis
+- Margin, pricing and financial modeling
 - Reporting and dashboards
+- Process automation
+- Digital workforce setup, scoped to the client's work
+- AI adoption strategy and training
 - Privacy, security and regulatory fit
 - Recoverability and operational resilience
 
