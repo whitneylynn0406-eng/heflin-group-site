@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  WHAT THIS DOES: A password-protected preview page. The calculator itself is stored encrypted in the block below;
+  WHAT THIS DOES: A password-protected preview page. The page content is stored encrypted in the block below;
     typing the right password decrypts it in your browser and shows it. Nothing is sent anywhere.
   HOW IT IS LOCKED: key from the password with PBKDF2-SHA256 (600000 rounds, random salt), then AES-GCM-256 (random IV).
     Stored text is base64 of: 16 bytes salt, 12 bytes IV, then the encrypted page.
@@ -11,7 +11,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex,nofollow" />
-<title>Cash-Flow Calculator (preview)</title>
+<title>Preview</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; background: #172554; color: #F5F0E8; font-family: Georgia, 'Times New Roman', serif; }
@@ -28,7 +28,7 @@
 </head>
 <body>
 <main>
-  <h1>Cash-Flow Calculator (preview)</h1>
+  <h1>Preview</h1>
   <p>This preview is password-protected. Ask Heflin Group for access.</p>
   <p>Nothing you type here is sent anywhere; it unlocks this page in your browser.</p>
   <form id="f" autocomplete="off">
